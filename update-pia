@@ -1,0 +1,6 @@
+#!/bin/sh
+#	$Id: update-pia,v 1.1 1999-07-11 06:20:57 steve Exp $
+#	update PIA using ssh from CRC
+
+export CVS_RSH=$HOME/bin/crcssh
+cd $HOME/PIA; cvs update -d -P
