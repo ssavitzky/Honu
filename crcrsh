@@ -1,5 +1,5 @@
 #!/usr/bin/expect -f
-#	$Id: crcrsh,v 1.3 1998-10-28 07:26:12 steve Exp $ -*-tcl-*-
+#	$Id: crcrsh,v 1.4 1999-06-28 02:32:05 steve Exp $ -*-tcl-*-
 #	crcrsh host command...
 #	export CVS_RSH=crcrsh ; cvs update
 
@@ -12,7 +12,7 @@ set host [lrange $argv 0 0]
 #set cmd  [lrange $argv 1 end]
 set cmd [lindex $argv 1]
 
-set pass [exec /usr/bin/grep $host "$home/.netrc" ]
+set pass [exec /bin/grep $host "$home/.netrc" ]
 regexp {password [\" ]*([^\"]+)\"?} $pass foo password
 
 if [string match $password ""] then {
@@ -46,7 +46,7 @@ expect {
 expect -re "s\/key (\[0-9\]+)" {
     set key "$expect_out(1,string)"
     send_error "using skey: $key\n"
-    set skey [exec /usr/bin/grep $key $home/.skeys]
+    set skey [exec /bin/grep $key $home/.skeys]
     set skey [lrange $skey 1 end]
 }
 expect ssword: {
@@ -86,7 +86,7 @@ stty cooked
 if [string match $cmd ""] then {
   interact
 } else { 
-  expect -timeout 20 "> " {
+  expect -timeout 20 "> " #{
     #sleep 1
     # The following line seems to have no effect:  interact is setting raw
     #stty -echo raw 
@@ -96,7 +96,7 @@ if [string match $cmd ""] then {
     #sleep 1
     send "$cmd\n"
     interact -reset
-  }
+  #}
   #stty -echo raw
   #send "stty -echo; $cmd\r"
   #send "$cmd\r"
