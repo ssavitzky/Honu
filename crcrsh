@@ -1,5 +1,5 @@
 #!/usr/bin/expect -f
-#	$Id: crcrsh,v 1.1 1997-09-19 04:27:18 steve Exp $
+#	$Id: crcrsh,v 1.2 1997-10-12 05:46:41 steve Exp $
 #	crcrsh host command...
 
 # This is stupid, but I don't know how to deal with associative arrays
@@ -27,7 +27,7 @@ if [string match $cmd ""] then {
 }
 
 
-spawn telnet -8 crc.ricoh.com
+spawn telnet -8 gateway.crc.ricoh.com
 expect {
   -timeout 400 
   Username: {
