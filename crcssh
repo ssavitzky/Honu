@@ -1,0 +1,7 @@
+#!/bin/sh
+#	$Id: crcssh,v 1.1 1999-06-28 02:32:16 steve Exp $ 
+#	crcssh host command...
+#	export CVS_RSH=crcrsh ; cvs update
+# Note that the host is a dummy: we always end up on leaf.
+shift
+ssh -p 40000 205.226.66.127 $*
