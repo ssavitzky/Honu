@@ -1,3 +1,3 @@
 #!/bin/bash
-#  $Id: daily,v 1.1 1997-09-19 04:27:19 steve Exp $
-(date; uptime; df) | mail -s "STATUS:"`hostname` steve steve@rsv.ricoh.com
+#  $Id: daily,v 1.2 1999-06-28 02:31:33 steve Exp $
+(date; uptime; df) | mail -s "STATUS:`hostname` `date`" steve steve@rsv.ricoh.com
