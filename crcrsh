@@ -1,0 +1,92 @@
+#!/usr/bin/expect -f
+#	$Id: crcrsh,v 1.1 1997-09-19 04:27:18 steve Exp $
+#	crcrsh host command...
+
+# This is stupid, but I don't know how to deal with associative arrays
+
+set user [exec /bin/sh -c "echo \$USER"]
+set home [exec /bin/sh -c "echo \$HOME"]
+
+set host [lrange $argv 0 0]
+#set cmd  [lrange $argv 1 end]
+set cmd [lindex $argv 1]
+
+set pass [exec /usr/bin/grep $host "$home/.netrc" ]
+regexp {password [\" ]*([^\"]+)\"?} $pass foo password
+
+if [string match $password ""] then {
+   send_error "no password for $host in $home/.netrc\n"
+   exit 1
+}
+if [string match $cmd ""] then {
+  send_error "rlogin to $host\n"
+} else {
+  send_error "on $host execute $cmd\n"
+  log_user 0
+  log_file -noappend "$home/.crcrsh.log"
+}
+
+
+spawn telnet -8 crc.ricoh.com
+expect {
+  -timeout 400 
+  Username: {
+    send "$user\r"
+    expect -re "s\/key (\[0-9\]+)" {
+      set key "$expect_out(1,string)"
+      send_error "using skey: $key\n"
+      set skey [exec /usr/bin/grep $key $home/.skeys]
+      set skey [lrange $skey 1 end]
+      send "$skey\r"
+    } 
+  } Denied {
+    send_error "you lose: permission denied\n"
+    exit 1
+  } timeout {
+    send_error "Timeout in first-level chat\n"
+    exit 1
+  }
+}
+
+expect {
+  -timeout 100
+  "> " {
+    send "telnet $host\r"
+    exp_continue
+  } ogin: {
+    send "$user\n"
+    exp_continue
+  } assword: {
+    send "$password\n"
+  } timeout {
+    send_error "Timeout in second-level telnet"
+    exit 1
+  }
+}
+
+send_error "Connection established\n"
+
+if [string match $cmd ""] then {} else { 
+  expect -timeout 20 "> " {
+    sleep 1
+    # The following line seems to have no effect:  interact is setting raw
+    #stty -echo raw 
+    send "stty -echo raw\r"
+    # the following line makes it hang even though it gets the "> ".
+    #expect "> " {}
+    sleep 1
+    send "$cmd\n"
+  }
+  #stty -echo raw
+  #send "stty -echo; $cmd\r"
+  #send "$cmd\r"
+
+  #expect "$cmd\r\n" {
+    send_error "Command $cmd sent\n"
+    #sleep 1
+  #}
+}
+
+interact
+
+
