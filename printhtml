@@ -1,0 +1,14 @@
+#!/bin/sh
+#	$Id: printhtml,v 1.1 1997-09-19 04:35:08 steve Exp $
+#	printhtml file...
+#
+# crude hack to print an HTML file using html2latex.  
+# Doesn't handle images.
+
+for f in $*; do
+    b=`basename $f .html`
+    html2latex $b.html > $b.tex
+    latex $b
+    dvilj $b
+    lpr -Praw $b.lj
+done
