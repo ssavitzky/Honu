@@ -1,6 +1,7 @@
 #!/usr/bin/expect -f
-#	$Id: crcrsh,v 1.2 1997-10-12 05:46:41 steve Exp $
+#	$Id: crcrsh,v 1.3 1998-10-28 07:26:12 steve Exp $ -*-tcl-*-
 #	crcrsh host command...
+#	export CVS_RSH=crcrsh ; cvs update
 
 # This is stupid, but I don't know how to deal with associative arrays
 
@@ -26,20 +27,13 @@ if [string match $cmd ""] then {
   log_file -noappend "$home/.crcrsh.log"
 }
 
-
-spawn telnet -8 gateway.crc.ricoh.com
+# Telnet to the gateway and log in:
+spawn -noecho telnet -8 gateway.crc.ricoh.com
 expect {
   -timeout 400 
-  Username: {
+  login: {
     send "$user\r"
-    expect -re "s\/key (\[0-9\]+)" {
-      set key "$expect_out(1,string)"
-      send_error "using skey: $key\n"
-      set skey [exec /usr/bin/grep $key $home/.skeys]
-      set skey [lrange $skey 1 end]
-      send "$skey\r"
-    } 
-  } Denied {
+  } incorrect {
     send_error "you lose: permission denied\n"
     exit 1
   } timeout {
@@ -48,15 +42,37 @@ expect {
   }
 }
 
+# Get the s/key index out of the prompt, and send it.
+expect -re "s\/key (\[0-9\]+)" {
+    set key "$expect_out(1,string)"
+    send_error "using skey: $key\n"
+    set skey [exec /usr/bin/grep $key $home/.skeys]
+    set skey [lrange $skey 1 end]
+}
+expect ssword: {
+    send_error "Sending skey password\n"
+    send "$skey\r"
+}
+
+# Now connect to the host we _really_ want, and log in on _it_
 expect {
   -timeout 100
-  "> " {
+  "termserv>" {			# FreeBSD
+    if [string match $host ""] { 
+       interact
+       exit 0
+    }
     send "telnet $host\r"
     exp_continue
+  } ">" {			# Gauntlet
+    send "connect $host\r"
+    exp_continue
   } ogin: {
+    send_error "sending username\n"
     send "$user\n"
     exp_continue
   } assword: {
+    send_error "sending password\n"
     send "$password\n"
   } timeout {
     send_error "Timeout in second-level telnet"
@@ -64,18 +80,22 @@ expect {
   }
 }
 
+# OK, we're talking.  Run the program, if specified, then interact.
 send_error "Connection established\n"
-
-if [string match $cmd ""] then {} else { 
+stty cooked
+if [string match $cmd ""] then {
+  interact
+} else { 
   expect -timeout 20 "> " {
-    sleep 1
+    #sleep 1
     # The following line seems to have no effect:  interact is setting raw
     #stty -echo raw 
     send "stty -echo raw\r"
     # the following line makes it hang even though it gets the "> ".
     #expect "> " {}
-    sleep 1
+    #sleep 1
     send "$cmd\n"
+    interact -reset
   }
   #stty -echo raw
   #send "stty -echo; $cmd\r"
@@ -85,8 +105,9 @@ if [string match $cmd ""] then {} else {
     send_error "Command $cmd sent\n"
     #sleep 1
   #}
+  stty cooked
 }
 
-interact
+
 
 
