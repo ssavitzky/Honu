@@ -1,0 +1,19 @@
+#!/bin/bash
+#	"idle task" run in X console terminal window.
+#	The main reason for this is to run various daily backup
+#	and notification tasks from an environment in which I'm
+#	logged in and running the ssh-agent for authentication.
+#	
+#
+
+odate=`date +%Y-%m-%d`
+
+while true; do
+    date=`date +%Y-%m-%d`
+    if [ ! "$date" = "$odate" ]; then
+	odate=$date
+	date
+	$HOME/bin/daily < /dev/null >& /dev/null
+    fi
+    sleep 3600
+done
