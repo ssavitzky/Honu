@@ -1,5 +1,5 @@
 #!/usr/local/bin/perl -pi.bak
-#	$Id: blacken,v 1.1 1997-09-19 04:27:17 steve Exp $
+#	$Id: blacken,v 1.1 1997/09/19 04:27:17 steve Exp $
 # Blacken a WWW page or set of pages in protest.  
 
 s'<body>'

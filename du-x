@@ -1,5 +1,5 @@
 #!/bin/csh -f
-#	$Id: du-x,v 1.1 1997-09-19 04:29:26 steve Exp $
+#	$Id: du-x,v 1.1 1997/09/19 04:29:26 steve Exp $
 #	Run xdu < .du with an appropriate label.
 #
 # df . produces something like:

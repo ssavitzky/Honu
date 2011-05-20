@@ -1,5 +1,5 @@
 #!/bin/bash
-#	$Id: crcb,v 1.1 1997-09-19 04:27:18 steve Exp $
+#	$Id: crcb,v 1.1 1997/09/19 04:27:18 steve Exp $
 #	dial in to CRC with a callback.
 /usr/sbin/dip /usr/local/etc/crcb.dip
 

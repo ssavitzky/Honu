@@ -1,6 +1,6 @@
 #!/bin/csh -f
 #  cptree src dst
-#  	$Id: cpltree,v 1.1 1997-09-19 04:27:18 steve Exp $
+#  	$Id: cpltree,v 1.1 1997/09/19 04:27:18 steve Exp $
 #
 # 	copy a directory tree (on the same machine)
 # 	STAY ON ONE FILE SYSTEM

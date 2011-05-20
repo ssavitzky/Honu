@@ -1,5 +1,5 @@
 #!/bin/csh -f
-#	$Id: du-sx,v 1.1 1997-09-19 04:27:19 steve Exp $
+#	$Id: du-sx,v 1.1 1997/09/19 04:27:19 steve Exp $
 #	Same as du-x except it actually does the du | sort > .du first.
 #
 # df . produces something like:

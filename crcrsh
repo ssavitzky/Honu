@@ -1,5 +1,5 @@
 #!/usr/bin/expect -f
-#	$Id: crcrsh,v 1.4 1999-06-28 02:32:05 steve Exp $ -*-tcl-*-
+#	$Id: crcrsh,v 1.4 1999/06/28 02:32:05 steve Exp $ -*-tcl-*-
 #	crcrsh host command...
 #	export CVS_RSH=crcrsh ; cvs update
 
