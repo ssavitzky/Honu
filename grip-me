@@ -1,0 +1,9 @@
+#!/bin/bash
+#	Rip one of my own songs
+#
+cd
+cp .grip .grip-other
+cp .grip-mine .grip
+grip
+cp .grip .grip-mine
+cp .grip-other .grip 

@@ -1,0 +1,14 @@
+#!/bin/csh -f
+#
+# Environment for XNEWS -- improved version by steve
+#
+#if (-e /.cshrc_xnews) then
+#    source /.cshrc_xnews
+#else
+    setenv OPENWINHOME /usr/openwin
+    setenv XNEWSHOME $OPENWINHOME
+    setenv LD_LIBRARY_PATH $OPENWINHOME/lib:/usr/lib
+    set path=( $OPENWINHOME/bin $OPENWINHOME/bin/xview $OPENWINHOME/demo $path )
+    setenv FRAMEBUFFER /dev/fb
+#endif
+xnews

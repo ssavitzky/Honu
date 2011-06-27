@@ -1,0 +1,5 @@
+#!/bin/sh
+while true; do 
+    /bin/echo -e -n `ping -c1 google.com | grep time | head -c 70` "\r"
+    sleep 5
+done

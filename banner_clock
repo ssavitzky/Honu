@@ -1,0 +1,10 @@
+#!/bin/csh
+#
+onintr finis
+while (1)
+clear
+banner `date "+%a--%H:%M"`
+sleep 10
+end
+finis:
+exit 0

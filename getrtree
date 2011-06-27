@@ -1,0 +1,11 @@
+#!/bin/csh -f
+# getrtree host src dst
+#
+# 	copy a directory tree from host:src to dst
+#
+if ($#argv != 3) then
+	echo usage: getrtree host src dst
+	exit
+endif
+if (! -e $3) mkdir $3
+(rsh $1 cd $2\; tar cf - .) | (cd $3; tar xpBf -)

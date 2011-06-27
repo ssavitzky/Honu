@@ -1,0 +1,20 @@
+# fixx [-r] file...
+#	turn off executable bit in non-directories
+#	may be recursive
+#
+if ("$1" == "-r") then
+  set recursive = 1
+  shift
+else
+  set recursive = 0
+endif
+foreach f ($*)
+  if (! -d $f) then
+	chmod -x $f
+  else
+	if ($recursive) then
+		echo $f
+		fixx -r $f/*
+	endif
+  endif
+end

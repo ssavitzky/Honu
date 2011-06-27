@@ -1,0 +1,11 @@
+#!/bin/sh
+#
+# nevermind what my classpath says; if we're using kaffe we need this stuff
+if [ 0 ]; then # [ -x /usr/bin/kaffe ]; then
+    export CLASSPATH=/usr/share/kaffe/Klasses.jar:/usr/share/kaffe/comm.jar:/usr/share/kaffe/pjava.jar:/usr/share/kaffe/servlet.jar:/usr/share/kaffe/tools.jar:/usr/share/kaffe/microsoft.jar:/usr/share/kaffe/kjc.jar:/usr/share/kaffe/rmi.jar
+    export PATH=/usr/bin:$PATH
+    export JAVA_HOME=/usr/share/kaffe
+    export JAVA_BIN=/usr/bin/kaffe
+fi
+# on the other hand it's not enough because pia runs in a subshell.
+xterm -geometry 80x16+0+230 -fn fixed -name pia -e pia &

@@ -1,0 +1,5 @@
+#!/bin/sh
+#	rgrep expr
+#	$Id:$
+
+find . -type f -exec grep "$1" -n {} /dev/null \;

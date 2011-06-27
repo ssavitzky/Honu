@@ -1,0 +1,32 @@
+#!/bin/bash
+#	Start a cascade of root xterms on localhost and the
+#	local servers.  May have to be edited from time to time
+#	Pings machines not guaranteed to be available.
+
+xterm -geometry -4+52 -e ssh -lroot nova&
+
+ping -c 1 -q stargate > /dev/null && \
+    xterm -geometry -100+150 -e ssh -lroot stargate&
+
+ping -c 1 -q gateway > /dev/null && \
+    xterm -geometry -200+250 -e ssh -lroot gateway&
+
+# we're going to have to revise this if we start running it on
+# any host except dorsai/trantor or harmony.  Should cascade
+# them in a loop using eval.
+
+host=`hostname`
+
+[ ! $host = dorsai ] && ping -c 1 -q dorsai > /dev/null && \
+    xterm -geometry +300-275 -e ssh -lroot dorsai&
+
+[ ! $host = harmony ] && ping -c 1 -q harmony > /dev/null && \
+    xterm -geometry +300-275 -e ssh -lroot harmony&
+
+[ ! $host = trantor ] && ping -c 1 -q trantor > /dev/null && \
+    xterm -geometry +300-275 -e ssh -lroot trantor&
+
+ping -c 1 -q dantooine > /dev/null && \
+    xterm -geometry +100-175 -e ssh -lroot dantooine&
+
+xterm -geometry +0-77 -e ssh -lroot localhost&

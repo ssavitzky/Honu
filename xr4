@@ -1,0 +1,15 @@
+#!/bin/csh
+#	xr4 [command...]
+#	execute the command in an R4 environment.
+#	can also be sourced in .cshrc
+
+setenv XREV  R4
+setenv XHOME /usr/local/X11R4
+setenv XSRC  /usr/local/xrc/X11
+setenv XBIN  /usr/bin/X11
+setenv XLIB  /usr/lib
+setenv XINC  /usr/include
+
+set path = ( $XBIN $path )
+
+$*

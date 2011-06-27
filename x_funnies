@@ -1,0 +1,13 @@
+#!/bin/csh -f
+#
+# x_funnies -- set up clock face and analog clock
+#
+if ($#argv) then
+   alias remote rcmd $1
+else
+   alias remote '\!* &'
+endif
+
+remote oclock -geometry 172x378+865+-9
+remote xeyes -geometry 150x100+874+56
+remote xclock -geometry 279x28+999+334 -digital -update 10 -fn serifb12 

@@ -1,0 +1,15 @@
+#!/bin/csh
+#	Run every night before midnight
+
+set d = (`date`)
+set cf = ~/Calendar/xc$d[3]$d[2]$d[6]
+if (-e $cf) then
+   mv $cf ~/Calendar/Done
+endif
+
+# strictly speaking the following doesn't belong here
+(cd ; du | sort +1 -t/ > .du )
+
+
+
+

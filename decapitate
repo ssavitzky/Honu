@@ -1,0 +1,6 @@
+# decapitate [file]
+#
+#	Strip off a mail or news header
+#	(everything up to and including the first totally blank line)
+#
+sed -e '1,/^$/ d' $*

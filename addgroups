@@ -1,0 +1,5 @@
+#!/bin/sh
+
+for g in $*;  do {
+  su news -c "/usr/lib/news/bin/maint/addgroup $g y"
+}; done

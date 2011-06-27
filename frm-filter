@@ -1,0 +1,3 @@
+#!/bin/sh
+
+frm  | grep -vi alsa-user | grep -vie "fetchmail\\|delivery\\|postmaster\\|failure\\|undeliverable\\|administrator\\|autoreply\\|frozen\\|undeliver\\|returned\\|mailer-daemon\\|content-filter\\|message frozen\\|spam\\|windows-" 

@@ -1,0 +1,4 @@
+#! /bin/sh
+# Rot13 encode/decode filter
+#
+tr 'a-zA-Z' 'n-za-mN-ZA-M'

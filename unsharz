@@ -1,0 +1,5 @@
+#
+foreach f ($*)
+	echo $f
+	zcat $f | sed -e '/^#/,$ p' -e 'd' | sh
+end

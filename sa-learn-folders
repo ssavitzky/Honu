@@ -1,0 +1,11 @@
+#!/bin/sh
+#	Learns from ~/Spool/sa/{spam, ham}
+#	These are the mail folder directories into which we move (sa.spam)
+#	or copy (sa.ham) mail that was misclassified.
+
+folders=$HOME/Spool
+sa-learn --spam $folders/sa/spam
+sa-learn --ham $folders/sa/ham
+	
+# ham is done _after_ spam so you can cancel something you hastily
+# misclassified.

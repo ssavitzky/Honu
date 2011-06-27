@@ -1,0 +1,2 @@
+#!/bin/sh
+exec /usr/bin/cpp-3.4 -traditional-cpp $*

@@ -1,0 +1,167 @@
+#! /usr/local/bin/perl
+#
+# Combine split uuencoded files into a single data stream with
+# e-mail garbage removed and pipe into uudecode. The uuencoded
+# files must be in the correct order on the command line - in
+# particular the first file must contain the "begin" line and
+# the last file must contain the "end" line.
+#
+# WARNING: this code relies on uuencode putting out all lines
+# of the form "M[61 ASCII characters]\n" for every line of the
+# file except the last few before the "end" line. If you come
+# across a uuencoded file that doesn't do this, you'll need to
+# modify the code to handle it.
+#
+# DISCLAIMER: You use this code at your own risk. Also, don't
+# take this is as a sterling example of Perl programming. Corrections
+# and improvements welcome. You may do whatever you like with this
+# code as long as you leave in some reminder of who the original
+# culprit^H^H^H^H^H^H^Hauthor was.
+#
+# Usage: uumerge filename [filename...]
+# Requires Perl 3.0 - my copy is at patchlevel 18
+#
+# Dave Mack csu@alembic.ACS.COM
+#
+# TODO: modify to allow more than one collection of files on
+#	command line.
+#
+# KNOWN BUGS: 
+#
+# If some bozo puts a line beginning with "M" in the body of one
+# of the intermediate/last chunks, uumerge will assume that uuencoded
+# part starts there.
+#
+# If the last chunk only contains the last two or three lines of
+# the uuencoded file (the ones that don't start with "M"), uumerge
+# will die.
+#
+# CHANGES
+#
+# PATCH 1:
+# It appears that some versions of uudecode are too stupid to skip
+# past the lines preceding the "begin" line, so feeding a one-part
+# uuencoded file to uumerge will bomb.
+#
+if ($#ARGV < 0 ) {
+	print "Usage: uumerge filename [filename...]\n";
+	exit 1;
+}
+
+$| = 1;
+# open a pipe into uudecode
+open(DECO,"|uudecode") || die "Can't pipe into uudecode\n";
+
+# if we only have one file, pump it straight into uudecode and die
+if ( $#ARGV == 0 ) {
+	open(FIRST,"<$ARGV[0]") || die "Can't open $ARGV[0] for input\n";
+
+	while ( <FIRST> ) {
+		# skip past everything before the "begin" line
+		next unless /^begin [0-9]/;
+		last;
+	}
+	die "$ARGV[0] doesn't contain \"begin\"\n" if eof(FIRST);
+	
+	print DECO $_; # the begin line
+
+	while ( <FIRST> ) {
+		print DECO $_ unless /^end/;
+		if ( /^end/ ) {
+			print DECO $_;
+			last;
+		}
+		die "$ARGV[0] doesn't contain \"end\"\n" if eof(FIRST);
+	}
+
+	# done with file
+	close(FIRST);
+	exit 0;
+}
+
+# process the first file - make sure we have a "begin" line
+
+open(FIRST,"<$ARGV[0]") || die "Can't open $ARGV[0] for input\n";
+
+while ( <FIRST> ) {
+	# skip past everything before the "begin" line
+	next unless /^begin [0-9]/;
+	last;
+}
+die "First file on command line doesn't contain \"begin\"\n" if eof(FIRST);
+	
+print DECO $_; # the begin line
+
+# the remaining "real" uuencoded lines in this file should begin with "M"
+while ( <FIRST> ) {
+	if ( /^M/ ) {
+		print DECO $_;
+	}
+	else {
+		last;
+	}
+}
+
+# done with the first file
+close(FIRST);
+
+# do all except the last file
+$maxindex = $#ARGV;
+$curr = 1;
+
+while ( $curr < $maxindex ) {
+	open(CURR,"<$ARGV[$curr]") || die "Can't open $ARGV[$curr]\n";
+	# skip the header junk
+	while ( <CURR> ) {
+		next unless /^$/;
+		last;
+	}
+	# at the body of the message - start looking for /^M/
+	while ( <CURR> ) {
+		next unless /^M/;
+		last;
+	}
+	die "$ARGV[$curr] isn't a uuencoded file\n" if eof(CURR);
+	# OK, we're at the start of the good stuff (probably)
+	print DECO $_;
+	while ( <CURR> ) {
+		if (/^M/) {
+			print DECO $_;
+		}
+		else {
+			last;
+		}
+	}
+	# done with current file
+	close(CURR);
+	$curr++;
+}
+
+# time to do the last file in the set
+$curr = $maxindex;
+open(CURR,"<$ARGV[$curr]") || die "Can't open $ARGV[$curr]\n";
+# skip the header junk
+while ( <CURR> ) {
+	next unless /^$/;
+	last;
+}
+# at the body of the message - start looking for /^M/
+while ( <CURR> ) {
+	next unless /^M/;
+	last;
+}
+# OK, we're at the start of the good stuff (probably)
+print DECO $_;
+while ( <CURR> ) {
+	print DECO $_ unless /^end/;
+	if ( /^end/ ) {
+		print DECO $_;
+		last;
+	}
+	die "Last file on command line doesn't contain \"end\"\n" if eof(CURR);
+}
+# done with final file
+close(CURR);
+# close the pipe to uudecode and exit
+close(DECO);
+exit(0);

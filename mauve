@@ -1,0 +1,3 @@
+#!/bin/sh
+host=`basename $0`
+ssh -l savitzky $host.rahul.net $*

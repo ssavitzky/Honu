@@ -1,0 +1,12 @@
+# xfonts 
+#
+#	convert Tex gf fonts to X bdf fonts.
+#	The suffix .118gf is wired-in, as are the paths etc.
+#
+#	uses gfto to make bdf fonts, then rcp's them to steve:x/fonts
+#
+foreach f (*.118gf)
+	echo $f
+	gfto -b ./$f > $f:r.bdf
+	rcp $f:r.bdf steve:x/fonts/$f:r.bdf
+end
