@@ -2,6 +2,10 @@
 #	Start a cascade of root xterms on localhost and the
 #	local servers.  May have to be edited from time to time
 #	Pings machines not guaranteed to be available.
+#
+#	With an argument, does not start the local xterm -- 
+#	this is used after a return from sleep, where the 
+#	remote connections are lost but the local one stays.
 
 xterm -geometry -4+52 -e ssh -lroot nova&
 
@@ -29,4 +33,4 @@ host=`hostname`
 ping -c 1 -q dantooine > /dev/null && \
     xterm -geometry +100-175 -e ssh -lroot dantooine&
 
-xterm -geometry +0-77 -e ssh -lroot localhost&
+[ ! -z $1 ] || xterm -geometry +0-77 -e ssh -lroot localhost&
