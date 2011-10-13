@@ -1,4 +1,4 @@
 # NOTE: master is ~steve/bin/crontab.nova
 8 3 * * * $HOME/bin/daily
-3,33 * * * * fetchmail | grep -v skipping | grep -v 'messages (' >> /home/steve/logs/fetchmail.log
+3,33 * * * * fetchmail | grep -v skipping | grep -v 'messages ' >> /home/steve/logs/fetchmail.log
 
