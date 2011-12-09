@@ -1,10 +1,10 @@
-if [ -f /local/starport/Config/etc/starport.bashrc ]; then
-  .  /local/starport/Config/etc/starport.bashrc
+### Steve's .bashrc
+
+#if [ -f /local/starport/Config/etc/starport.bashrc ]; then
+#  .  /local/starport/Config/etc/starport.bashrc
 #elif [ -f /usr/local/starport/Config/etc/bashrc ]; then
 #  source  /usr/local/starport/Config/etc/bashrc
-else
-  echo cannot find /local/starport/Config.
-fi
+#fi
 
 PRINTER=lp
 VISUAL=emacs
@@ -64,7 +64,7 @@ if [ "$PS1" ]; then
   PS1='(\h:$USER\W \!) '
 
   if [ "$TERM" = 'xterm' ]; then
-    PS1='\[\033]1;\h:\u\]\[\033]2;\h:$USER \w\]\[`rvideo`\]($USER \!) '
+    PS1='\[\033]1;\h:\u\]\[\033]2;\h:$USER \w\]($USER \!) '
   fi
 
   pwgrep () {
