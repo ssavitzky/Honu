@@ -46,7 +46,7 @@
 (load "uniquify" t)
 (load "thing" t)
 (load "crypt++" t)
-(or (load "/local/share/emacs/site-lisp/gin-mode" t) 
+(or (load "gin-mode" t) 
     (defun gin-mode-on () "no gin-mode: fake it"))
 
 ;;; Many html-helper-mode commands are useful in other modes
