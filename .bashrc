@@ -71,6 +71,11 @@ if [ "$PS1" ]; then
       grep -i $1 ~/Secret/pwds
   }
 
+  getmail () {
+      fetchmail | grep -v skipping | grep -v 'No mail' \
+	  >> /home/steve/logs/fetchmail.log
+  }
+
   # cd. cd's to the *real* current directory to make .. work properly
   cd.() {
       if [ "$1" != "" ]; then cd "$1"; fi
