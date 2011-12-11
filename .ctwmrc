@@ -1,0 +1,98 @@
+### Steve's personal .ctwmrc
+
+nodefaults
+
+### Anything we want at the top of a menu goes here.
+
+menu "windowOps" {
+  "Pin"			f.pin
+  "Upper right"		f.moveresize "-4+52"
+  "Upper left"		f.moveresize "+72+169"
+  "Lower left"		f.moveresize "+0-77"
+  "Lower right"		f.moveresize "-4-77"
+  "Autoraise"		f.autoraise
+  "Delete"		f.delete
+}
+
+menu "root2" {
+  "Pin"			f.pin
+}
+
+menu "root1" {
+  "Pin"			f.pin
+  "Debian"		f.menu "/Debian"
+}
+
+# May get annoying, since it slaps new windows on top of old ones;
+# probably includes popups.
+WindowGeometries {
+  "Mozilla Firefox" "-0+52"
+}
+
+### Here are the include files:
+#	Note that if an include file doesn't exist it just gets ignored.
+#	We use this for the Debian menus (/etc/X11/ctwm/menudefs.hook)
+#
+include(/local/starport/Config/X11/twm/starport.ctwmrc)
+include(/etc/X11/ctwm/menudefs.hook)
+#
+### End of include files.  Menu items added here go at the bottom.
+
+NoTitle {
+  "xdialdctl"
+}
+
+menu "root1" {
+  "XTerms"	f.title
+  "Upper right"		! "xterm -geometry -4+52&"
+  "Upper left"		! "xterm -geometry +72+169&"
+  "Lower left"		! "xterm -geometry +0-77&"
+  "Lower right"		! "xterm -geometry -4-77&"
+
+}
+
+menu "fun-stuff" {
+  "Squeak"		! "(cd ~/squeak; squeak *.image)&"
+}
+
+menu "windowOps" {
+  "Position"		f.title
+  "Upper right"		f.moveresize "-3+52"
+  "Upper left"		f.moveresize "+72+108"
+  "Lower left"		f.moveresize "+0-57"
+  "Middle"		f.moveresize "+175+265"
+}
+
+"KP_Prior"	=     :   t|f|i : f.moveresize "-3+52"
+"KP_Home"	=     :   t|f|i : f.moveresize "+0+108"
+
+menu "rxterms" {
+"Xterm on..."		f.title
+"yellow" ("Black":"yellow") !"xon yellow.crc.ricoh.com -access xterm -name xterm-r&"
+"blackroot" ("Black":"azure")  !"xon blackroot.crc.ricoh.com -access xterm -name xterm-r&"
+"gelion"  ("Black":"ivory")  !"xon gelion.crc.ricoh.com  -access xterm -name xterm-r&"
+}
+
+menu "redits" {
+"Edit on..."		f.title
+"yellow"	("Black":"yellow")! "xon yellow.crc.ricoh.com -access emacs -name e1&"
+"blackroot"  	("Black":"azure") ! "xon blackroot.crc.ricoh.com -access emacs -name e1&"
+"congo" 	("Black":"wheat") ! "xon congo.crc.ricoh.com -access emacs -name e1&"
+"gelion" 	("Black":"ivory") ! "xon gelion.crc.ricoh.com  -access emacs -name e1&"
+}
+
+menu "rxloads" {
+"Xload on..."		f.title
+"yellow" ("Black":"yellow")	! "xon yellow.crc.ricoh.com -access xload -name xload-r&"
+"blackroot" ("Black":"azure")	! "xon blackroot.crc.ricoh.com -access xload -name xload-r&"
+"congo" ("Black":"wheat")	! "xon congo.crc.ricoh.com -access xload -name xload-r&"
+"gelion"  ("Black":"ivory")	! "xon gelion.crc.ricoh.com  -access xload -name xload-r&"
+}
+
+
+
+menu "images" {
+"Cthulhu"	! "xsetbg  $HOME/x/pixmaps/cthulhu-flip.gif&"
+"Rose"		! "xsetbg  $HOME/x/pixmaps/amethyst_rose_big.gif&"
+}
+
