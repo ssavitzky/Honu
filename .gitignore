@@ -1,0 +1,25 @@
+# Top-level .gitignore file
+
+*.[oa]
+*~
+*.bak
+*.BAK
+\#*
+.#*
+tags 
+TAGS 
+CVS
+,*
+
+#For reference, here's the list for rsync --cvs-exclude:
+# RCS  SCCS  CVS  CVS.adm   RCSLOG   cvslog.*   tags   TAGS
+# .make.state  .nse_depinfo *~ #* .#* ,* _$* *$ *.old *.bak
+# *.BAK *.orig *.rej .del-* *.a *.olb *.o *.obj *.so  *.exe
+$ *.Z *.elc *.ln core .svn/
+
+# ignore .draft, which is a symlink to the entry under construction
+.draft
+
+# ignore Old, which is where we'll put all the stuff that *used* to be in
+# Private. 
+Old
