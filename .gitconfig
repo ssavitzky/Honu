@@ -1,3 +1,17 @@
 [user]
 	name = Steve Savitzky
 	email = steve@thestarport.org
+
+[branch]
+	autosetupmerge = true
+[advice]
+	pushNonFastForward = false
+
+[alias]
+	co = checkout
+
+[color]
+	ui = auto
+	diff = auto
+	status = auto
+	branch = auto
