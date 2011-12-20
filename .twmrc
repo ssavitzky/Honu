@@ -1,1 +1,683 @@
-/users/starport/Config/X11/twm/starport.twmrc
+#################### S T A R P O R T . T W M R C #########################
+# $Id: starport.twmrc,v 1.12 2010-07-11 16:57:05 steve Exp $
+# 	Part of the Grand Central Starport System Configuration Kit   
+##########################################################################
+#
+# $XConsortium: system.twmrc,v 1.7 89/12/01 11:23:47 jim Exp $
+# Heavily modified by Steve Savitzky for use at ARC, then Ricoh CRC.
+# Further modified at Grand Central Starport for use as system.twmrc
+# Also included from starport.ctwmrc
+
+NoDefaults
+NoGrabServer
+#DecorateTransients
+TitleFont "-adobe-helvetica-bold-r-normal--*-140-*-*-*-*-*-*"
+ResizeFont "-adobe-helvetica-bold-r-normal--*-140-*-*-*-*-*-*"
+MenuFont "-adobe-helvetica-bold-r-normal--*-140-*-*-*-*-*-*"
+IconFont "-adobe-helvetica-bold-o-normal--*-140-*-*-*-*-*-*"
+IconManagerFont "-adobe-helvetica-bold-r-normal--*-120-*-*-*"
+#ClientBorderWidth
+# turning ClientBorderWidth off makes InterViews and Motif apps look better.
+
+TitlePadding 2
+BorderWidth 3
+Zoom
+AutoRelativeResize
+OpaqueMove
+UsePPosition "nonzero"
+#NoTitleHighlight
+NoTitleFocus
+Color {
+    # Was forestGreen and grey85 for everything.  
+    #   forestGreen and black looks good but doesn't print.
+    #   This looks good with a default of lightSteelBlue1 for windows.
+    BorderColor		     "steelblue4"
+    DefaultBackground	     "lightSteelBlue"
+    DefaultForeground	     "black"
+    TitleBackground	     "lightSteelBlue"
+    TitleForeground	     "black"
+    MenuBackground	     "lightSteelBlue"
+    MenuForeground	     "black"
+    MenuTitleBackground	     "steelBlue"
+    MenuTitleForeground	     "white"
+    IconBackground	     "lightSteelBlue"
+    IconForeground	     "black"
+    IconBorderColor	     "black"
+    IconManagerBackground    "lightSteelBlue"
+    IconManagerForeground    "black"
+}
+
+Monochrome {
+    MenuBackground		"white"
+    MenuForeground		"black"
+    MenuTitleBackground		"black"
+    MenuTitleForeground		"white"
+    MenuShadowColor		"black"
+}
+
+Cursors {
+	Frame	"arrow"
+	Title	"arrow"
+	Icon	"icon"
+	IconMgr	"icon"
+}
+
+########################################################################
+#
+#		  W I N D O W S   A N D   I C O N S
+#
+
+AutoRaise{
+	"XTerm" "NXTerm" "xemacs" "emacs" "gnus" "vm" "Emacs" "PostItNote" 
+	"Manual Page" "xconsole" "XString" "XClipboard" "XCutsel"
+	"XCal" "XCalendar" "memo" "Tove" 
+	"Xpdf" "Totem" "Calendar" "Reminder" 
+	"Icon Manager" "WorkSpaceManager" "RealPlayer" "xmms" "xamp"
+	"Mosaic" "Chimera" "Netscape*" "Mozilla*" "Galeon*" "tkWWW"
+	"Dillo*" "Firefox*" "Firefox" "Pidgin" "Lt-pidgin" "pidgin"
+	"Epiphany" "Iceweasel" "Chrome"
+	"VNC*" 
+}
+NoTitle {
+  "XLoad" "XClock" "oclock" "DXclock" "dclock" "console" "xdaliclock"
+  "mailbox" "xeyes" "xstring" "xlogo" "XBiff" "logout" "xpostit"
+  "ncube" "xgif" "xloadimage" "XCutsel" "xcal" "CHROMACHRON" "Ari"
+  "Icon Manager"  "WorkSpaceManager" "panel" "mc" "gmc" "gkrellm"
+  "gnome-panel" "xmms" "XClipboard" 
+}
+DontSqueezeTitle { "XMcp" "XCal" "Xdu" "console"}
+SqueezeTitle {
+# Uncomment for left-justified edit windows. --------------------\
+#    "XTerm"		right	0 0
+#    "XPostit"		right	0 0
+#    "Xman"		right	0 0
+# ---------------------------------------------------------------/
+
+    "xv load"		right	0 0
+    "Chimera"		right	0 0
+    "Mosaic"		right	0 0
+    "Netscape*"		right	0 0
+    "Dillo*"		right	0 0
+    "Mozilla*"		right	0 0
+    "Iceweasel"		right	0 0
+    "Firefox"		right	0 0
+    "Firefox*"		right	0 0
+    "Galeon*"		right	0 0
+    "Epiphany*"		right	0 0
+    "Chrome"		right	0 0
+    "Google-chrome"	right	0 0
+    "tkWWW"		right	0 0
+    "w3"		right	0 0
+    # Versions of Emacs with different tab positions:
+    #	 At work I keep vm running all the time; most people around here
+    #	 run mail and news from one copy of emacs.  Note that some people 
+    #	 will keep Mosaic overlapped with emacs.
+    "Emacs"		left	0 8
+    "Manual*"		left	2 8
+    "e1"		left	1 8
+    "root"		left	1 8
+    "www"		left	1 8
+#    "w3"		left	1 8
+    "gnus"		left	1 8
+    "vm"		left	0 0
+#    "e1"		left	1 4
+#    "e2"		left	1 2
+#    "e3"		left	3 4
+#    "w3"		left	4 6
+#    "gnus"		left	5 6
+#    "vm"		right	0 0
+}
+
+#
+# Icon handling
+#
+#IconRegion "350x30+30+0" North West 30 30
+
+StartIconified {"Manual Page"}
+RestartPreviousState
+ForceIcons
+WarpCursor
+
+ShowIconManager
+SortIconManager
+IconifyByUnmapping
+IconManagerDontShow { 
+  "xmcp" "xeyes" 
+  "Clock" "oclock" "XClock" "dclock" "XLoad" "xdaliclock" "gkrellm"
+  "xstring" "XCal" "CHROMACHRON" "xpostit" "xbiff" "dxsession"
+  "Ari" "console" "xconsole" "ncube" "sunclock" "DXclock"  "mc" "gmc"
+  "panel" "gnome-panel" "Icon Manager" "XClipboard" 
+}
+DontIconifyByUnmapping {
+  "xmcp" "xeyes"
+  "Clock" "oclock" "XClock" "dclock" "DXclock" "XLoad" "xdaliclock" "gkrellm"
+  "xstring" "XCal" "CHROMACHRON" "xpostit" "xbiff" "dxsession"
+  "Ari" "console" "xconsole" "ncube" "sunclock" "mc" "gmc"
+  "panel" "gnome-panel" "Icon Manager"  "WorkSpaceManager" 
+}
+
+# Change + to - here ----------v for left-justified edit windows.
+IconManagerGeometry	"=600x5+55+52"  5	# "=150x5+0+78"	1 # was +250
+IconManagers {
+  "XCalendar"		"=105x5+155+52" 1
+  "Calendar"		"=50x5+0+52"   1
+  "XTerm"		"=800x5+70-30"  8       # "=105x5+155+78" 1 #  -155+155
+  "Emacs"		"=600x5-70-30"  5       # "=105x5+265+78" 1
+#  "Emacs"		"=105x5+155+200" 1
+  "XPostit"		"=105x5+0+200"  1
+#  "xv"			"=120x5+0+450"	1
+}
+
+########################################################################
+#
+# 			 B I N D I N G S
+#
+
+#
+# Define some useful functions for motion-based actions.
+#	 note that deiconify-warp doesn't really work: we set WarpCursor
+#
+MoveDelta 3
+Function "move-or-lower"   { f.move f.deltastop f.lower }
+Function "move-or-raise"   { f.move f.deltastop f.raise }
+Function "move-or-iconify" { f.move f.deltastop f.iconify }
+#
+# Icon manager functions
+#
+Function "deiconify-raise" { f.deiconify f.raise }
+Function "deiconify-warp"  { f.deiconify f.raise }
+Function "deiconify-only"  { f.deiconify f.warptoiconmgr "" }
+Function "iconify-only"    { f.iconify f.warptoiconmgr "" }
+Function "iconmgr-up"	   { f.warptoiconmgr "" f.backiconmgr }
+Function "iconmgr-down"	   { f.warptoiconmgr "" f.forwiconmgr }
+Function "iconify-up"	   { f.warptoiconmgr "" f.iconify f.backiconmgr }
+Function "iconify-down"	   { f.warptoiconmgr "" f.iconify f.forwiconmgr }
+#
+# Other functions
+#
+Function "print-win"	  { ! "xwd -frame | xpr -device ps | lpr&" }
+Function "run-emacs"	  { ! "/usr/bin/emacs&" }
+Function "run-gnus"	  { ! "emacs -name gnus -f gnus&" }
+Function "run-vm"	  { ! "emacs -name vm -f vm&" }
+Function "run-w3"	  { ! "/opt/mozilla/mozilla&" }
+
+#  left in commented out to show how to make title buttons if needed.
+#LeftTitleButton ":iconify" = f.iconify
+
+######################################################################
+#
+# Mouse Bindings
+#    In general, the shifted bindings are also available as 
+#    nested menus from within the non-shifted binding's menu, if any.
+#    Meta is required for use in windows.
+
+# root:		 normal		meta
+#
+#    Btn 1:	 pgm menus     	misc pgms
+#    Btn 2:	 session ops	fun pgms
+#    Btn 3:	 window ops	re-init pgms
+
+Button1		 =   : root : f.menu "root1"
+Button2		 =   : root : f.menu "root2"
+Button3		 =   : root : f.menu "windowOps"
+
+Button1 	 = m : root : f.menu "remote"
+#Button2 	 = m : root : f.menu "fun-stuff"
+#Button3 	 = m : root : f.menu "re-init"
+
+# window:	click		drag		shifted
+#
+#    Btn 1: 	iconify		move		lower
+#    Btn 2:	raise		resize		zoom menu
+#    Btn 3:	identify	ops menu	props menu
+
+# iconmgr:	click		drag		shifted
+#
+#    Btn 1: 	iconify-warp	...		lower
+#    Btn 2:	iconify-only	...		deiconify-only
+#    Btn 3:	identify	ops menu	props menu
+ 
+Button1 	= m|c  : w|t|f|i   : f.function "move-or-iconify"
+Button1		=     :   t|f|i   : f.function "move-or-iconify"
+Button1		=     :         m : f.iconify
+#Button1 	= m|s : w|t|f|i|m : f.lower
+#Button1 	=   s :   t|f|i|m : f.lower
+
+Button2		= m|c : w|t|f     : f.resize
+Button2		=     :   t|f     : f.resize
+Button2		=     :       i   : f.function "deiconify-warp"
+Button2		=     :         m : f.function "iconify-only"
+#Button2 	= m|s : w|t|f     : f.menu "zoom"
+#Button2 	=   s :   t|f     : f.menu "zoom"
+#Button2 	=   s :         m : f.function "deiconify-only"
+
+Button3		= m|c : w|t|f     : f.menu "windowOps"
+Button3		=     :   t|f     : f.menu "windowOps"
+Button3 	=     :       i|m : f.menu "iconOps"
+#Button3 	= m|s : w|t|f     : f.menu "windowProps"
+#Button3 	=   s :   t|f     : f.menu "windowProps"
+
+
+######################################################################
+#
+# Key Pad bindings: require meta inside window
+#     KP_+	deiconify / warp to icon mgr	(KP-, on DECs)
+#     KP_-	iconify (toggle)
+#     KP_Enter	fullzoom (toggle)
+#     KP_.	warp to icon mgr
+#     PgUp	iconify+up;   (M)raise 		root: circleup
+#     PgDn	iconify+down; (M)lower		root: circledown
+#     s/PgUp	autoraise (toggle)
+#     scrlLock	autoraise (toggle)
+
+# F29 = KP_9 = Prior (PgUp)
+# F35 = KP_3 = Next  (PgDn)
+# F23 = Scroll_Lock
+
+"DRemove"	= m   : w|t|f|i|m : f.delete
+"F23"		= m   : w|t|f|i|m : f.autoraise
+"Scroll_Lock"	= m   : w|t|f|i|m : f.autoraise
+"Scroll_Lock"	=     :   t|f|i|m : f.autoraise
+
+"KP_Add"	= m   : w|t|f     : f.warptoiconmgr ""
+"KP_Add"	=     :       i   : f.function "deiconify-raise"
+"KP_Add"	=     :   t|f     : f.warptoiconmgr ""
+"KP_Add"	=     :         m : f.function "deiconify-only"
+"KP_Separator"	= m   : w|t|f     : f.warptoiconmgr ""
+"KP_Separator"	=     :       i   : f.function "deiconify-raise"
+"KP_Separator"	=     :   t|f     : f.warptoiconmgr ""
+"KP_Separator"	=     :         m : f.function "deiconify-only"
+
+"KP_Subtract"	= m   : w|t|f|i|m : f.iconify
+"KP_Subtract"	=     :   t|f|i|m : f.iconify
+
+"KP_Enter"	= m   : w|t|f|i|m : f.fullzoom
+"KP_Enter"	=     :   t|f|i|m : f.fullzoom
+
+"KP_Decimal"	= m   : w|t|f|i|m : f.warptoiconmgr ""
+"KP_Decimal"	=     :   t|f|i|m : f.warptoiconmgr ""
+
+"Prior"		= m   : w|t|f|i|m : f.raise
+"Prior"		=     :   t|f|i|m : f.function "iconify-up"
+"Prior"		=   s :   t|f|i|m : f.autoraise
+"Prior"		= m|s : w|t|f|i|m : f.autoraise
+"F29"		=     :   t|f|i|m : f.function "iconify-up"
+"F29"		= m   : w|t|f|i|m : f.raise
+"F29"		=   s :   t|f|i|m : f.autoraise
+"F29"		= m|s : w|t|f|i|m : f.autoraise
+
+"Next"		= m   : w|t|f|i|m : f.lower
+"Next"		=     :   t|f|i|m : f.function "iconify-down"
+"Next"		= m|s : w|t|f|i|m : f.autoraise
+"F35"		=     :   t|f|i|m : f.function "iconify-down"
+"F35"		= m   : w|t|f|i|m : f.lower
+"F35"		= m|s : w|t|f|i|m : f.autoraise
+
+"KP_Subtract"	= m|s : w|t|f|i|m : f.delete
+"KP_Subtract"	=   s :   t|f|i|m : f.delete
+
+
+######################################################################
+#
+# Key bindings
+#
+#	   Control keys have Emacs-like functions
+#	   Meta keys usually start programs
+
+#
+# Key bindings in the Root
+#
+"L"		=  c  : root : f.refresh
+"L"		= m   : root : ! "(sleep 1; xlock -display :0.0)&"
+"P"		= m   : root : f.function "print-win"
+"p"		= m   : root : f.function "print-win"
+"S"		= m   : root : ! "(sleep 1; xscreensaver-command -next)&"
+"s"		= m   : root : ! "(sleep 1; xscreensaver-command -next)&"
+"V"		=  c  : root : f.circledown
+"V"		= m   : root : f.circleup
+"Y"		= m   : root : ! "xcutsel&"
+"N"		=  c  : root : f.nexticonmgr
+
+"E"		= m   : root : f.function "run-emacs"
+"E"		= m|s : root : ! "epoch&"
+"M"		= m   : root : ! "xman&"
+"M"		= m|s : root : f.function "run-vm"
+"m"		= m|s : root : f.function "run-vm"
+"N"		= m|s : root : f.function "run-gnus"
+"n"		= m|s : root : f.function "run-gnus"
+"T"		= m   : root : ! "xterm&"
+"T"		= m|s : root : ! "xterm -geometry -20-20&"
+"W"		= m|s : root : f.function "run-w3"
+"w"		= m|s : root : f.function "run-w3"
+
+"F29"		=     : root : f.circleup
+"Prior"		=     : root : f.circleup
+"F35"		=     : root : f.circledown
+"Next"		=     : root : f.circledown
+
+#
+# Key bindings in icons, title bars, frames, and icon managers
+#
+#	These are not defined in windows, even with meta,
+#	because they conflict with Emacs commands.
+#
+"D"		= c   : t|f|i|m : f.delete
+"Q"		= c   : t|f|i|m : f.delete
+"I"		= c   : t|f|i|m : f.iconify
+"Tab"		=     : t|f|i|m : f.iconify
+"K"		= c   : t|f|i|m : f.destroy
+"L"		= c   : t|f|i|m : f.winrefresh
+"P"		=   m : t|f|i|m : f.function "print-win"
+"V"		= c   : t|f|i|m : f.lower
+"V"		=   m : t|f|i|m : f.raise
+"Y"		=   m : t|f|i|m : ! "xcutsel&"
+"equal"		= c   : t|f|i|m : f.identify
+"equal"		=     : t|f|i   : f.identify
+"question"	= c|s : t|f|i|m : f.identify
+"question"	=   s : t|f|i   : f.identify
+
+#     ^P/Up	prev icon manager entry
+#     ^N/Down	next icon manager entry
+#     ^B/Left	prev icon manager
+#     ^F/Right	next icon manager
+
+"Right"		=     : t|f|i   : f.warptoiconmgr ""
+"Right"		=     :       m : f.nexticonmgr
+"F"		= c   : t|f|i   : f.warptoiconmgr ""
+"F"		= c   :       m : f.nexticonmgr
+
+"Left"		=     : t|f|i   : f.warptoiconmgr ""
+"Left"		=     :       m : f.previconmgr
+"B"		= c   : t|f|i   : f.warptoiconmgr ""
+"B"		= c   :       m : f.previconmgr
+
+"Up"		=     : t|f|i|m : f.function "iconmgr-up"
+"P"		= c   : t|f|i|m : f.function "iconmgr-up"
+
+"Down"		=     : t|f|i|m : f.function "iconmgr-down"
+"N"		= c   : t|f|i|m : f.function "iconmgr-down"
+
+
+######################################################################
+###
+### Menus
+###
+######################################################################
+
+
+####################################################################
+#
+# Right mouse button on root and window titles
+#
+
+# Window Operations and submenus.
+
+menu "windowOps" {
+"Window Ops"	f.title
+"Identify"		f.identify
+"Info"			! "xterm -name sh -e sh -c 'xwininfo | less'&"
+"Props"			! "xterm -name sh -e sh -c 'xprop | less'&"
+"Autoraise"		f.autoraise
+"Lower"			f.lower
+"Refresh"		f.winrefresh
+"Unfocus"		f.unfocus
+"Zoom"			f.menu "zoom"
+"Delete"		f.delete
+""			f.title
+"Kill"			f.destroy
+}
+
+menu "windowProps" {
+"Identify"		f.identify
+"Iconify"		f.iconify
+"Autoraise"		f.autoraise
+"Raise"			f.raise
+"Lower"			f.lower
+"Resize"		f.resize
+"Move"			f.move
+"Focus"			f.focus
+"Unfocus"		f.unfocus
+}
+
+menu "zoom" {
+"full"			f.fullzoom
+"top"			f.topzoom
+"bottom"		f.bottomzoom
+"left"			f.leftzoom
+"right"			f.rightzoom
+"vert"			f.zoom
+"horiz"			f.horizoom
+}
+
+menu "iconOps" {
+"Identify"		f.identify
+"WindowProps"		f.menu "windowProps"
+"UnIconify"		f.deiconify
+"Delete"		f.delete
+""			f.title
+"Kill"			f.destroy
+}
+
+####################################################################
+#
+# Middle mouse button
+#
+menu "root2"
+{
+"Display"	f.title
+"Refresh Screen (C-l)"	! "xrefresh -root"
+"Lock screen    (M-l)"	! "(sleep 1; xscreensaver-command -lock)&"
+"Screen Saver   (M-s)"	! "xscreensaver-demo&"
+"Print window"		f.function "print-win"
+"Desktop..."		! "xfm&"
+#"high color..."	! "startx /usr/bin/X11/enlightenment -- :1 -bpp 16&"
+#"Desktop..."		! "xfilemanager&"
+"X Resources..."	f.menu "resources"
+"All Windows..."	f.menu "TwmWindows"
+
+"Defaults"	f.title
+"Backgrounds..."	f.menu "backgrounds"
+"Mouse settings..."	f.menu "mouse settings"
+"Reload XDefaults"	! "xrdb $HOME/.Xdefaults&"
+"Restart Window Mgr"	f.restart
+""		f.title
+"Exit Window Mgr"	f.quit
+"Log out"		f.menu "logout"
+}
+
+menu "logout" {
+"Log out?"    		f.title
+"yes"			! "killall xterm&"
+}
+
+menu "resources" {
+"Resources"		f.title
+"Magnify"		! "xmag -geometry +650+0&"
+"Cutsel"		! "xcutsel&"
+"Editres"		! "editres&"
+"XFontsel"		! "xfontsel&"
+"Colors"		! "xcmap&"
+}
+
+menu "backgrounds" {
+"Background"	   f.title
+"Default"		! "xsetroot -default"
+"White"			! "xsetroot -solid white"
+"Black"			! "xsetroot -solid black"
+"Pixmaps..."		! "xbmbrowser /usr/lib/X11/twm&"
+"Images..."		f.menu "images"
+"...browse"		! "xv -root /usr/local/Images/* &"
+"Moon"			! "killall xearth xphoon; xphoon -t 300 &"
+"Earth (sun)"		! "killall xearth xphoon; xearth -label -grid &"
+"Earth (here)"		! "killall xearth xphoon; xearth -label -grid -pos 'fixed 32 -122' &"
+"Mandelbear"		! "nice mandelbear -cubic -root&"
+}
+
+menu "images" {
+# At some point these need to be moved to /usr/local/Images ...
+"Dragon"      ! "xsetbg -fullscreen -colors 128 /c/windows/dragonbg.bmp"
+"Shark"	      ! "xsetbg -fullscreen -colors 128 /usr/local/src/logos/3d_logo_1024x768.ppm"
+"GNU Gen"     ! "xsetbg -fullscreen -colors 128 /usr/local/src/logos/linux-povlogo.gif"
+}
+
+menu "mouse settings" {
+"Mouse Settings:"			f.title
+"  Very Fast"				! "xset m 7 10 &"
+"  Faster"				! "xset m 5 10 &"
+"  Normal (Fast)"			! "xset m 3 10 &"
+"  System Default (Un-Accelerated)"	! "xset m default &"
+"  Glacial"				! "xset m 0 10 &"
+}
+
+####################################################################
+#
+# Left mouse button
+#
+menu "root1"
+{
+"Programs"	f.title
+"Xterm (M-T)"		! "xterm&"
+"Color Xterm"		! "color_xterm&"
+"Xload"			! "xload&"
+"Emacs (M-E)"		! "emacs&"
+"Web Browser (M-W)"	! "/opt/mozilla/mozilla&"
+"File Manager"		! "nautilus --no-desktop --sm-disable&"
+"(and more!)"		f.title
+"Terminals..."		f.menu "xterms"
+"Browsers..."		f.menu "browsers"
+"Editors..."		f.menu "editors"
+"Comm Pgms..."		f.menu "comm-pgms"
+"Misc Pgms..."		f.menu "misc-pgms"
+"Fun Pgms..."		f.menu "fun-stuff"
+"Desktop Pgms..."	f.menu "desktop-pgms"
+}
+
+
+menu "browsers" {
+"Image & File Browsers"	f.title
+"XV"			! "xv&"
+"XbmBrowser"		! "xbmbrowser /usr/lib/X11/twm&"
+"Nautilus"		! "nautilus --no-desktop --sm-disable&"
+"Web Browsers"		f.title
+"Mozilla"		! "/opt/mozilla/mozilla&"
+"Galeon"		! "galeon&"
+"Netscape4"		! "netscape&"
+"Opera"			! "/opt/opera/opera&"
+"Emacs w3-mode"		! "emacs -name w3 -f w3&"
+"LEmacs w3-mode"	! "lemacs -name w3 -f w3&"
+"News & Mail Readers"	f.title
+"News: gnus (M-N  )"	! "xon central -access emacs -name gnus -f gnus&"
+"Mail: vm (M-M  )"	! "xon central -access emacs -name vm -f vm&'"
+"News: xrn"		! "xon central -access xrn&"
+"Mail: xmh"		! "xon central -access xmh&"
+}
+
+menu "editors" {
+"Text Editors"	f.title
+"Emacs (M-e)"		! "emacs&"
+"Lucid Emacs (M-E)"	! "xemacs&"
+"Doc (WYSIWYG TeX)"	! "doc&"
+"Graphics Editors" f.title
+"XFig"			! "xfig&"
+"...Portrait"		! "xfig -P&"
+"XPaint"		! "xpaint &"
+"the Gimp"		! "gimp &"
+"Idraw"			! "idraw &"
+"Tgif"			! "tgif&"
+}
+
+menu "comm-pgms" {
+"Comm Programs"	 f.title
+"Internet"	 	! "xterm -e internet&"
+"Seyon"			! "seyon&"
+"Kermit"		! "xterm -e kermit&"
+}
+
+menu "misc-pgms" {
+"Programs"	 f.title
+"Calculator"		! "xcalc -name calc -stipple&"
+"...RPN"		! "xcalc -name calc -stipple -rpn&"
+"Spreadsheet"		! "xspread &"
+}
+
+menu "desktop-pgms" {
+"Desktop"		f.title
+"Manual"		! "xman&"
+"XBiff"			! "xbiff&"
+"Clock (A)"		! "xclock -name xclock-a&"
+"Clock (D)"		! "xclock -name xclock-d&"
+"Calendar"		! "xcalendar -iconic -name thisMonth&"
+"XCal"			! "xcal&"
+"XLoad"			! "xload -geometry 100x48-157+0&"
+"Xpostit"		! "xpostit&"
+"News: gnus (M-N  )"	f.function "run-gnus"
+"Mail: vm (M-M  )"	! "emacs -name vm -f vm&'"
+"Today's Notice"	! "x_notify&"
+}
+
+menu "fun-stuff" {
+"Fun Stuff"	 	f.title
+"Fractint"	! "xterm -T XFractint -e sh -c 'cd $XSRC/net/xfractint; xfractint'&"
+"Fractint -pr"	! "xterm -T XFractint -e sh -c 'cd $XSRC/net/xfractint; xfractint -private'&"
+"Ncube"		! "nice ncube -l -d5 -n1 -color -rv&"
+# "Neko"		! "oneko&"
+"Chess"		! "xboard&"
+"Eyes"		! "nice xeyes -geometry 71x54+175+0&"
+"Pipe Dreams"	! "xpipeman&"
+"Pool"		! "xpool&"
+# "Sunclock"	! "sunclock -iconic -geometry +0+50 -icongeometry -0+300&"
+"Solitaire"	! "xsol&"
+"Seahaven"	! "seahaven&"
+"Tetris"	! "xtetris&"
+"Nethack"	! "xterm -name nethack -e /usr/games/nethack&"
+"Mahjongg"	! "xmahjongg&"
+"Doom"		! "xdoom -3&"
+}
+
+
+######################################################################
+#
+# The menus that invoke programs remotely
+#   use the same color code as the corresponding hosts.
+#
+menu "remote" {
+"Remote"	f.title
+"Xterms..."		f.menu "rxterms"
+"Xloads..."		f.menu "rxloads"
+"Emacs..."		f.menu "redits"
+}
+
+menu "xterms" {
+"Xterm"			f.title
+"local (M-T)"		! "xterm&"
+"small (M-t)"		! "xterm -name xterm-s&"
+"for root"		! "xterm -name root -e su&"
+"console"		! "CONSOLE=1;export CONSOLE;xterm -C -name console&"
+"login"			! "xterm -name login -ls&"
+"pc graphics"		! "xterm -fn -misc-fixed-medium-r-normal-ibmpc-14-120-75-75-c-80-iso8859-1&"
+}
+
+menu "rxterms" {
+"Xterm on..."		f.title
+"Mos Eisley"   ("Black":"#f0f0e0") !"xon moseisley -access xterm -name xterm-r&"
+"Nova"		("Black":"#f0f0ff") !"xon nova -access xterm -name xterm-r&"
+"Central"	("Black":"#f0f0ff") !"xon central -access xterm -name xterm-r&"
+}
+
+menu "redits" {
+"Edit on..."		f.title
+"Mos Eisley"    ("Black":"#f0f0e0") !"xon moseisley -access emacs -name e1&"
+"Nova"  	("Black":"#f0f0ff") !"xon nova -access emacs -name e1&"
+"Central"	("Black":"#f0f0ff") !"xon central -access emacs -name e1&"
+}
+
+menu "rxloads" {
+"Xload on..."		f.title
+"Mos Eisley"   ("Black":"#f0f0e0") !"xon moseisley -access xload -name xload-r&"
+"Grand Central"	("Black":"#f0f0ff") !"xon central -access xload -name xload-r&"
+}
+
+
+# Local Variables:
+# fill-column: 79
+# End:
