@@ -103,7 +103,7 @@ if [ "$PS1" ]; then
   alias lr='ls -aRF --color=auto'
   alias l='ls -aCF --color=auto'
   alias todo='emacs ~/Private/Journals/Dog/to.do'
-  alias chrome="google-chrome >& /dev/null"
+  alias chrome="google-chrome --allow-outdated-plugins >& /dev/null"
   alias gnus="emacs -f gnus -name gnus"
   alias pidgin="pidgin -f"
   alias rwbak="ssh root@localhost mount -oremount,rw /media/bak"
