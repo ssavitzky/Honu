@@ -37,11 +37,11 @@ uploads() {
     if $sshOK && [ -d /vv/users ]; then
 	if [ -x /vv/push-offsite ]; then /vv/push-offsite -v 2>&1; fi
 	for u in lgf steve tg; do
-	    echo pushing /users/$u/Lyrics
+	    echo -n from $u/Lyrics: " "
 	    (cd /users/$u/Lyrics && git push) 2>&1
 	done
 	for d in Tools Config; do 
-	    echo pushing /users/steve/$d
+	    echo -n from steve/$d: " "
 	    (cd /users/steve/$d && git push) 2>&1
 	done
     fi
