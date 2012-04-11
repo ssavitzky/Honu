@@ -7,8 +7,8 @@
 #fi
 
 PRINTER=lp
-VISUAL=emacs
-EDITOR=emacs
+VISUAL="emacs -nw"
+EDITOR="emacs -nw"
 BROWSER=google-chrome:iceweasel:firefox
 export VISUAL EDITOR BROWSER
 
