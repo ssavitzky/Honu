@@ -1,0 +1,49 @@
+! .Xdefaults for Steve Savitzky
+!
+
+! Merge with system defaults.  After all, I set them up.
+
+#if 1
+#define EMACS21 1
+#include "/users/starport/Config/X11/Xdefaults"
+#else
+#include ".Xdefaults.crc"
+#endif
+
+! default background -- has been #e0e0f0, grey50, grey75, white, lightsteelblue
+!#define BG #BBBBBB
+#define BG white
+
+! Now my private overrides
+
+*background:			BG
+XTerm*background:		BG
+
+! Terminal-mode apps are designed to look better on a black bg:
+XTerm*VT100.background:		black
+XTerm*VT100.foreground:		white
+
+
+XTerm*eightBitInput:		false
+
+XTerm*VT100.Translations:	#override\
+	<KeyPress> KP_Add:	  set-vt-font(d)set-scrollbar(on)\n\
+	<KeyPress> KP_Separator:  set-vt-font(d)set-scrollbar(on)\n\
+	<KeyPress> KP_Subtract:	  set-vt-font(1)set-scrollbar(off)\n\
+	<KeyPress> KP_1:	  set-vt-font(1)set-scrollbar(on)\n\
+	<KeyPress> KP_2:	  set-vt-font(2)set-scrollbar(on)\n\
+	<KeyPress> KP_3:	  set-vt-font(3)set-scrollbar(on)\n\
+	<KeyPress> KP_4:	  set-vt-font(4)set-scrollbar(on)\n\
+	<KeyPress> KP_5:	  set-vt-font(5)set-scrollbar(on)\n\
+	<KeyPress> KP_6:	  set-vt-font(6)set-scrollbar(on)
+
+! === these get in the way if using emacs over ssh.  Use shift. === \n\
+!	<KeyPress> Prior:	  scroll-back(1,page)\n\
+!	<KeyPress> F29:		  scroll-back(1,page)\n\
+!	<KeyPress> Next:	  scroll-forw(1,page)\n\
+!	<KeyPress> F35:		  scroll-forw(1,page)
+
+Squeak.geometry:		+10+52
+
+Xdialdctl.geometry:		155x52+260+0
+Xdialdctl*Command.font:		bFONT	

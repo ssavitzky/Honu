@@ -1,0 +1,89 @@
+#!/bin/bash
+# Run by system.xinitrc on startup -- must be executable.
+# $Id: .Xapps,v 1.5 2012-05-06 15:23:07 steve Exp $
+
+# Go is mostly a symlink directory.
+PRJDIR="-g 91x53+415+89 Private/Journals/Dog/to.do"
+
+if [ -x /usr/bin/X11/xtoolwait ]; then
+   TW () { 
+       xtoolwait $* 
+   }
+else
+    TW () { 
+	$* & sleep 1 
+    }
+fi
+
+picture=none
+bitmap=none
+# /usr/local/src/logos/llogo.tile.xbm
+[ -f $HOME/.background ] && picture=$HOME/.background
+
+if [ -x /usr/bin/X11/xsetbg ]; then
+   BG="/usr/bin/X11/xsetbg -fullscreen -colors 128"
+else
+   BG="/usr/bin/X11/xv -root -quit"
+fi
+
+if [ -f "$picture" ]; then
+   ( nice $BG $picture )& sleep 5
+elif [ -f "$bitmap" ]; then
+   nice xsetroot -bg steelblue -bitmap $f &
+fi
+
+
+# Configure the screen, keyboard, etc.
+
+xset r			  # turn on keyboard repeat
+xhost +			  # allow access after su
+
+# Start the ``dashboard'' utilities:
+
+if [ -x /usr/local/bin/dclock ] || [ -x /usr/bin/X11/dclock ]; then
+   TW dclock -name dclock
+elif [ -x /usr/bin/X11/xdaliclock ] || [ -x /usr/local/bin/xdaliclock ]; then
+   TW xdaliclock -fn 12x24 -geom +20+3
+else
+   TW oclock -geometry 150x50+-3+-3 -jewel yellow 
+fi
+
+TW xclock -name xclock-d -geometry 185x21+395+0
+TW xman
+
+[ -s /usr/bin/gkrellm ] && TW gkrellm
+
+# xtoolwait times out on xbiff and xload.  Darned if I know why
+xbiff &
+xload &
+
+#[ -f /usr/bin/X11/xpostit ] && ( TW xpostit )
+
+if [ -f /usr/bin/ical ]; then
+   TW ical -iconic
+elif [ -f /usr/local/bin/ical ]; then
+   TW ical -iconic
+elif [ -f /usr/bin/X11/xcalendar ]; then
+   TW xcalendar -iconic -name thisMonth
+fi
+
+#xclipboard -geometry +650-25&
+
+# Start a login window.  RedHat's color xterm loses big on light backgrounds.
+
+TW xterm -name login -ls
+
+#sleep 2		# it takes a few seconds to run .profile 
+
+
+( # The following is run in a subshell to make the dashboard start faster
+
+    # Start an editor
+    TW emacs $PRJDIR
+)&
+
+# [ -x /usr/bin/X11/xphoon ] && xphoon  # -t 720&
+#xeyes -geometry 151x82+110+154&
+#oclock -transparent -geometry 293x217+38+123&
+
+
