@@ -869,8 +869,6 @@ Paragraphs are delimited only by empty lines."
 (setq message-default-mail-headers "Bcc: steve\nFcc: ~/Mail/mail-archive\n")
 (setq message-default-news-headers "Fcc: ~/News/.outgoing\n")
 
-;;; for mail purposes we don't care which machine we're on.
-(setq mail-host-address "theStarport.org")
 
 ;;; 
 ;;; Misc stuff from other people
@@ -923,6 +921,7 @@ Paragraphs are delimited only by empty lines."
  '(show-paren-mode t nil (paren))
  '(text-mode-hook (quote (turn-on-auto-fill my-text-mode-hook text-mode-hook-identify)))
  '(uniquify-buffer-name-style (quote forward) nil (uniquify))
+ '(user-mail-address "steve@savitzky.net")
  '(x-select-enable-clipboard t))
 ;(custom-set-faces)
 (custom-set-faces
