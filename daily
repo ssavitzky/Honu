@@ -50,6 +50,6 @@ uploads() {
 # Email a status ping:  uptime, disk, users, and backup report
 (uptime; df; uploads; backups; w) \
     | mail -s "STATUS: `hostname` `date +%Y-%m-%d`" \
-      steve@theStarport.org 
+      steve@theStarport.org steve@savitzky.net
 
 
