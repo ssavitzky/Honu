@@ -52,9 +52,10 @@
 ;;; Many html-helper-mode commands are useful in other modes
 (load "html-helper-mode" t)
 
-(if (file-exists-p "/local/share/emacs/site-lisp/ljupdate")
-    (progn (setq load-path (cons "/local/share/emacs/site-lisp/ljupdate" 
-				 load-path))
+(setq ljupdir (cons (concat my-home-emacs-dir "/ljupdate")))
+;;        was "/local/share/emacs/site-lisp/ljupdate"
+(if (file-exists-p ljupdir)
+    (progn (setq load-path (cons ljupdir load-path))
 	   (require 'ljupdate)
 	   ;(setq lj-default-profile (lj-defprofile 'livejournal "mdlbear"))
 	   )
