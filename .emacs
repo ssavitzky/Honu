@@ -52,7 +52,7 @@
 ;;; Many html-helper-mode commands are useful in other modes
 (load "html-helper-mode" t)
 
-(setq ljupdir (cons (concat my-home-emacs-dir "/ljupdate")))
+(setq ljupdir (concat my-home-emacs-dir "/ljupdate"))
 ;;        was "/local/share/emacs/site-lisp/ljupdate"
 (if (file-exists-p ljupdir)
     (progn (setq load-path (cons ljupdir load-path))
