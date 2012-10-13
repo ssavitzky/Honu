@@ -109,6 +109,7 @@ if [ "$PS1" ]; then
   alias pidgin="pidgin -f"
   alias rwbak="ssh root@localhost mount -oremount,rw /media/bak"
   alias robak="ssh root@localhost mount -oremount,ro /media/bak"
+  alias bed="ssh root@localhost acpitool -s"
 
   # enable bash completion in interactive shells
   # (done in starport.bashrc, but might not be present if standalone)
