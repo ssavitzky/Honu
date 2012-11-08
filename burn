@@ -1,5 +1,0 @@
-#!/bin/sh
-#	burn foo.iso
-#	dev="0,0,0" for SCSI or pseudo-SCSI in 2.4 kernels
-ls -l $1
-cdrecord dev="ATA:1,1,0"  driveropts=burnfree speed=48 -dao -v -eject -pad -data $1

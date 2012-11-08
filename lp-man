@@ -1,7 +1,0 @@
-#	Print a bunch of man pages with a suitable burst page
-#
-ll $* | prlp
-foreach f ($*)
-  echo $f
-  manlph $f
-end
