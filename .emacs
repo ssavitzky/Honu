@@ -898,8 +898,9 @@ Paragraphs are delimited only by empty lines."
     ;; this stuff is done if emacs is being run from a terminal or console
     ;; the idea is that if you're in via ssh, the time updates will keep 
     ;; the connection alive.
-    (display-time))
+    t)
   )
+(display-time)
 
 (custom-set-variables
   ;; custom-set-variables was added by Custom.
