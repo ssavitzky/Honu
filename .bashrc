@@ -1,11 +1,5 @@
 ### Steve's .bashrc
 
-#if [ -f /local/starport/Config/etc/starport.bashrc ]; then
-#  .  /local/starport/Config/etc/starport.bashrc
-#elif [ -f /usr/local/starport/Config/etc/bashrc ]; then
-#  source  /usr/local/starport/Config/etc/bashrc
-#fi
-
 PRINTER=lp
 VISUAL="emacs -nw"
 EDITOR="emacs -nw"
@@ -18,12 +12,6 @@ if [ -d /opt/java/bin ]; then
     PATH=/opt/java/bin:$PATH
 elif [ -d /usr/local/java/bin ]; then
     PATH=/usr/local/java/bin:$PATH
-fi
-
-if [ -d $HOME/PIA/bin ]; then
-    PATH=$HOME/PIA/bin:$PATH
-elif [ -d $HOME/pia/bin ]; then
-    PATH=$HOME/pia/bin:$PATH
 fi
 
 export PATH
@@ -49,15 +37,6 @@ no_proxy () {
     export http_proxy wais_proxy ftp_proxy gopher_proxy
 } 
 
-a2i_proxy () {
-    export http_proxy=http://http.rahul.net:80
-    export no_proxy=localweb
-    unset wais_proxy
-    unset ftp_proxy
-    unset gopher_proxy
-    export http_proxy wais_proxy ftp_proxy gopher_proxy no_proxy
-} 
-
 #unalias rm
 
 if [ "$PS1" ]; then
@@ -68,7 +47,18 @@ if [ "$PS1" ]; then
   fi
 
   pwgrep () {
-      grep -i $1 ~/Secret/pwds
+      echo "you mean pw"
+      pw $1
+  }
+  pw () {
+      if [ -d $HOME/Secret ]; then 
+	  grep -i $1  $HOME/Secret/pwds
+      else
+	  target=nova
+	  if [ -d /home/engelbert ]; then target=engelbert@localhost; fi
+	  echo ssh $target
+	  ssh $target grep -i $1 Secret/pwds
+      fi
   }
 
   getmail () {
@@ -112,7 +102,6 @@ if [ "$PS1" ]; then
   alias bed="ssh root@localhost acpitool -s"
 
   # enable bash completion in interactive shells
-  # (done in starport.bashrc, but might not be present if standalone)
   if [ -f /etc/bash_completion -a -z "$BASH_COMPLETION" ]; then
       . /etc/bash_completion
   fi
@@ -122,5 +111,5 @@ if [ "$PS1" ]; then
       || alias frm='echo x | mail| tail +2'
 fi
 
-
+# Console xterm on my ctwm dashboard.
 [ x"$CONSOLE" != x ] && { unset CONSOLE ; $HOME/bin/idle& }
