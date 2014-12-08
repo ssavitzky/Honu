@@ -7,8 +7,19 @@
 [advice]
 	pushNonFastForward = false
 
+# some aliases from http://durdn.com/blog/2012/11/22/must-have-git-aliases-advanced-examples/
 [alias]
-	co = checkout
+	amend	= commit -a --amend
+	br	= branch
+	ci	= commit
+	co	= checkout
+	h	= help
+	k	= !gitk --all&
+	lasttag = describe --tags --abbrev=0
+	ll = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --numstat
+	ls = log --pretty=format:"%C(yellow)%h%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate
+	lt = describe --tags --abbrev=0
+	st	= status
 
 [color]
 	ui = auto
@@ -17,3 +28,8 @@
 	branch = auto
 [push]
 	default = matching
+
+
+# Local Variables:
+#   fill-column:120
+# End:
