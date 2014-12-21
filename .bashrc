@@ -43,7 +43,7 @@ if [ "$PS1" ]; then
   PS1='(\h:$USER\W \!) '
 
   if [ "$TERM" = 'xterm' ]; then
-    PS1='\[\033]1;\h:\u\]\[\033]2;\h:$USER \w\]($USER \!) '
+    PS1='\[\033]1;\h:\u\]\[\033]2;\h:$USER \w\](\h:\W \!) '
   fi
 
   pwgrep () {
