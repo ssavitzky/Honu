@@ -1,0 +1,11 @@
+#!/bin/sh
+#
+# Set up X applications on a second screen, assumed to be to the right of the
+#   main screen, and widescreen.  On a 1680x1050 display this setup leaves room 
+#   for a pair of 91-column gnome-terminal's  running on the display host.
+# Run with:  ssh -X nova xsetup2nd
+
+xdaliclock -noseconds -geometry 417x135-487+0&
+emacs -geometry 92x55-87+192& 
+gkrellm& 
+exec xterm -ls -geom 80x10-0+0
