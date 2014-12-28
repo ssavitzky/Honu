@@ -911,6 +911,7 @@ Paragraphs are delimited only by empty lines."
  '(browse-url-browser-function (quote browse-url-mozilla))
  '(browse-url-mozilla-program "iceweasel")
  '(case-fold-search t)
+ '(column-number-mode t)
  '(current-language-environment "ASCII")
  '(delete-old-versions t)
  '(global-font-lock-mode t nil (font-lock))
