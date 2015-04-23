@@ -21,7 +21,7 @@ XTerm*background:		BG
 
 ! Terminal-mode apps are designed to look better on a black bg:
 XTerm*VT100.background:		black
-XTerm*VT100.foreground:		white
+XTerm*VT100.foreground:		green
 
 
 XTerm*eightBitInput:		false
