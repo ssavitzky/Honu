@@ -1,0 +1,23 @@
+#!/bin/sh
+# Setup for Gnome on Ubuntu
+
+S="gsettings set"
+
+### To find a schema:
+# gsettings list-schemas | sort
+# gsettings list-recursively <schema>
+
+### fix the clock applet, which is badly broken in post-unity Ubuntu
+$S com.canonical.indicator.datetime time-format 'custom'
+$S com.canonical.indicator.datetime custom-time-format '%a %Y-%m-%d %H:%M'
+
+### Fix focus:
+$S org.gnome.desktop.wm.preferences raise-on-click true
+$S org.gnome.desktop.wm.preferences auto-raise true
+$S org.gnome.desktop.wm.preferences focus-mode 'sloppy'
+$S org.gnome.desktop.wm.preferences auto-raise-delay 500
+
+### Fix key bindings:
+$S org.gnome.desktop.wm.keybindings activate-window-menu "['<Control><Alt>space']"
+$S org.gnome.desktop.wm.keybindings cycle-panels "['<Control><Alt>Escape']"
+$S org.gnome.desktop.wm.keybindings switch-panels "['<Control><Alt>Tab']"
