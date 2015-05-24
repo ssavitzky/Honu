@@ -71,12 +71,13 @@ ${color1}CPU:$color $cpu% ${cpubar 8}
 ${color1}Avg:$color $loadavg  \
 ${color1}Procs:$color $running_processes/$processes
 ${loadgraph 30 0044ff ff4400 -l -t}
-${color1}File systems:
+${color1}File systems:\
+ ${if_mounted /mirror}$alignr mirror$color mounted$endif$color1
  /  $color${fs_used /}/${fs_size /} ${fs_free_perc /}% ${fs_bar 6 /}
-${if_mounted /home}
+${if_mounted /home}${color1}\
  ~  $color${fs_used /home}/${fs_size /home} ${fs_free_perc /home}% ${fs_bar 6 /home}
 $endif\
-${if_mounted /vv}
+${if_mounted /vv}${color1}\
  vv $color${fs_used /vv}/${fs_size /vv} ${fs_free_perc /vv}% ${fs_bar 6 /vv}
 $endif\
 $hr
