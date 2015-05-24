@@ -63,8 +63,8 @@ show_graph_range no
 
 TEXT
 $alignc$color${time %a %F %H:%M}$font
+$USER@$nodename_short   $alignr${color1}Up:$color $uptime_short
 $hr
-$nodename_short   ${color1}Up:$color $uptime_short$alignr${color1}User:$color $USER
 ${color1}RAM:$color $mem/$memmax $memperc% ${membar 8}
 ${color1}Swap:$color $swap/$swapmax $swapperc% ${swapbar 8}
 ${color1}CPU:$color $cpu% ${cpubar 8}
@@ -80,10 +80,9 @@ $endif\
 ${if_mounted /vv}${color1}\
  vv $color${fs_used /vv}/${fs_size /vv} ${fs_free_perc /vv}% ${fs_bar 6 /vv}
 $endif\
-$hr
+${diskiograph 30 00ff44 ff4400 -l -t}
 ${color1}Name              PID   CPU%   MEM%
 ${color lightgrey} ${top name 1} ${top pid 1} ${top cpu 1} ${top mem 1}
 ${color lightgrey} ${top name 2} ${top pid 2} ${top cpu 2} ${top mem 2}
 ${color lightgrey} ${top name 3} ${top pid 3} ${top cpu 3} ${top mem 3}
 ${color lightgrey} ${top name 4} ${top pid 4} ${top cpu 4} ${top mem 4}
-${color lightgrey} ${top name 5} ${top pid 5} ${top cpu 5} ${top mem 5}
