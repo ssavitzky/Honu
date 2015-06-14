@@ -15,3 +15,11 @@ for f in .[^.]*; do
     echo linking "$f->Config/dotfiles/$f"
     (cd $HOME; ln -sf Config/dotfiles/$f .)
 done
+
+# Finally, clean up a broken symlink to .gitignore, if any.
+# Eventually, this should probably be a loop over all dotfiles.
+if [ -L ~/.gitignore -a ! -e ~/.gitignore ]; then
+    echo removing broken symlink .gitignore
+    rm ~/.gitignore
+fi
+

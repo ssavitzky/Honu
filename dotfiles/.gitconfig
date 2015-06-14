@@ -2,7 +2,7 @@
 	name = Steve Savitzky
 	email = steve@savitzky.net
 [core]
-	excludesfile = ~/.gitignore
+	excludesfile = ~/.gitignore_global
 
 [branch]
 	autosetupmerge = true
