@@ -1,6 +1,8 @@
 [user]
 	name = Steve Savitzky
-	email = steve@thestarport.org
+	email = steve@savitzky.net
+[core]
+	excludesfile = ~/.gitignore
 
 [branch]
 	autosetupmerge = true
