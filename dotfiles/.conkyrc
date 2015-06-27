@@ -35,7 +35,7 @@ minimum_size 5 5
 own_window yes
 own_window_class Conky
 own_window_transparent yes
-own_window_type desktop
+own_window_type override
 
 # Shell:
 background no			# let the shell do it
