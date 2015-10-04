@@ -534,9 +534,7 @@ makes it buffer-local.")
 	"</head><body>\n"
 	"<h1>" p "</h1>\n\n"
 	"<hr />\n"
-	"<b>$" "Id$</b><br />\n"
-	;;html-helper-timestamp-start \nhtml-helper-timestamp-end "\n<br>\n"
-	"<address>" html-helper-address-string "</address>"
+       	"<address>" html-helper-address-string "</address>"
 	"\n</body></html>\n"))
 
 (defun html-helper-smarter-insert-item (&optional arg)
