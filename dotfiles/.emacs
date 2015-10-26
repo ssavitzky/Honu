@@ -301,7 +301,7 @@
     ;; Put unimportant files in a light face.
     ("[^ ]*[#~]$" . font-lock-string-face)
     ("\\.?[#][^ ]*$" . font-lock-string-face)
-    ("[^ ]*\\.\\(aux\\|bak\\|class\\|dvi\\|elc\\|log\\|o\\|toc\\|ps\\|lj\\)$"
+    ("[^ ]*\\.\\(aux\\|bak\\|class\\|dvi\\|elc\\|log\\|o\\|toc\\|ps\\|pdf\\|lj\\)$"
      . font-lock-string-face)
     ))
 
