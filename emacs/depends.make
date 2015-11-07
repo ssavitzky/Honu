@@ -9,7 +9,18 @@ GITDIRS :=
 
 ### Install target
 #
-install:
+install:: | ljupdate
+install:: | $(HOME)/Config
+install:: | $(HOME)/emacs
+
+# This will do for now.  Should really be in ..
+$(HOME)/Config:
+	cd ../dotfiles; $(MAKE) install
+
+$(HOME)/emacs: | $(HOME)/Config
+	cd $(HOME); ln -sf Config/emacs .
+
+ljupdate:
 	git clone git://github.com/hober/ljupdate.git
-	(cd ljupdate; make fetch compile)
+	(cd ljupdate; yes | make fetch compile)
 
