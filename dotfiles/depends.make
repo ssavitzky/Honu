@@ -6,5 +6,5 @@
 ### Install dotfiles in $(HOME).
 #   Eventually we should eliminate install.sh in favor of a pure make process.
 #
-install:
+install::
 	install.sh
