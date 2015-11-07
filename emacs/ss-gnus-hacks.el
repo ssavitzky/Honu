@@ -1,12 +1,12 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;
 ;;; The following is a set of hacks for use with gnus,
-;;;	brought to you by Steve Savitzky (steve@advansoft.com)
+;;;	brought to you by Steve Savitzky (steve@crc.ricoh.com)
 ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; Copyright (C) 1990 Stephen Savitzky
+;;; Copyright (C) 1993 Stephen Savitzky
 ;;;
 ;;; This program is free software; you can redistribute it and/or modify
 ;;; it under the terms of the GNU General Public License as published by
@@ -35,47 +35,28 @@
 ;;;
 ;;; Hooks
 ;;;
-(setq gnus-Group-mode-hook
-      '(lambda ()
-	 (setq browse-hook 'mouse-browse-group)
-	 (setq gnus-default-article-saver 'gnus-Subject-save-in-mail)
-	 (setq gnus-mail-save-name 'gnus-numeric-save-name)))
-
-(setq gnus-Subject-mode-hook
-      '(lambda ()
-	 (setq browse-hook 'mouse-browse-subject)
-	 (setq browse-exit-hook 'gnus-Subject-browse-exit)
-	 (setq gnus-subject-lines-height 12)
-	 (local-set-key "Z" 'gnus-Subject-print-article)
-	 (local-set-key "F" 'gnus-Subject-forward)
-	 (fset 'kill-subject-permanently
-	       "kb*Subject*k")
-	 (local-set-key "\M-\C-k" 'kill-subject-permanently )))
-
-(setq gnus-Select-group-hook
+(add-hook 'gnus-group-mode-hook
       (function
        (lambda ()
-	 ;; Sort by subject ignoring `Re:'.
-	 ;; (Except in alt.callahans, where order is important)
-	 (if (not
-	      (or (string-equal gnus-newsgroup-name "alt.callahans")
-		  (string-equal gnus-newsgroup-name "alt.cyberpunk.chatsubo")
-		  ))
-	     (gnus-sort-headers
-	      (function
-	       (lambda (a b)
-		 (string-lessp 
-		  (gnus-simplify-subject
-		   (gnus-header-subject a) 're-only)
-		  (gnus-simplify-subject
-		   (gnus-header-subject b) 're-only)
-		  ))))
-	   (gnus-sort-headers
-	    (function
-	     (lambda (a b)
-	       (gnus-date-lessp (gnus-header-date a)
-				(gnus-header-date b)))))
-	   )
+	 (setq browse-hook 'mouse-browse-group)
+	 (setq gnus-default-article-saver 'gnus-summary-save-in-mail)
+	 (setq gnus-mail-save-name 'gnus-numeric-save-name))))
+
+(add-hook 'gnus-summary-mode-hook
+      (function
+       (lambda ()
+	 (setq browse-hook 'mouse-browse-summary)
+	 (setq browse-exit-hook 'gnus-summary-browse-exit)
+	 (setq gnus-summary-lines-height 12)
+	 (local-set-key "Z" 'gnus-summary-print-article)
+	 (local-set-key "F" 'gnus-summary-forward)
+	 (fset 'kill-subject-permanently
+	       "kb*Subject*k")
+	 (local-set-key "\M-\C-k" 'kill-subject-permanently ))))
+
+(add-hook 'gnus-select-group-hook
+      (function
+       (lambda ()
 	 ;; Don't select first article in groups prone to bigness
 	 ;;   (In most cases this is better done in the KILL.el file)
 	 (if (or (string-match "\.sources" gnus-newsgroup-name)
@@ -83,6 +64,7 @@
 		 (string-match "\.pictures" gnus-newsgroup-name)
 		 (string-match "\.answers" gnus-newsgroup-name)
 		 (string-match "\.callahans" gnus-newsgroup-name)
+		 (string-match "\.coffeehouse" gnus-newsgroup-name)
 		 )
 	     (setq gnus-auto-select-first nil)
 	   (setq gnus-auto-select-first t))
@@ -99,7 +81,7 @@
 	       (gnus-save-newsrc-file)
 	       (setq gnus-read-articles 0))))))
 
-(setq gnus-Article-prepare-hook
+(add-hook 'gnus-article-prepare-hook
       '(lambda ()
 	 ;; If a save directory exists, change to it.
 	 ;;
@@ -127,20 +109,20 @@ current posting and insert the header line Lines into the message."
 ;;;
 
 (defun mouse-browse-group ()
-  (gnus-Group-read-group nil nil))
+  (gnus-group-read-group nil nil))
 
-(defun mouse-browse-subject ()
-  (gnus-Subject-next-page nil))
+(defun mouse-browse-summary ()
+  (gnus-summary-next-page nil))
 
-(defun gnus-Subject-browse-exit ()
+(defun gnus-summary-browse-exit ()
   "Quietly catch up and exit"
   (interactive nil)
-  (gnus-Subject-catch-up-and-exit nil t))
+  (gnus-summary-catch-up-and-exit nil t))
 
-(defun gnus-Subject-print-article ()
+(defun gnus-summary-print-article ()
   "print the article using mp"
   (interactive nil)
-  (gnus-eval-in-buffer-window gnus-Article-buffer (article-print))
+  (gnus-eval-in-buffer-window gnus-article-buffer (article-print))
   )
 
 (defun article-print ()
@@ -149,15 +131,17 @@ current posting and insert the header line Lines into the message."
   (my-print-buffer)
   )
 
-(defun gnus-Subject-forward ()
+;;; Should keep original author and set Resent-By (?)
+(defun gnus-summary-forward ()
   "Forward the current message to another user.
 Stolen almost blindly from rmail.el for use in GNUS."
   (interactive)
-  (switch-to-buffer gnus-Article-buffer)
-  (let ((forward-buffer gnus-Article-buffer) ; used to be (current-buffer)
+  (switch-to-buffer gnus-article-buffer)
+  (let ((forward-buffer gnus-article-buffer) ; used to be (current-buffer)
         (subject (concat "["
                          (mail-strip-quoted-names (mail-fetch-field "From"))
-                         ": " (or (mail-fetch-field "Subject") "") "]")))
+                         " in " gnus-newsgroup-name ": "
+			 (or (mail-fetch-field "Subject") "") "]")))
     (mail nil nil subject)
     (save-excursion
       (goto-char (point-max))
@@ -169,7 +153,10 @@ Stolen almost blindly from rmail.el for use in GNUS."
 ;;; IMO these are closer to what you want: newsgroup on Subject modeline
 ;;;     and article subject on Article modeline.
 
-(defun gnus-Subject-set-mode-line ()
+(if nil (progn
+	  ;; eliminated for now ...
+
+(defun gnus-subject-set-mode-line ()
   "Set Article mode line string."
   (let ((unmarked
 	 (- (length gnus-newsgroup-unreads)
@@ -196,8 +183,8 @@ Stolen almost blindly from rmail.el for use in GNUS."
 			))))
   (set-buffer-modified-p t))
 
-(defun gnus-Article-set-mode-line ()
-  "Set Subject mode line string."
+(defun gnus-article-set-mode-line ()
+  "Set subject mode line string."
   ;; The value must be a string to escape %-constructs.
   (let ((subject
 	 (if gnus-current-headers
@@ -210,3 +197,4 @@ Stolen almost blindly from rmail.el for use in GNUS."
 		  (make-string (max 0 (- 17 (length subject))) ? ))))
   (set-buffer-modified-p t))
 
+))
