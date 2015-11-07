@@ -850,6 +850,7 @@ Paragraphs are delimited only by empty lines."
  '(delete-old-versions t)
  '(global-font-lock-mode t nil (font-lock))
  '(lj-default-headers "Music: 
+Preformatted: yes
 ")
  '(lj-default-server "dreamwidth.org")
  '(lj-default-username "mdlbear")
