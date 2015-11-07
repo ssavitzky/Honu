@@ -1,43 +1,9 @@
 ;;; Gnu Emacs Initialization File -- Steve Savitzky
 
-;;; Which version?
-;;;	It's time to give up on this stuff
-(defconst emacs18 (string-match "^18\\." emacs-version)
-  "non-nil iff Emacs 18, nil otherwise")
-
-;;; Version-dependent filenames for my local hacks.
-(defun hack-file (name)
-  "Generate an appropriate filename, either NAME-hacks or NAME-19"
-  (concat name (if emacs18 "-hacks" "-19")))
-
-(defun load-hacks (name)
-  "Load file NAME-hacks or NAME-19 depending on emacs version"
-  (load (hack-file name) t))
-
 (setq my-home-emacs-dir (concat (getenv "HOME") "/emacs"))
 (if (file-exists-p my-home-emacs-dir)
     (setq load-path (cons my-home-emacs-dir load-path))
   (setq my-home-emacs-dir nil))
-
-
-;;; Set up load paths.
-(if nil (progn
-(if (file-exists-p "/usr/local/starport/site-lisp")
-    (progn (setq load-path (cons "/usr/local/starport/site-lisp" load-path))
-	   (load "/usr/local/starport/site-lisp/default.el" t)
-	   )
-)
-
-;;; put our old site-lisp at the end.  elib/cookie.el is used by pcl-cvs
-(if (file-exists-p "/local/share/emacs/site-lisp")
-    (progn (setq load-path 
-		 (append  load-path 
-			  (list "/local/share/emacs/site-lisp"
-				;"/usr/local/share/emacs/site-lisp/elib"
-				)))
-	   (load "/local/share/emacs/site-lisp/default.el" t)
-	   )
-)))
 
 ;;; Load the things we always need.  
 ;;;	Use load rather than require to prevent errors if files don't exist.
@@ -52,10 +18,22 @@
 ;;; Many html-helper-mode commands are useful in other modes
 (load "html-helper-mode" t)
 
+
+(if (file-exists-p "~/.abbrev_defs") (quietly-read-abbrev-file nil))
+
+(cond (my-home-emacs-dir
+       ;; ss-browse-hacks, ss-key-hacks haven't been used for years
+       (autoload 'ss-gnus-hacks "ss-gnus-hacks" "hacks for gnus" t)
+       (autoload 'ss-dired-hacks "ss-dired-hacks" "hacks for dired" t)
+       (add-hook 'dired-mode-hook 'ss-dired-hacks)))
+
 (setq ljupdir (concat my-home-emacs-dir "/ljupdate"))
-;;        was "/local/share/emacs/site-lisp/ljupdate"
 (if (file-exists-p ljupdir)
     (progn (setq load-path (cons ljupdir load-path))
+	   (if (fboundp 'html-helper-mode)
+	       ;; we use html-helper-mode as a base for lj-update, and
+	       ;; don't use html-mode anyway.
+	       (defalias 'html-mode 'html-helper-mode))
 	   (require 'ljupdate)
 	   ;(setq lj-default-profile (lj-defprofile 'livejournal "mdlbear"))
 	   )
@@ -64,20 +42,7 @@
 ;;; lj-compose to compose; ^C-s to post
 
 
-(if (file-exists-p "~/.abbrev_defs") (quietly-read-abbrev-file nil))
-
-(cond (my-home-emacs-dir
-       (load "ss-browse-hacks" t)
-       (autoload 'ss-gnus-hacks (hack-file "ss-gnus") "hacks for gnus" t)
-       (autoload 'ss-dired-hacks "ss-dired-hacks" "hacks for dired" t)
-       (add-hook 'dired-mode-hook 'ss-dired-hacks)))
-
-
 (or (fboundp 'gin-mode-on) (defun gin-mode-on () "no gin-mode: fake it"))
-
-;;; Version-dependent loads and other setup
-;;; obsoleted
-
 
 (if (fboundp 'global-font-lock-mode) (global-font-lock-mode t))
 (add-hook 'c-mode-hook 'turn-on-font-lock)
@@ -85,39 +50,10 @@
 
 (setq font-lock-maximum-decoration 3
       ;;font-lock-background-mode 'light
-)
-
-(load-hacks "ss-key")
-
-;;;
-;;; Special handling for terminals with stupid problems
-;;;
-
-(defun swap-ctl-h-and-del ()
-  "Swap the C-h and C-? keys."
-  (interactive)
-  ;; Mark D. Baushke
-  ;; UUCP:		{3comvax,auspex,sun}!bridge2!mdb
-  ;; Internet:   	mdb@bridge2.ESD.3Com.COM
-
-  ;; First make a translate table that does the identity translation.
-  (setq keyboard-translate-table (make-string 128 0))
-  (let ((i 0))
-    (while (< i 128)
-      (aset keyboard-translate-table i i)
-      (setq i (1+ i))))
-
-  ;; Now alter translations of some characters.
-  (aset keyboard-translate-table ?\C-? ?\C-h)
-  (aset keyboard-translate-table ?\C-h ?\C-?)
-)
+      )
 
 (setq terminal-uses-flow-control-chars 
    '("vt100" "vt320" "vt52" "vt101" "vt131"))
-
-;;; (load "flow-ctrl" t)
-
-
 
 ;;;
 ;;; Key Bindings
@@ -586,7 +522,7 @@ makes it buffer-local.")
   (local-set-key "\C-Cd"   'tempo-template-html-definition-list); d: DL
   (local-set-key "\C-Ce"   'tempo-template-html-emphasized)	; e: EM
   (local-set-key "\C-Ci"   'html-helper-smarter-insert-item)	; i: item
-  (local-set-key "\C-Cl"   'tempo-template-html-anchor)		; l: link
+  (local-set-key "\C-Cl"   'tempo-template-html-hyperlink)	; l: link
   (local-set-key "\C-Co"   'tempo-template-html-ordered-list)	; o: OL
   (local-set-key "\C-Cs"   'tempo-template-html-strong)		; s: STRONG
   (local-set-key "\C-Cu"   'tempo-template-html-unordered-list)	; u: UL
@@ -858,7 +794,7 @@ Paragraphs are delimited only by empty lines."
 ;;; Autoload the file ss-gnus-hacks for the real goodies
 
 (and my-home-emacs-dir
-     (add-hook (if emacs18 'gnus-Startup-hook 'gnus-startup-hook)
+     (add-hook 'gnus-startup-hook
 	       'ss-gnus-hacks))
 
 ;;; Use default article sorting.
