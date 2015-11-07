@@ -1,6 +1,10 @@
 ### depends.make for Config/emacs
 #
 
+### Prevent make push from trying to push ljupdate
+
+GITDIRS :=
+
 .PHONY: install
 
 ### Install target
