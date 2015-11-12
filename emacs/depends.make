@@ -20,7 +20,9 @@ $(HOME)/Config:
 $(HOME)/emacs: | $(HOME)/Config
 	cd $(HOME); ln -sf Config/emacs .
 
+# was originally  git://github.com/hober/ljupdate.git, but the fork is
+# more recent.
 ljupdate:
-	git clone git://github.com/hober/ljupdate.git
+	git clone git@github.com:blipvert/ljupdate.git
 	(cd ljupdate; yes | make fetch compile)
 
