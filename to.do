@@ -7,10 +7,6 @@ o Some dotfiles, e.g. .gitconfig, really need to be modified by a script rather 
   
 o regular dotfiles should start with "_" rather than ".", to make them visible.
 
-1111We
-  @ https://github.com/blipvert/ljupdate/commits/master marginally more up to date
-    o update emacs/depends.make
-
 ==============================================================================
 Work Log:
 ========
@@ -24,6 +20,8 @@ Work Log:
       ControlPath ~/.ssh/controlmasters/%r@%h:%p
       ControlPersist 10m
       ControlMaster auto
+  @ https://github.com/blipvert/ljupdate/commits/master marginally more up to date
+    * update emacs/depends.make
 
 ==============================================================================
 Local Variables:
