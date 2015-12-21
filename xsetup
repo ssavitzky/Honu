@@ -7,4 +7,4 @@
 
 xdaliclock -noseconds -geometry 408x163-0-424&
 conky -a br&
-exec xterm -fg green -geometry  72x13-0+411
+exec xterm -fg green -geometry  72x13-0+400
