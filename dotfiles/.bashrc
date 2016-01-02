@@ -100,6 +100,7 @@ if [ "$PS1" ]; then
   alias rwbak="ssh root@localhost mount -oremount,rw /media/bak"
   alias robak="ssh root@localhost mount -oremount,ro /media/bak"
   alias bed="ssh root@localhost acpitool -s"
+  alias todo="emacs -geometry 91x35 to.do&"
 
   # enable bash completion in interactive shells
   if [ -f /etc/bash_completion -a -z "$BASH_COMPLETION" ]; then
