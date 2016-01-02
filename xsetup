@@ -5,6 +5,6 @@
 # hand edge.
 # Run with:  ssh -X nova xsetup
 
-xdaliclock -noseconds -geometry 408x163-0-424&
+xdaliclock -builtin1 -geometry 375x82-0-426&
 conky -a br&
-exec xterm -fg green -geometry  72x13-0+400
+exec xterm -fg green -geometry  60x18-0+400
