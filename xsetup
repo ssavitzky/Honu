@@ -5,6 +5,9 @@
 # hand edge.  Relies on .Xdefaults-host for color.
 # Run with:  ssh -X nova xsetup
 
-xdaliclock -builtin1 -geometry 375x82-0-426&
+xdaliclock -builtin1 -geometry 375x82-0-426 -name xdaliclock &
 conky -a br&
-exec xterm -geometry  60x18-0+400
+sleep 1
+exec xterm -geometry  60x18-0+400 -name xsetup
+
+
