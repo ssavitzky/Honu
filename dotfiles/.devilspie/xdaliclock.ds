@@ -1,0 +1,13 @@
+; generated_rule xdaliclock
+( if 
+  ( begin 
+    ( is ( window_name ) "Dali Clock" )
+    ) 
+    ( begin 
+      ( undecorate )
+      ( skip_pager )
+      ( skip_tasklist )
+      ( stick )
+      ( println "match" )
+      )
+  )

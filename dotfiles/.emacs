@@ -188,7 +188,8 @@
 	 ("\\.otl$" . outline-mode)
 
 	 ("\\.gwm$" . lisp-mode)	;generic window manager
-	 
+	 ("\\.ds$"  . lisp-mode)	;devilspie rules
+
 	 ("\\.pml$" . c-mode)		;parser meta-language (ARC local)
 	 
 	 ("\\.pl$" . perl-mode)

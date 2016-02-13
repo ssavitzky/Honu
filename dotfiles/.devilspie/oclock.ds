@@ -1,0 +1,11 @@
+( if 
+  ( begin 
+    ( is ( window_name ) "oclock" )
+    ) 
+    ( begin 
+      ( undecorate )
+      ( skip_pager )
+      ( skip_tasklist )
+      ( println "match" )
+      )
+  )
