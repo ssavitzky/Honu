@@ -21,3 +21,8 @@ $S org.gnome.desktop.wm.preferences auto-raise-delay 500
 $S org.gnome.desktop.wm.keybindings activate-window-menu "['<Control><Alt>space']"
 $S org.gnome.desktop.wm.keybindings cycle-panels "['<Control><Alt>Escape']"
 $S org.gnome.desktop.wm.keybindings switch-panels "['<Control><Alt>Tab']"
+
+### Fix fonts:
+$S org.gnome.desktop.interface document-font-name 'Sans 11'
+$S org.gnome.desktop.interface font-name 'Cantarell 11'
+$S org.gnome.desktop.interface monospace-font-name 'Inconsolata 12'
