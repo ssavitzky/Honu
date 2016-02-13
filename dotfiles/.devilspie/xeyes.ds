@@ -1,9 +1,11 @@
 ( if 
-    ( is ( window_class ) "Clock" )
+  ( begin 
+    ( is ( window_class ) "XEyes" )
+    ) 
     ( begin 
       ( undecorate )
       ( skip_pager )
       ( skip_tasklist )
-      ( println "matched oclock" )
+      ( println "matched XEyes" )
       )
   )

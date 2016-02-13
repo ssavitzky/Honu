@@ -1,0 +1,10 @@
+( if 
+    ( contains ( window_name ) "xsetup" )
+    ( begin 
+      ( skip_pager )
+      ( skip_tasklist )
+      ( stick )
+      ( pin )
+      ( println "matched xsetup" )
+      )
+  )

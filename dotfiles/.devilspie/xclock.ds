@@ -1,9 +1,9 @@
 ( if 
-    ( is ( window_class ) "Clock" )
+    ( is ( window_class ) "XClock" )
     ( begin 
       ( undecorate )
       ( skip_pager )
       ( skip_tasklist )
-      ( println "matched oclock" )
+      ( println "matched XClock" )
       )
   )

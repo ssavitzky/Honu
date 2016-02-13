@@ -1,13 +1,12 @@
 ; generated_rule xdaliclock
 ( if 
-  ( begin 
-    ( contains ( window_name ) "Dali" )
-    ) 
+    (is ( window_class ) "XDaliClock" )
     ( begin 
       ( undecorate )
       ( skip_pager )
       ( skip_tasklist )
       ( stick )
-      ( println "matched Dali Clock" )
+      ( pin )
+      ( println "matched XDaliClock" )
       )
   )
