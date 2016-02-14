@@ -7,10 +7,6 @@ S="gsettings set"
 # gsettings list-schemas | sort
 # gsettings list-recursively <schema>
 
-### fix the clock applet, which is badly broken in post-unity Ubuntu
-$S com.canonical.indicator.datetime time-format 'custom'
-$S com.canonical.indicator.datetime custom-time-format '%a %Y-%m-%d %H:%M'
-
 ### Fix focus:
 $S org.gnome.desktop.wm.preferences raise-on-click true
 $S org.gnome.desktop.wm.preferences auto-raise true
@@ -26,3 +22,12 @@ $S org.gnome.desktop.wm.keybindings switch-panels "['<Control><Alt>Tab']"
 $S org.gnome.desktop.interface document-font-name 'Sans 11'
 $S org.gnome.desktop.interface font-name 'Cantarell 11'
 $S org.gnome.desktop.interface monospace-font-name 'Inconsolata 12'
+
+### Ubuntu-specific fixes:
+if gsettings list-schemas | grep -q canonical; then
+
+    ## fix the clock applet, which is badly broken in post-unity Ubuntu
+    $S com.canonical.indicator.datetime time-format 'custom'
+    $S com.canonical.indicator.datetime custom-time-format '%a %Y-%m-%d %H:%M'
+
+fi
