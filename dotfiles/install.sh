@@ -23,3 +23,5 @@ if [ -L ~/.gitignore -a ! -e ~/.gitignore ]; then
     rm ~/.gitignore
 fi
 
+# We may have installed or changed .fonts, so update the cache
+fc-cache ~/.fonts/
