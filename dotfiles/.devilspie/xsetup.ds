@@ -3,6 +3,7 @@
     ( begin 
       ( skip_pager )
       ( skip_tasklist )
+      ( undecorate )
       ( stick )
       ( pin )
       ( println "matched xsetup" )
