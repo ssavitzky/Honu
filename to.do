@@ -23,6 +23,14 @@ Work Log:
   @ https://github.com/blipvert/ljupdate/commits/master marginally more up to date
     * update emacs/depends.make
 
+2016
+
+0214Su
+  * much hacking in gnome-setup and font setup over the last week or so.
+
+0215Mo
+  * added adobe-source-code-pro font, tell emacs to use system font.
+
 ==============================================================================
 Local Variables:
     fill-column:90

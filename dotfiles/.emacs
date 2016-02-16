@@ -838,10 +838,10 @@ Paragraphs are delimited only by empty lines."
 (display-time)
 
 (custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(auto-compression-mode t nil (jka-compr))
  '(browse-url-browser-function (quote browse-url-mozilla))
  '(browse-url-mozilla-program "iceweasel")
@@ -849,6 +849,8 @@ Paragraphs are delimited only by empty lines."
  '(column-number-mode t)
  '(current-language-environment "ASCII")
  '(delete-old-versions t)
+ '(display-time-mode t)
+ '(font-use-system-font t)
  '(global-font-lock-mode t nil (font-lock))
  '(lj-default-headers "Music: 
 Preformatted: yes
@@ -858,14 +860,17 @@ Preformatted: yes
  '(lj-fill-function (quote ignore))
  '(scroll-bar-mode (quote right))
  '(show-paren-mode t nil (paren))
- '(text-mode-hook (quote (turn-on-auto-fill my-text-mode-hook text-mode-hook-identify)))
+ '(text-mode-hook
+   (quote
+    (turn-on-auto-fill my-text-mode-hook text-mode-hook-identify)))
+ '(tool-bar-mode nil)
  '(uniquify-buffer-name-style (quote forward) nil (uniquify))
  '(user-mail-address "steve@savitzky.net")
  '(x-select-enable-clipboard t))
 ;(custom-set-faces)
 (custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  )
