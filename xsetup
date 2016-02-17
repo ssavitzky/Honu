@@ -7,7 +7,7 @@
 #
 # Run with:  ssh -X nova xsetup
 
-if ps x | grep -q "conky -a br"; then
+if ps x | egrep -q "[c]onky -a br"; then
     true;			# no need to restart clock and conky
 else
     xdaliclock -builtin1 -geometry 375x82-0-426 -name xdaliclock &
