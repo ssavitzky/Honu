@@ -10,9 +10,8 @@ fi
 
 export PATH=$HOME/bin:$PATH
 
-LC_ALL=C
 LC_COLLATE=C
-export LC_ALL LC_COLLATE
+export LC_COLLATE
 
 #[ -x /usr/bin/X11/ctwm ] && export XWINDOWMANAGER="ctwm -W -n -f $HOME/.ctwmrc.crc"
 export XWINDOWMANAGER=/usr/bin/X11/ctwm

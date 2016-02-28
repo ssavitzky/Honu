@@ -20,14 +20,12 @@ export WWW_HOME=http://localweb/~steve/home.html
 
 export IRCNICK=mdlbear
 export IRCNAME="The Mandelbear"
-export IRCSERVER=SanJose.CA.US.undernet.org
 
 CVS_RSH=ssh
 export CVS_RSH
 
-LC_ALL=C
 LC_COLLATE=C
-export LC_ALL LC_COLLATE
+export LC_COLLATE
 
 no_proxy () {
     unset http_proxy
