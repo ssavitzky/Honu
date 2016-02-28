@@ -1,6 +1,6 @@
 ;;; Gnu Emacs Initialization File -- Steve Savitzky
 
-(setq my-home-emacs-dir (concat (getenv "HOME") "/emacs"))
+(setq my-home-emacs-dir (concat (getenv "HOME") "/Config/emacs"))
 (if (file-exists-p my-home-emacs-dir)
     (setq load-path (cons my-home-emacs-dir load-path))
   (setq my-home-emacs-dir nil))
@@ -15,7 +15,17 @@
 (or (load "gin-mode" t) 
     (defun gin-mode-on () "no gin-mode: fake it"))
 
+(defun load-from-subdir (subdir)
+  (if (file-exists-p (concat my-home-emacs-dir "/" subdir))
+      (setq load-path (cons (concat my-home-emacs-dir "/" subdir) load-path))
+    ))
+
 ;;; Many html-helper-mode commands are useful in other modes
+
+(load "tempo" t)			; required for html-helper-mode
+(setq html-helper-use-expert-menu t)
+(setq html-helper-do-write-file-hooks nil)
+(load-from-subdir "html-helper-mode")
 (load "html-helper-mode" t)
 
 
@@ -25,7 +35,9 @@
        ;; ss-browse-hacks, ss-key-hacks haven't been used for years
        (autoload 'ss-gnus-hacks "ss-gnus-hacks" "hacks for gnus" t)
        (autoload 'ss-dired-hacks "ss-dired-hacks" "hacks for dired" t)
-       (add-hook 'dired-mode-hook 'ss-dired-hacks)))
+       (add-hook 'dired-mode-hook 'ss-dired-hacks)
+       
+       ))
 
 (setq ljupdir (concat my-home-emacs-dir "/ljupdate"))
 (if (file-exists-p ljupdir)
@@ -291,9 +303,10 @@ makes it buffer-local.")
 (add-hook 'message-mode-hook 'my-message-mode-hook)
 
 
-(setq html-helper-do-write-file-hooks t)
+(setq html-helper-do-write-file-hooks nil)
 (setq html-helper-build-new-buffer t)
-
+(setq html-helper-timestamp-start nil)
+(setq html-helper-timestamp-end nil)
 (defun my-html-mode-hook ()
   "Hook for HTML editing"
   ;(setq browse-hook 'w3-follow-url-at-point)
@@ -449,13 +462,13 @@ makes it buffer-local.")
 ;;; HTML stuff
 ;;;
 
-(setq html-helper-do-write-file-hooks t)
+(setq html-helper-do-write-file-hooks nil)
 (setq html-helper-build-new-buffer t)
 
-(setq my-html-domain "theStarport.org")
+(setq my-html-domain "savitzky.net")
 (setq my-html-home-site
       (concat "http://"
-	      (user-real-login-name) ".savitzky.net/" )
+	      (user-real-login-name) "." my-html-domain)
       )
 
 (setq html-helper-address-string
