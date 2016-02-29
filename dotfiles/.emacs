@@ -23,10 +23,10 @@
 ;;; Many html-helper-mode commands are useful in other modes
 
 (load "tempo" t)			; required for html-helper-mode
-(setq html-helper-use-expert-menu t)
-(setq html-helper-do-write-file-hooks nil)
 (load-from-subdir "html-helper-mode")
 (load "html-helper-mode" t)
+(setq html-helper-use-expert-menu t)
+(setq html-helper-do-write-file-hooks nil)
 
 
 (if (file-exists-p "~/.abbrev_defs") (quietly-read-abbrev-file nil))
@@ -307,17 +307,6 @@ makes it buffer-local.")
 (setq html-helper-build-new-buffer t)
 (setq html-helper-timestamp-start nil)
 (setq html-helper-timestamp-end nil)
-(defun my-html-mode-hook ()
-  "Hook for HTML editing"
-  ;(setq browse-hook 'w3-follow-url-at-point)
-  (auto-fill-mode 1)
-  (gin-mode-on)
-  (setq gin-left-hang-indent-re
-	"\\s *\\(<[a-zA-Z0-9]+>\\)\\s +")
-  (setq fill-column 78)
-  )
-(add-hook 'html-mode-hook 'my-html-mode-hook)
-(add-hook 'html-helper-mode-hook 'my-html-mode-hook)
 
 (defun my-tex-mode-hook ()
   (local-set-key "\C-C;" 'tex-comment-lines)
@@ -526,9 +515,7 @@ makes it buffer-local.")
 	"\\s +\\|[#]+\\s *" )
   (gin-mode-on)
   (setq fill-column 78)
-  ;(require 'html-helper-menus)
-  ;(require 'hilit19)
-  ;(hilit19)
+
   (local-set-key [C-M-return]   'html-helper-smarter-insert-item)
   (local-set-key [M-S-return]   'html-helper-insert-link-item)
   (local-set-key "\C-Cb"   'tempo-template-html-bold) 		; b: B
