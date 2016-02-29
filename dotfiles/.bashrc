@@ -24,6 +24,12 @@ export IRCNAME="The Mandelbear"
 CVS_RSH=ssh
 export CVS_RSH
 
+if [ ! -z "$LC_ALL" ]; then
+   unset LC_ALL
+   unexport LC_ALL
+   LANG=en_US.UTF-8
+   export LANG
+fi
 LC_COLLATE=C
 export LC_COLLATE
 
