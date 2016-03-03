@@ -23,6 +23,9 @@ $S org.gnome.desktop.interface document-font-name 'Sans 11'
 $S org.gnome.desktop.interface font-name 'Cantarell 11'
 $S org.gnome.desktop.interface monospace-font-name 'Inconsolata 12'
 
+### Fix window behavior
+$S org.gnome.shell.overrides edge-tiling false
+
 ### Ubuntu-specific fixes:
 if gsettings list-schemas | grep -q canonical; then
 
