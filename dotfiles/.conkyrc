@@ -34,7 +34,8 @@ gap_y 30
 minimum_size 5 5
 own_window yes
 own_window_class Conky
-own_window_transparent yes
+# Transparent does not play well with Nautilus.
+own_window_transparent no
 own_window_type override
 
 # Shell:
@@ -50,9 +51,11 @@ default_shade_color white
 color1 gray			# labels
 
 # Fonts:
-# This appears to break $font, but it looks better.
+# This appears to break $font, but it looks better.  Inconsolata is smaller
+# than DejaVu; we may be able to squeeze more in at some point.
 use_xft yes
-xftfont DejaVu Sans Mono:size=12
+#xftfont DejaVu Sans Mono:size=12
+xftfont Inconsolata:size=14
 
 # Formatting:
 border_width 1
@@ -75,7 +78,7 @@ update_interval 1.0
 ### Templates:
 # ${template0 filesystem label} usage (used/size pct bar) (if mounted)
 template0 ${if_mounted \1}${color1}\2 ${template1 \1}\n$endif
-template1 $color${fs_used \1}/${fs_size \1} ${fs_used_perc \1}% ${fs_bar 6 \1}
+template1 $color${fs_used \1}/${fs_size \1} ${fs_used_perc \1}% ${fs_bar 8 \1}
 
 # ${template2 n} top line n
 template2 ${color lightgrey} ${top name \1} ${top pid \1} ${top cpu \1} ${top mem \1}
@@ -85,9 +88,9 @@ TEXT
 $alignc$color${time %a %F %H:%M}$font
 $USER@$nodename_short   $alignr${color1}Up:$color $uptime_short
 $hr
-${color1}RAM:$color $mem/$memmax $memperc% ${membar 8}
-${color1}Swap:$color $swap/$swapmax $swapperc% ${swapbar 8}
-${color1}CPU:$color $cpu% ${cpubar 8}
+${color1}RAM:$color $mem/$memmax $memperc% ${membar 10}
+${color1}Swp:$color $swap/$swapmax $swapperc% ${swapbar 10}
+${color1}CPU:$color $cpu% ${cpubar 10}
 ${color1}Avg:$color $loadavg  \
 ${color1}Procs:$color $running_processes/$processes
 ${loadgraph 30 0044ff ff4400 -l -t}
