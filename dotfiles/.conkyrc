@@ -55,7 +55,7 @@ color1 gray			# labels
 # than DejaVu; we may be able to squeeze more in at some point.
 use_xft yes
 #xftfont DejaVu Sans Mono:size=12
-xftfont Inconsolata:size=14
+xftfont Inconsolata:size=13
 
 # Formatting:
 border_width 1
