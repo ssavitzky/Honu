@@ -7,4 +7,4 @@
 #   Eventually we should eliminate install.sh in favor of a pure make process.
 #
 install::
-	install.sh
+	./install.sh
