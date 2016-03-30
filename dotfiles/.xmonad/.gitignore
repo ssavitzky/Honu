@@ -1,3 +1,5 @@
 *.hi
 *.errors
 *.o
+# This is what xmonad.hs compiles into.
+xmonad-x86_64-linux
