@@ -1,0 +1,10 @@
+!!! xmodmap file for xmonad.  Probably better to selectively remap super to Alt-r
+!   See https://wiki.archlinux.org/index.php/xmodmap for good examples
+
+!add Shift   = Shift_L Shift_R
+!add Lock    = Caps_Lock
+remove Mod1    = Alt_R
+!add Mod2    = Mode_switch
+!add Mod3    = Alt_R Meta_R
+add Mod4    = Super_L Super_R Alt_R
+!add Mod5    =

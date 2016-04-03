@@ -8,6 +8,7 @@ if [ -x /usr/bin/xscreensaver ]; then xscreensaver -nosplash & fi
 
 $(gnome-keyring-daemon --start --daemonize)
 
-if [ -e $HOME/.Xmodmap ]; then xmodmap $HOME/.Xmodmap; fi
+#if [ -e $HOME/.xmonad/.Xmodmap ]; then xmodmap $HOME/.xmonad/.Xmodmap; fi
+#Apparently any use of xmodmap on Ubuntu turns off VT switching!
 
 
