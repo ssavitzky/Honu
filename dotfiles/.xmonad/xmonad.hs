@@ -14,10 +14,11 @@ import XMonad.Layout.NoBorders     -- smart borders on solo clients
 
 main = xmonad $ defaultConfig
         { modMask = mod4Mask -- mod3Mask to use right Alt; old keyboards don't have super
-                    -- unfortunately, mod3Mask doesn't seem to work on _new_ keyboards.
+                    -- unfortunately, right alt is normally bound to mod1, and using
+                    -- xmodmap to rebind it breaks X's VT switching on Ubuntu.  Grump.
         , terminal = "xterm"
 	, layoutHook = myLayoutHook
-        , manageHook = manageDocks <+> manageHook defaultConfig
+        , manageHook = manageDocks <+> myManageHook <+> manageHook defaultConfig
         , workspaces = myWorkspaces
         -- more changes
         }
