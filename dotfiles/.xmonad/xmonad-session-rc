@@ -2,12 +2,12 @@
 #    Sourced by the xmonad gdm/lightdm session.  Initially from
 #    /usr/share/doc/xmonad/README.Debian
 
-xsetroot -xcf /usr/share/icons/Adwaita/cursors/left_ptr 16 -solid black
+xsetroot -xcf /usr/share/icons/Adwaita/cursors/left_ptr 16 -solid blue
 
 if [ -x /usr/bin/xscreensaver ]; then xscreensaver -nosplash & fi
 
 $(gnome-keyring-daemon --start --daemonize)
 
-if [ -e ~/.Xmodmap ]; then xmodmap ~/.Xmodmap; fi
+if [ -e $HOME/.Xmodmap ]; then xmodmap $HOME/.Xmodmap; fi
 
 

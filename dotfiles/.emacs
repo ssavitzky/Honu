@@ -852,6 +852,7 @@ Paragraphs are delimited only by empty lines."
  '(display-time-mode t)
  '(font-use-system-font t)
  '(global-font-lock-mode t nil (font-lock))
+ '(haskell-mode-hook (quote (turn-on-haskell-doc turn-on-haskell-indentation)))
  '(lj-default-headers "Music: 
 Preformatted: yes
 ")

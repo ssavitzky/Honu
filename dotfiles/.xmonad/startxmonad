@@ -1,0 +1,6 @@
+#!/bin/sh
+# Start xmonad
+
+. $HOME/.xmonad/xmonad-session-rc
+exec xmonad
+
