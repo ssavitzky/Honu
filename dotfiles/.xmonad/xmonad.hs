@@ -51,11 +51,13 @@ myManageHook = composeAll
 -- workspace name. The number of workspaces is determined by the length
 -- of this list.
 --
+-- Note that the keybindings have to be added for anything past 9
+--
 -- A tagging example:
 --
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
-myWorkspaces    = ["1","2","3","4","5","6","7","8","9", "-", "="]
+myWorkspaces    = ["1","2","3","4","5","6","7","8","9", "0", "-", "="]
 
 
 -- END OF FILE ------------------------------------------------------------------------
