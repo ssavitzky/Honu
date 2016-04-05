@@ -42,7 +42,11 @@ myManageHook = composeAll
     , className =? "Vlc"            --> doFloat
     , className =? "Gimp"           --> doFloat
     , className =? "XCalc"          --> doFloat
+    , className =? "Dia"            --> doFloat
+    , className =? "Inkscape"       --> doFloat
+    , className =? "XClock"         --> doFloat
     , className =? "stalonetray"    --> doIgnore
+    , className =? "panel"          --> doIgnore
     ]
  
 -- see http://softwareprocess.es/x/x/xmonad-burn.hs for some good documentation
@@ -57,7 +61,7 @@ myManageHook = composeAll
 --
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
-myWorkspaces    = ["1","2","3","4","5","6","7","8","9", "0", "-", "="]
+myWorkspaces    = ["1","2","3","4","5","6","7","8","9", "0"]
 
 
 -- END OF FILE ------------------------------------------------------------------------
