@@ -859,6 +859,11 @@ Preformatted: yes
  '(lj-default-server "dreamwidth.org")
  '(lj-default-username "mdlbear")
  '(lj-fill-function (quote ignore))
+ '(mode-line-format
+   (quote
+    ("%e" mode-line-front-space mode-line-mule-info mode-line-client mode-line-modified mode-line-remote mode-line-frame-identification mode-line-buffer-identification "   " mode-line-position
+     (vc-mode vc-mode)
+     "  " mode-line-modes mode-line-misc-info system-name mode-line-end-spaces)))
  '(scroll-bar-mode (quote right))
  '(show-paren-mode t nil (paren))
  '(text-mode-hook
