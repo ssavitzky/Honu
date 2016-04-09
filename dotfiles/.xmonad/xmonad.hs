@@ -29,11 +29,11 @@ main = xmonad $ defaultConfig
 -- the default layout is fullscreen with smartborders applied to all
 -- see https://wiki.haskell.org/Xmonad/Config_archive/Thayer_Williams%27_xmonad.hs
 -- for the golden ratio stuff.
-myLayoutHook = smartBorders $ avoidStruts ( full ||| mtiled ||| tiled )
+myLayoutHook = smartBorders $ avoidStruts ( full ||| tiled ||| mtiled )
   where
     full    = simpleTabbed
     mtiled  = Mirror tiled
-    tiled   = Tall 1 (5/100) (2/(1+(toRational(sqrt(5)::Double))))
+    tiled   = Tall 1 (3/100) (2/(1+(toRational(sqrt(5)::Double))))
     -- sets default tile as: Tall nmaster (delta) (golden ratio)
 
 
