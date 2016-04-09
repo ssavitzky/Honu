@@ -1,41 +1,50 @@
 import XMonad
 
-import XMonad.Layout.Tabbed
+import System.IO                   -- hPutStrLn scope
 
+import XMonad.Hooks.DynamicLog     -- statusbar 
 import XMonad.Hooks.ManageDocks    -- dock/tray mgmt
+import XMonad.Hooks.UrgencyHook    -- window alert bells 
+
+import XMonad.Layout.Named         -- custom layout names
+import XMonad.Layout.NoBorders     -- smart borders on solo clients
+import XMonad.Layout.Tabbed        -- tabs, sort of like TWM!
+
+import XMonad.Util.EZConfig        -- append key/mouse bindings
+import XMonad.Util.Run             -- spawnPipe and hPutStrLn
 
 import qualified XMonad.Layout.Circle
 import qualified XMonad.Layout.PerWorkspace
+import qualified XMonad.StackSet as W
 import qualified XMonad.Layout.WorkspaceDir
- 
-import XMonad.Hooks.UrgencyHook    -- window alert bells 
-import XMonad.Layout.Named         -- custom layout names
-import XMonad.Layout.NoBorders     -- smart borders on solo clients
 
 main = xmonad $ defaultConfig
-        { modMask = mod4Mask -- mod3Mask to use right Alt; old keyboards don't have super
-                    -- unfortunately, right alt is normally bound to mod1, and using
-                    -- xmodmap to rebind it breaks X's VT switching on Ubuntu.  Grump.
+        { modMask = myModMask
         , terminal = "xterm"
 	, layoutHook = myLayoutHook
         , manageHook = manageDocks <+> myManageHook <+> manageHook defaultConfig
         , workspaces = myWorkspaces
         -- more changes
         }
+        `additionalKeys` myAdditionalKeys
+        -- could use `additionalKeysP` for emacs-like key names; you can't mix them.
+
+myModMask = mod4Mask  -- mod3Mask to use right Alt; old keyboards don't have super
+                      -- unfortunately, right alt is normally bound to mod1, and using
+                      -- xmodmap to rebind it breaks X's VT switching on Ubuntu.  Grump.
 
 -- | The available layouts.  Note that each layout is separated by |||, which
 -- denotes layout choice. 
 
--- the default layout is fullscreen with smartborders applied to all
+-- the default layout is simpleTabbed with smartborders applied to all
 -- see https://wiki.haskell.org/Xmonad/Config_archive/Thayer_Williams%27_xmonad.hs
--- for the golden ratio stuff.
+-- for the golden ratio stuff and some other config things.
 myLayoutHook = smartBorders $ avoidStruts ( full ||| tiled ||| mtiled )
   where
     full    = simpleTabbed
     mtiled  = Mirror tiled
     tiled   = Tall 1 (3/100) (2/(1+(toRational(sqrt(5)::Double))))
     -- sets default tile as: Tall nmaster (delta) (golden ratio)
-
 
 myManageHook = composeAll
     [ className =? "MPlayer"        --> doFloat
@@ -55,13 +64,24 @@ myManageHook = composeAll
 -- workspace name. The number of workspaces is determined by the length
 -- of this list.
 --
--- Note that the keybindings have to be added for anything past 9
---
 -- A tagging example:
 --
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
---
-myWorkspaces    = ["1","2","3","4","5","6","7","8","9", "0"]
+-- 
+myWorkspaces = ["1","2","3","4","5","6","7","8","9"]
+               ++ (map snd myExtraWorkspaces)
 
+myExtraWorkspaces = [(xK_0, "0")] -- list of (key, name)
 
+-- took me hours to figure out that modMask was bound to something unhelpful here
+myAdditionalKeys =
+  [
+  ] ++ [                        -- regular and shifted bindings for myExtraWorkspaces
+    ((myModMask, key), (windows $ W.greedyView ws))
+    | (key, ws) <- myExtraWorkspaces
+    ] ++ [
+    ((myModMask .|. shiftMask, key), (windows $ W.shift ws))
+    | (key, ws) <- myExtraWorkspaces
+    ]
+    
 -- END OF FILE ------------------------------------------------------------------------

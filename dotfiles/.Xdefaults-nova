@@ -1,15 +1,15 @@
-! .Xdefaults.nova -- this is loaded by all Xt applications running on nova
+! .Xdefaults.cygnus -- this is loaded by all Xt applications running on cygnus
 ! 		  Since gnome doesn't normally load the X resource database,
 !		  this is also the only way we can set resources reliably.
 
 ! We use green-on-black to distinguish xterms on the remote host.
 XTerm*vt100.background:		black
-XTerm*vt100.foreground:		green
+XTerm*vt100.foreground:		white
 XTerm*vt100.scrollBar:		true
 XTerm*vt100.rightScrollBar:	true
 XTerm*saveLines:		1000
 
-! We suppress the toolbar in .emacs, but this prevents emacs from resizing,
+! We suppress the toolbar in .emacs, but doing it here keeps emacs from resizing,
 ! which it does because it shows the toolbar on startup and then deletes it
 ! when the option is set.
 

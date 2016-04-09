@@ -164,7 +164,7 @@
 ;;; File extensions to ignore when completing filenames
 (setq completion-ignored-extensions
        (append completion-ignored-extensions
- 	      '(".exe" ".obj" ".prj" ".ide" ".class"
+ 	      '(".exe" ".obj" ".prj" ".ide" ".class" ".hi" ".errors"
 		".lj" ".ps" ".dvi" ".log" ".aux")))
 
 (setq TeX-default-mode 'LaTeX-mode)

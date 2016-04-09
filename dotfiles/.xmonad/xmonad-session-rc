@@ -4,9 +4,27 @@
 
 xsetroot -xcf /usr/share/icons/Adwaita/cursors/left_ptr 16 -solid blue
 
-if [ -x /usr/bin/xscreensaver ]; then xscreensaver -nosplash & fi
+#xrdb -merge .Xresources
 
+trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --width 15 --height 12 --transparent true --tint 0x000000 &
+
+gnome-settings-daemon&
+
+# equivalent to eval -- sources the output to set variables.
 $(gnome-keyring-daemon --start --daemonize)
+
+if [ -x /usr/bin/gnome-power-manager ] ; then
+   sleep 1
+   gnome-power-manager &
+fi
+
+if [ -x /usr/bin/nm-applet ] ; then
+   nm-applet --sm-disable &
+fi
+
+
+# xscreensaver on gnome-oriented distros is old and crufty.
+gnome-screensaver&
 
 #if [ -e $HOME/.xmonad/.Xmodmap ]; then xmodmap $HOME/.xmonad/.Xmodmap; fi
 #Apparently any use of xmodmap on Ubuntu turns off VT switching!
