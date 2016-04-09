@@ -8,6 +8,7 @@ import XMonad.Hooks.UrgencyHook    -- window alert bells
 
 import XMonad.Layout.Named         -- custom layout names
 import XMonad.Layout.NoBorders     -- smart borders on solo clients
+import XMonad.Layout.ShowWName     -- show workspace name when switching
 import XMonad.Layout.Tabbed        -- tabs, sort of like TWM!
 
 import XMonad.Util.EZConfig        -- append key/mouse bindings
@@ -39,7 +40,7 @@ myModMask = mod4Mask  -- mod3Mask to use right Alt; old keyboards don't have sup
 -- the default layout is simpleTabbed with smartborders applied to all
 -- see https://wiki.haskell.org/Xmonad/Config_archive/Thayer_Williams%27_xmonad.hs
 -- for the golden ratio stuff and some other config things.
-myLayoutHook = smartBorders $ avoidStruts ( full ||| tiled ||| mtiled )
+myLayoutHook = showWName $ smartBorders $ avoidStruts ( full ||| tiled ||| mtiled )
   where
     full    = simpleTabbed
     mtiled  = Mirror tiled
