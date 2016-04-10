@@ -4,7 +4,7 @@
 
 xsetroot -xcf /usr/share/icons/Adwaita/cursors/left_ptr 16 -solid blue
 
-#xrdb -merge .Xresources
+xrdb -merge $HOME/.Xdefaults
 
 trayer --edge top --align right --SetDockType true\
        --SetPartialStrut true --expand true\
