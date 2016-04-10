@@ -46,8 +46,8 @@ myModMask = mod4Mask  -- mod3Mask to use right Alt; old keyboards don't have sup
 -- for the golden ratio stuff and some other config things.
 myLayoutHook = showWName $ smartBorders $ avoidStruts ( full ||| tiled ||| mtiled )
   where
-    full    = simpleTabbed
-    mtiled  = Mirror tiled
+    full    = named "Tabs" simpleTabbed
+    mtiled  = named "Wide" $ Mirror tiled
     tiled   = Tall 1 (3/100) (2/(1+(toRational(sqrt(5)::Double))))
     -- sets default tile as: Tall nmaster (delta) (golden ratio)
 
@@ -85,6 +85,7 @@ myExtraWorkspaces = [(xK_0, "0")] -- list of (key, name)
 -- took me hours to figure out that modMask was bound to something unhelpful here
 myAdditionalKeys =
   [
+    ((myModMask .|. controlMask, xK_l)     , spawn "gnome-screensaver-command --lock" ) -- lock screen
   ] ++ [                        -- regular and shifted bindings for myExtraWorkspaces
     ((myModMask, key), (windows $ W.greedyView ws))
     | (key, ws) <- myExtraWorkspaces

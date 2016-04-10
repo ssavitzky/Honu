@@ -40,10 +40,7 @@ Config {
    --   see http://projects.haskell.org/xmobar/#system-monitor-plugins.
    , commands = 
 
-        -- weather monitor
-        [ Run Weather "SEA" [ "--template", "<skyCondition> | <fc=#4682B4><tempF></fc>°F | <fc=#4682B4><rh></fc>% | <fc=#4682B4><pressure></fc>hPa"
-                             ] 36000
-
+        [ Run StdinReader       -- accept input from stdin (i.e. from xmonad)
         -- network activity monitor (dynamic interface resolution)
         , Run DynNetwork     [ "--template" , "<dev>: <tx>kB/s|<rx>kB/s"
                              , "--Low"      , "1000"       -- units: kB/s
@@ -91,6 +88,6 @@ Config {
         -- time and date indicator 
         --   (%F = y-m-d date, %a = day of week, %T = h:m:s time)
         , Run Date           "<fc=#ABABAB>%a %F %I:%M:%S%P</fc>" "date" 10
-        , Run StdinReader       -- accept input from stdin (i.e. from xmonad)
+        -- Run Weather "SEA" [ "--template", "<skyCondition> | <fc=#4682B4><tempF></fc>°F | <fc=#4682B4><rh></fc>% | <fc=#4682B4><pressure></fc>hPa" ] 36000
         ]
    }
