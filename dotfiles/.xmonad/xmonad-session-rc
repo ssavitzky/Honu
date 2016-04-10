@@ -6,7 +6,9 @@ xsetroot -xcf /usr/share/icons/Adwaita/cursors/left_ptr 16 -solid blue
 
 #xrdb -merge .Xresources
 
-trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --width 15 --height 12 --transparent true --tint 0x000000 &
+trayer --edge top --align right --SetDockType true\
+       --SetPartialStrut true --expand true --width 15 --height 20\
+       --transparent true --tint 0x000000 &
 
 gnome-settings-daemon&
 
@@ -22,6 +24,7 @@ if [ -x /usr/bin/nm-applet ] ; then
    nm-applet --sm-disable &
 fi
 
+export LC_COLLATE=C
 
 # xscreensaver on gnome-oriented distros is old and crufty.
 gnome-screensaver&

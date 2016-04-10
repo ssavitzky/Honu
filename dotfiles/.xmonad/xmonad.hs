@@ -19,12 +19,16 @@ import qualified XMonad.Layout.PerWorkspace
 import qualified XMonad.StackSet as W
 import qualified XMonad.Layout.WorkspaceDir
 
-main = xmonad $ defaultConfig
+main = do
+    xmproc <- spawnPipe "xmobar"
+
+    xmonad $ defaultConfig
         { modMask = myModMask
         , terminal = "xterm"
 	, layoutHook = myLayoutHook
         , manageHook = manageDocks <+> myManageHook <+> manageHook defaultConfig
         , workspaces = myWorkspaces
+        , logHook = myLogHook xmproc
         -- more changes
         }
         `additionalKeys` myAdditionalKeys
@@ -58,7 +62,11 @@ myManageHook = composeAll
     , className =? "stalonetray"    --> doIgnore
     , className =? "panel"          --> doIgnore
     ]
- 
+
+myLogHook = \xmproc -> dynamicLogWithPP xmobarPP { ppOutput = hPutStrLn xmproc
+                                      , ppTitle = xmobarColor "green" "" . shorten 50
+                                      }
+            
 -- see http://softwareprocess.es/x/x/xmonad-burn.hs for some good documentation
 -- The default number of workspaces (virtual screens) and their names.
 -- By default we use numeric strings, but any string may be used as a
