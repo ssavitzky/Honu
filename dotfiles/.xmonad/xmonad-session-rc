@@ -2,19 +2,30 @@
 #    Sourced by the xmonad gdm/lightdm session.  Initially from
 #    /usr/share/doc/xmonad/README.Debian
 
-xsetroot -xcf /usr/share/icons/Adwaita/cursors/left_ptr 16 -solid blue
+# This is used by GTK applications to get their defaults.
+gnome-settings-daemon&
 
-xrdb -merge $HOME/.Xdefaults
+# This combines ssh-agent and gpg-agent for key management.
+# $(...) sources the command output to set variables.
+$(gnome-keyring-daemon --start --daemonize)
 
+# This is used by X toolkit applications, notably xterm, to get their defaults.
+# They will also read .Xdefaults-<hostname> for local overrides; I use this to
+# set the foreground color to green on servers and amber on cloud hosts.
+if [ -e  $HOME/.Xdefaults ]; then
+    xrdb -merge $HOME/.Xdefaults
+fi
+
+# This contains the indicators, most notably the network manager applet.
+# The width is set to 10% of the screen to leave room for xmobar, which
+# is started by xmonad so that it can pipe its log into it.
 trayer --edge top --align right --SetDockType true\
        --SetPartialStrut true --expand true\
        --widthtype percent --width 10 --height 20\
        --transparent true --tint 0x000000 &
 
-gnome-settings-daemon&
-
-# equivalent to eval -- sources the output to set variables.
-$(gnome-keyring-daemon --start --daemonize)
+# Use a solid blue background to indicate that something is happening.
+xsetroot -xcf /usr/share/icons/Adwaita/cursors/left_ptr 16 -solid blue
 
 if [ -x /usr/bin/gnome-power-manager ] ; then
    sleep 1
@@ -25,12 +36,17 @@ if [ -x /usr/bin/nm-applet ] ; then
    nm-applet --sm-disable &
 fi
 
+# I like to see directories listed in ASCII order, with dotfiles on top, then
+# uppercase, then lowercase.  I tend to start directory names with uppercase
+# letters to take advantage of this.
 export LC_COLLATE=C
 
-# xscreensaver on gnome-oriented distros is old and crufty.
+# xscreensaver on gnome-oriented distros is old and crufty.  gnome-screensaver
+# is bland, but it's reliable and has a "switch user" feature to bring up an
+# alternate session, which is handy when sharing a computer.
 gnome-screensaver&
 
-#if [ -e $HOME/.xmonad/.Xmodmap ]; then xmodmap $HOME/.xmonad/.Xmodmap; fi
 #Apparently any use of xmodmap on Ubuntu turns off VT switching!
+#if [ -e $HOME/.xmonad/.Xmodmap ]; then xmodmap $HOME/.xmonad/.Xmodmap; fi
 
 
