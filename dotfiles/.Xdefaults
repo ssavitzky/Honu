@@ -5,8 +5,7 @@
 !       DO NOT permit a session manager or window manager (e.g. dxsession or
 !	mwm) to scribble its defaults on your copy of this file -- this is 
 !	guaranteed to lose.  In particular, you lose all the C preprocessor 
-!	defines and conditionals.  This	means one shouldn't use OSF's, Dec's
-!	or Sun's resource editors unless you rename your copy of this file.
+!	defines and conditionals.
 !
 ! Note that trailing blanks on a line are significant (and usually wrong)!
 !      In particular they invisibly screw up font names.
@@ -41,8 +40,8 @@
 #define FH		16
 #define HH		20
 #define TH		24
-! go a little smaller because the 22" monitor has bigger dots
-#define EditFONT  -adobe-courier-medium-r-normal--17-*-*-*-m-*-*-1
+! go a little smaller because the 22'' monitor has bigger dots
+#define EditFONT  -adobe-courier-medium-r-normal--16-*-*-*-m-*-*-1
 #define fixed 		8x13
 #define serif10		serif12
 #define	serifb10	serifb12
@@ -56,7 +55,7 @@
 #define FH		18
 #define HH		20
 #define TH		24
-#define EditFONT  -adobe-courier-medium-r-normal--18-*-*-*-m-*-*-1
+#define EditFONT  -adobe-courier-medium-r-normal--16-*-*-*-m-*-*-1
 #define fixed 		8x13
 #define serif10		serif12
 #define	serifb10	serifb12
@@ -76,7 +75,7 @@
 #define EmacsGEOM	81x41-0+52
 #endif
 #define FH		18
-#define EditFONT -adobe-courier-medium-r-normal--18-*-*-*-m-*-*-1
+#define EditFONT -adobe-courier-medium-r-normal--16-*-*-*-m-*-*-1
 #define HH		20
 #define TH		24
 #else
@@ -316,10 +315,10 @@ Emacs.InternalBorder:		2
 Emacs.Cursor:			xterm
 
 !Emacs.Font:	-adobe-courier-medium-r-normal--*-160-*-*-m-*-*-1
-Emacs*background:			black
-Emacs*Background:			black
-Emacs*foreground:			white
-Emacs*Foreground:			white
+!Emacs*background:			black
+!Emacs*Background:			black
+!Emacs*foreground:			white
+!Emacs*Foreground:			white
 
 #ifndef EditFONT
 ! Environments that don't use xrdb or don't have a RESOURCE_MANAGER property
