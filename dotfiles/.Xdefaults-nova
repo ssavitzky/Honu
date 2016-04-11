@@ -22,7 +22,7 @@ XTerm*font:			-adobe-courier-medium-r-normal--16-*-*-*-m-*-*-1
 ! when the option is set.
 
 Emacs*toolBar:			0
-Emacs*font:			-adobe-courier-medium-r-normal--14-*-*-*-m-*-*-1
-Emacs*foreground:		green
+Emacs*font:			-adobe-courier-medium-r-normal--12-*-*-*-m-*-*-1
+
 
 

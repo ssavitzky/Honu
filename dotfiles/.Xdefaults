@@ -293,8 +293,8 @@ nethack*VT100.Translations:	#override\
 #ifndef EditFONT
 ! Environments that don't use xrdb or don't have a RESOURCE_MANAGER property
 ! on the root window (e.g Widoze X servers) will pick up these resources.
-XTerm*font:	-adobe-courier-medium-r-normal--*-160-*-*-m-*-*-1
-NXTerm*font:	-adobe-courier-medium-r-normal--*-160-*-*-m-*-*-1
+XTerm*font:	-adobe-courier-medium-r-normal--*-120-*-*-m-*-*-1
+NXTerm*font:	-adobe-courier-medium-r-normal--*-120-*-*-m-*-*-1
 xterm*VT100.geometry:		80x24+0-0
 console*VT100.geometry: 	80x4-55+0
 console*font:			fixed
