@@ -14,7 +14,7 @@ Config {
    -- layout
    , sepChar =  "%"   -- delineator between plugin names and straight text
    , alignSep = "}{"  -- separator between left-right alignment
-   , template = "%StdinReader% }{ %battery% | %multicpu% | %memory% | %dynnetwork% | %date% "
+   , template = "%StdinReader% }{ %multicpu% | %memory%|%swap% | %dynnetwork% | %battery% | %date% "
 
    -- general behavior
    , lowerOnStart =     True    -- send to bottom of window stack on start
@@ -57,6 +57,7 @@ Config {
                              , "--low"      , "darkgreen"
                              , "--normal"   , "darkorange"
                              , "--high"     , "darkred"
+                             , "-m"         , "2"
                              ] 10
 
         -- memory usage monitor
@@ -68,6 +69,14 @@ Config {
                              , "--high"     , "darkred"
                              ] 10
 
+        -- memory usage monitor
+        , Run Swap         [ "--template" ,"<usedratio>%"
+                             , "--Low"      , "10"        -- units: %
+                             , "--High"     , "90"        -- units: %
+                             , "--low"      , "darkgreen"
+                             , "--normal"   , "darkorange"
+                             , "--high"     , "darkred"
+                             ] 10
         -- battery monitor
         , Run Battery        [ "--template" , "Batt: <acstatus>"
                              , "--Low"      , "10"        -- units: %
@@ -88,6 +97,7 @@ Config {
         -- time and date indicator 
         --   (%F = y-m-d date, %a = day of week, %T = h:m:s time)
         , Run Date           "<fc=#ABABAB>%a %F %I:%M:%S%P</fc>" "date" 10
+          
         -- Run Weather "SEA" [ "--template", "<skyCondition> | <fc=#4682B4><tempF></fc>°F | <fc=#4682B4><rh></fc>% | <fc=#4682B4><pressure></fc>hPa" ] 36000
         ]
    }
