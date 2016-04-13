@@ -1,5 +1,6 @@
 import XMonad
 
+import System.Directory
 import System.IO                   -- hPutStrLn scope
 
 import XMonad.Hooks.DynamicLog     -- statusbar 
@@ -21,10 +22,11 @@ import qualified XMonad.Layout.WorkspaceDir
 
 main = do
     xmproc <- spawnPipe "xmobar"
+    haveGoodTerminal <- doesFileExist goodTerminal
 
     xmonad $ defaultConfig
         { modMask = myModMask
-        , terminal = "xterm"
+        , terminal =  if haveGoodTerminal then goodTerminal else "xterm"
 	, layoutHook = myLayoutHook
         , manageHook = manageDocks <+> myManageHook <+> manageHook defaultConfig
         , workspaces = myWorkspaces
@@ -37,6 +39,9 @@ main = do
 myModMask = mod4Mask  -- mod3Mask to use right Alt; old keyboards don't have super
                       -- unfortunately, right alt is normally bound to mod1, and using
                       -- xmodmap to rebind it breaks X's VT switching on Ubuntu.  Grump.
+
+goodTerminal = "/usr/bin/xfce4-terminal"
+
 
 -- | The available layouts.  Note that each layout is separated by |||, which
 -- denotes layout choice. 
