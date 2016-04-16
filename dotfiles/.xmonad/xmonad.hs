@@ -97,8 +97,8 @@ xmobarEscape = concatMap doubleLts
 mobarLogHook pipe = dynamicLogWithPP xmobarPP    { ppOutput = hPutStrLn pipe
                                                  , ppCurrent = xmobarColor "yellow" "" . wrap "[" "]"
                                                  , ppHiddenNoWindows = xmobarColor "grey" ""
-                                                 , ppTitle   = xmobarColor "green"  "" . shorten 50
-                                                               --possibly 40 on laptops
+                                                 , ppTitle   = xmobarColor "green"  "" -- . shorten 50
+                                                               -- xmobar truncates at }{ to fit.
                                                  , ppVisible = wrap "(" ")"
                                                  , ppUrgent  = xmobarColor "red" "yellow"
                                                  }
