@@ -14,7 +14,7 @@ Config {
    -- layout
    , sepChar =  "%"   -- delineator between plugin names and straight text
    , alignSep = "}{"  -- separator between left-right alignment
-   , template = "%StdinReader% }{ %multicpu% | %memory%|%swap% | %dynnetwork% | %battery% | %date% "
+   , template = "%UnsafeStdinReader% }{ %multicpu% | %memory%|%swap% | %dynnetwork% | %battery% | %date% "
 
    -- general behavior
    , lowerOnStart =     True    -- send to bottom of window stack on start
@@ -40,7 +40,7 @@ Config {
    --   see http://projects.haskell.org/xmobar/#system-monitor-plugins.
    , commands = 
 
-        [ Run StdinReader       -- accept input from stdin (i.e. from xmonad)
+        [ Run UnsafeStdinReader       -- accept input from stdin (i.e. from xmonad)
         -- network activity monitor (dynamic interface resolution)
         , Run DynNetwork     [ "--template" , "<dev>: <tx>kB/s|<rx>kB/s"
                              , "--Low"      , "1000"       -- units: kB/s
