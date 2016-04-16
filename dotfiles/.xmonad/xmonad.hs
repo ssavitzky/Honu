@@ -151,8 +151,8 @@ wsKeys wsNames = zip [ xK_0 ] (drop 9 wsNames)
 -- You have to pass the fully-munged workspace names, which are only known after
 -- we've figured out which status bar to mung them for.
 myAdditionalKeys wsNames =
-  [
-    ((myModMask .|. controlMask, xK_l)     , spawn "gnome-screensaver-command --lock" ) -- lock screen
+  [ ((myModMask .|. controlMask, xK_l)     , spawn "gnome-screensaver-command --lock" ) -- lock screen
+  , ((myModMask .|. controlMask, xK_e)     , spawn "emacs" )                            -- editor
   ] ++ [                        -- regular and shifted bindings for myExtraWorkspaces
     ((myModMask, key), (windows $ W.greedyView ws))
     | (key, ws) <- wsKeys wsNames
