@@ -837,6 +837,10 @@ Paragraphs are delimited only by empty lines."
   )
 (display-time)
 
+;;; Set the window manager's title.  This has the same format as mode-line-format
+(setq frame-title-format
+      (quote ("%b  "  (vc-mode vc-mode) " - " invocation-name "@" system-name)))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
