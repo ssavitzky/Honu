@@ -99,10 +99,11 @@ xmobarEscape = concatMap doubleLts
 
 mobarLogHook pipe = dynamicLogWithPP xmobarPP    { ppOutput = hPutStrLn pipe
                                                  , ppCurrent = xmobarColor "yellow" "" . wrap "[" "]"
-                                                 , ppHiddenNoWindows = xmobarColor "grey" ""
+                                                 , ppHidden  = xmobarColor "gray" ""
+                                                 , ppHiddenNoWindows = xmobarColor "#646464" ""
                                                  , ppTitle   = xmobarColor "green"  "" -- . shorten 50
                                                                -- xmobar truncates at }{ to fit.
-                                                 , ppVisible = wrap "(" ")"
+                                                 , ppVisible = xmobarColor "gray" "" . wrap "(" ")"
                                                  , ppUrgent  = xmobarColor "red" "yellow"
                                                  }
 
@@ -116,10 +117,11 @@ dzenCommand = "dzen2 -x '0' -y '0' -h '20' -w '1000' -ta 'l' -fg '#646464' -bg '
 
 dzenLogHook pipe = dynamicLogWithPP defaultPP    { ppOutput = hPutStrLn pipe
                                                  , ppCurrent = dzenColor "yellow" "" . wrap "[" "]"
-                                                 , ppHiddenNoWindows = dzenColor "grey" ""
+                                                 , ppHidden  = dzenColor "gray" ""
+                                                 , ppHiddenNoWindows = dzenColor "#646464" ""
                                                  , ppTitle   = dzenColor "green"  "" . shorten 50
                                                                --possibly 40 on laptops
-                                                 , ppVisible = wrap "(" ")"
+                                                 , ppVisible = dzenColor "gray" "" . wrap "(" ")"
                                                  , ppUrgent  = dzenColor "red" "yellow"
                                                  }
 
