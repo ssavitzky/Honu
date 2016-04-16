@@ -1,0 +1,7 @@
+#!/bin/sh
+#   Cleanly restart a running xmonad
+
+# Kill any status bars hanging around; they'll come back when we restart.
+
+killall -q xmobar dzen2
+xmonad --restart
