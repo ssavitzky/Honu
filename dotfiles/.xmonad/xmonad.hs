@@ -32,18 +32,21 @@ goodTerminal = "/usr/bin/xfce4-terminal" -- Use xterm if we don't have this
 main = do
     -- everything that reads files or environment variables has to go inside of main.
 
-  xmproc <- spawnPipe myLogBar -- spawn the status bar.
   haveGoodTerminal <- doesFileExist goodTerminal -- detect terminal emulator
+  haveXmobar <- doesFileExist "/usr/bin/xmobar"  -- detect status bar program
 
+  xmproc <- spawnPipe $ myLogCommand haveXmobar -- spawn the status bar.
+  let wsNames = myWorkspaces haveXmobar
+  
   xmonad $ defaultConfig
         { modMask = myModMask
         , terminal =  if haveGoodTerminal then goodTerminal else "xterm"
 	, layoutHook = myLayoutHook
         , manageHook = manageDocks <+> myManageHook <+> manageHook defaultConfig
-        , workspaces = myWorkspaces
-        , logHook = myLogHook xmproc
+        , workspaces = myWorkspaces haveXmobar
+        , logHook = myLogHook haveXmobar xmproc
         }
-        `additionalKeys` myAdditionalKeys
+        `additionalKeys` myAdditionalKeys wsNames
         -- could use `additionalKeysP` for emacs-like key names; you can't mix them.
 
 -- | The available layouts.  Note that each layout is separated by |||, which
@@ -78,10 +81,10 @@ myManageHook = composeAll
 --   don't support the full configuration file format, so if we're stuck on Ubuntu 12.04
 --   we use dzen2.  It doesn't display status, so most people format a conky with a
 --   similar color scheme and layout, sitting next to it.
-myWorkspaces :: [String]
-myWorkspaces = if usingMobar then mobarWorkspaces else dzenWorkspaces
-myLogBar = if usingMobar then "xmobar" else "dzen2" ++ dzenArgs
-myLogHook= if usingMobar then mobarLogHook else dzenLogHook
+-- myWorkspaces :: Bool -> [String]
+myWorkspaces mobar = if mobar then mobarWorkspaces else dzenWorkspaces
+myLogCommand mobar = if mobar then "xmobar" else dzenCommand
+myLogHook mobar    = if mobar then mobarLogHook else dzenLogHook
 
 -- xmobar log hook configuration
 
@@ -96,10 +99,11 @@ xmobarEscape = concatMap doubleLts
 
 mobarLogHook pipe = dynamicLogWithPP xmobarPP    { ppOutput = hPutStrLn pipe
                                                  , ppCurrent = xmobarColor "yellow" "" . wrap "[" "]"
-                                                 , ppHiddenNoWindows = xmobarColor "grey" ""
-                                                 , ppTitle   = xmobarColor "green"  "" . shorten 50
-                                                               --possibly 40 on laptops
-                                                 , ppVisible = wrap "(" ")"
+                                                 , ppHidden  = xmobarColor "gray" ""
+                                                 , ppHiddenNoWindows = xmobarColor "#646464" ""
+                                                 , ppTitle   = xmobarColor "green"  "" -- . shorten 50
+                                                               -- xmobar truncates at }{ to fit.
+                                                 , ppVisible = xmobarColor "gray" "" . wrap "(" ")"
                                                  , ppUrgent  = xmobarColor "red" "yellow"
                                                  }
 
@@ -109,14 +113,15 @@ dzenWorkspaces = clickable $ workspaceNames
   where clickable l = [ "^ca(1,xdotool key super+" ++ show (n) ++ ")" ++ ws ++ "^ca()" |
                         (i,ws) <- zip [1..] l,
                         let n = i ]
-dzenArgs = " -x '0' -y '0' -h '20' -w '1000' -ta 'l' -fg '#646464' -bg 'black' -fn '"++font++"'"
+dzenCommand = "dzen2 -x '0' -y '0' -h '20' -w '1000' -ta 'l' -fg '#646464' -bg 'black' -fn '"++font++"'"
 
 dzenLogHook pipe = dynamicLogWithPP defaultPP    { ppOutput = hPutStrLn pipe
                                                  , ppCurrent = dzenColor "yellow" "" . wrap "[" "]"
-                                                 , ppHiddenNoWindows = dzenColor "grey" ""
+                                                 , ppHidden  = dzenColor "gray" ""
+                                                 , ppHiddenNoWindows = dzenColor "#646464" ""
                                                  , ppTitle   = dzenColor "green"  "" . shorten 50
                                                                --possibly 40 on laptops
-                                                 , ppVisible = wrap "(" ")"
+                                                 , ppVisible = dzenColor "gray" "" . wrap "(" ")"
                                                  , ppUrgent  = dzenColor "red" "yellow"
                                                  }
 
@@ -138,22 +143,24 @@ fgColor =      "#646464"
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 -- 
 workspaceNames = ["1","2","3","4","5","6","7","8","9" ] -- the predefined workspaces
-                 ++ [ "0" ]                             -- extras workspaces.
+                 ++ [ "0" ]                             -- extra workspaces.
 
 -- assign keys to the extra workspaces (only "0" so far)
 -- has to be done this way in order to pick up the clickable-wrapped actual names.
-myExtraWorkspaces = zip [ xK_0 ] (drop 9 myWorkspaces)
+wsKeys wsNames = zip [ xK_0 ] (drop 9 wsNames)
 
 -- took me hours to figure out that modMask was bound to something unhelpful here
-myAdditionalKeys =
-  [
-    ((myModMask .|. controlMask, xK_l)     , spawn "gnome-screensaver-command --lock" ) -- lock screen
+-- You have to pass the fully-munged workspace names, which are only known after
+-- we've figured out which status bar to mung them for.
+myAdditionalKeys wsNames =
+  [ ((myModMask .|. controlMask, xK_l)     , spawn "gnome-screensaver-command --lock" ) -- lock screen
+  , ((myModMask .|. controlMask, xK_e)     , spawn "emacs" )                            -- editor
   ] ++ [                        -- regular and shifted bindings for myExtraWorkspaces
     ((myModMask, key), (windows $ W.greedyView ws))
-    | (key, ws) <- myExtraWorkspaces
+    | (key, ws) <- wsKeys wsNames
     ] ++ [
     ((myModMask .|. shiftMask, key), (windows $ W.shift ws))
-    | (key, ws) <- myExtraWorkspaces
+    | (key, ws) <- wsKeys wsNames
     ]
     
 -- END OF FILE ------------------------------------------------------------------------
