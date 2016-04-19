@@ -3,7 +3,8 @@ import XMonad
 import System.Directory
 import System.IO                   -- hPutStrLn scope
 
-import XMonad.Hooks.DynamicLog     -- statusbar 
+import XMonad.Hooks.DynamicLog     -- statusbar
+import XMonad.Hooks.EwmhDesktops   -- extended window manager hints
 import XMonad.Hooks.ManageDocks    -- dock/tray mgmt
 import XMonad.Hooks.UrgencyHook    -- window alert bells 
 
@@ -38,7 +39,7 @@ main = do
   xmproc <- spawnPipe $ myLogCommand haveXmobar -- spawn the status bar.
   let wsNames = myWorkspaces haveXmobar
   
-  xmonad $ defaultConfig
+  xmonad $ ewmh $ defaultConfig
         { modMask = myModMask
         , terminal =  if haveGoodTerminal then goodTerminal else "xterm"
 	, layoutHook = myLayoutHook
@@ -107,7 +108,8 @@ mobarLogHook pipe = dynamicLogWithPP xmobarPP    { ppOutput = hPutStrLn pipe
                                                  , ppUrgent  = xmobarColor "red" "yellow"
                                                  }
 
--- dzen2 log hook configuration.
+-- dzen2 log hook configuration.  Note that in order to have clickable desktop names on older systems it
+-- may still be necessary to build the latest version from source, but that should be fairly simple.
 
 dzenWorkspaces = clickable $ workspaceNames
   where clickable l = [ "^ca(1,xdotool key super+" ++ show (n) ++ ")" ++ ws ++ "^ca()" |
