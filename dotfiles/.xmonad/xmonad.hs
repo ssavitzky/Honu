@@ -89,7 +89,7 @@ myLogHook mobar    = if mobar then mobarLogHook else dzenLogHook
 
 -- xmobar log hook configuration
 
-mobarWorkspaces = clickable . (map xmobarEscape) $ workspaceNames
+mobarWorkspaces' = clickable . (map xmobarEscape) $ workspaceNames
   where clickable l = [ "<action=xdotool key super+" ++ show (n) ++ ">" ++ ws ++ "</action>" |
                         (i,ws) <- zip ([1..9] ++ [0]) l,                                        
                         let n = i ]
@@ -98,14 +98,22 @@ xmobarEscape = concatMap doubleLts
   where doubleLts '<' = "<<"
         doubleLts x   = [x]
 
+mobarWorkspaces = workspaceNames
+
+-- | make a workspace name clickable for xmobar.
+-- Works as long as the first character of the name is the corresponding key
+xmobarClickWrap :: String -> String
+xmobarClickWrap ws = wrap start end (xmobarEscape ws)
+  where key = (head ws)
+        start = "<action=xdotool key super+" ++ [ key ] ++ ">"
+        end   = "</action>"
 mobarLogHook pipe = dynamicLogWithPP xmobarPP    { ppOutput = hPutStrLn pipe
-                                                 , ppCurrent = xmobarColor "yellow" "" . wrap "[" "]"
-                                                 , ppHidden  = xmobarColor "gray" ""
-                                                 , ppHiddenNoWindows = xmobarColor "#646464" ""
-                                                 , ppTitle   = xmobarColor "green"  "" -- . shorten 50
-                                                               -- xmobar truncates at }{ to fit.
-                                                 , ppVisible = xmobarColor "gray" "" . wrap "(" ")"
-                                                 , ppUrgent  = xmobarColor "red" "yellow"
+                                                 , ppCurrent = xmobarColor "yellow" "" . wrap "[" "]" . xmobarClickWrap
+                                                 , ppHidden  = xmobarColor "gray" "" . xmobarClickWrap
+                                                 , ppHiddenNoWindows = xmobarColor "#646464" "" . xmobarClickWrap
+                                                 , ppVisible = xmobarColor "gray" "" . wrap "(" ")" . xmobarClickWrap
+                                                 , ppUrgent  = xmobarColor "red" "yellow" . xmobarClickWrap
+                                                 , ppTitle   = xmobarColor "green"  "" -- xmobar truncates at }{ 
                                                  }
 
 -- dzen2 log hook configuration.  Note that in order to have clickable desktop names on older systems it
