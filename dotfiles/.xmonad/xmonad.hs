@@ -8,6 +8,8 @@ import XMonad.Hooks.EwmhDesktops   -- extended window manager hints
 import XMonad.Hooks.ManageDocks    -- dock/tray mgmt
 import XMonad.Hooks.UrgencyHook    -- window alert bells 
 
+import XMonad.Layout.PerWorkspace
+import XMonad.Layout.Grid
 import XMonad.Layout.Named         -- custom layout names
 import XMonad.Layout.NoBorders     -- smart borders on solo clients
 import XMonad.Layout.ShowWName     -- show workspace name when switching
@@ -17,7 +19,6 @@ import XMonad.Util.EZConfig        -- append key/mouse bindings
 import XMonad.Util.Run             -- spawnPipe and hPutStrLn
 
 import qualified XMonad.Layout.Circle
-import qualified XMonad.Layout.PerWorkspace
 import qualified XMonad.StackSet as W
 import qualified XMonad.Layout.WorkspaceDir
 
@@ -55,8 +56,10 @@ main = do
 -- the default layout is simpleTabbed with smartborders applied to all
 -- see https://wiki.haskell.org/Xmonad/Config_archive/Thayer_Williams%27_xmonad.hs
 -- for the golden ratio stuff and some other config things.
--- showWName $ looks awful with clickable workspace strings.
-myLayoutHook = smartBorders $ avoidStruts ( full ||| tiled ||| mtiled )
+-- showWName $ looks awful with clickable workspace strings.  But we fixed that.
+myLayoutHook = smartBorders $ avoidStruts $ showWName
+               $ onWorkspace "0" Grid          -- 0 is a parking area, since xmonad doesn't have icons.
+               $ ( full ||| tiled ||| mtiled ) -- applies to all workspaces not otherwise mentioned
   where
     full    = named "Tabs" simpleTabbed
     mtiled  = named "Wide" $ Mirror tiled
