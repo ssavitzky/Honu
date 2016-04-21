@@ -26,7 +26,7 @@ import qualified XMonad.Layout.WorkspaceDir
 
 myModMask = mod4Mask  -- mod3Mask would use right Alt; old keyboards don't have super.
                       -- The bindings these days are in /usr/share/X11/xkb/symbols/pc
-usingMobar = True     -- This should really come from an environment variable.
+wsClickable = True    -- whether to make workspace names clickable in xmobar/dzen
 goodTerminal = "/usr/bin/xfce4-terminal" -- Use xterm if we don't have this
 
 
@@ -37,17 +37,16 @@ main = do
   haveXmobar <- doesFileExist "/usr/bin/xmobar"  -- detect status bar program
 
   xmproc <- spawnPipe $ myLogCommand haveXmobar -- spawn the status bar.
-  let wsNames = myWorkspaces haveXmobar
-  
+ 
   xmonad $ ewmh $ defaultConfig
         { modMask = myModMask
         , terminal =  if haveGoodTerminal then goodTerminal else "xterm"
 	, layoutHook = myLayoutHook
         , manageHook = manageDocks <+> myManageHook <+> manageHook defaultConfig
-        , workspaces = myWorkspaces haveXmobar
+        , workspaces = workspaceNames
         , logHook = myLogHook haveXmobar xmproc
         }
-        `additionalKeys` myAdditionalKeys wsNames
+        `additionalKeys` myAdditionalKeys workspaceNames
         -- could use `additionalKeysP` for emacs-like key names; you can't mix them.
 
 -- | The available layouts.  Note that each layout is separated by |||, which
@@ -82,8 +81,6 @@ myManageHook = composeAll
 --   don't support the full configuration file format, so if we're stuck on Ubuntu 12.04
 --   we use dzen2.  It doesn't display status, so most people format a conky with a
 --   similar color scheme and layout, sitting next to it.
--- myWorkspaces :: Bool -> [String]
-myWorkspaces mobar = if mobar then mobarWorkspaces else dzenWorkspaces
 myLogCommand mobar = if mobar then "xmobar" else dzenCommand
 myLogHook mobar    = if mobar then mobarLogHook else dzenLogHook
 
@@ -98,42 +95,41 @@ xmobarEscape = concatMap doubleLts
   where doubleLts '<' = "<<"
         doubleLts x   = [x]
 
-mobarWorkspaces = workspaceNames
-
 -- | make a workspace name clickable for xmobar.
 -- Works as long as the first character of the name is the corresponding key
 xmobarClickWrap :: String -> String
 xmobarClickWrap ws = wrap start end (xmobarEscape ws)
-  where key = (head ws)
-        start = "<action=xdotool key super+" ++ [ key ] ++ ">"
+  where start = "<action=xdotool key super+" ++ [ head ws ] ++ ">"
         end   = "</action>"
 mobarLogHook pipe = dynamicLogWithPP xmobarPP    { ppOutput = hPutStrLn pipe
-                                                 , ppCurrent = xmobarColor "yellow" "" . wrap "[" "]" . xmobarClickWrap
-                                                 , ppHidden  = xmobarColor "gray" "" . xmobarClickWrap
-                                                 , ppHiddenNoWindows = xmobarColor "#646464" "" . xmobarClickWrap
-                                                 , ppVisible = xmobarColor "gray" "" . wrap "(" ")" . xmobarClickWrap
-                                                 , ppUrgent  = xmobarColor "red" "yellow" . xmobarClickWrap
+                                                 , ppCurrent = xmobarColor "yellow" "" . wrap "[" "]" . clickWrap
+                                                 , ppHidden  = xmobarColor "gray" "" . clickWrap
+                                                 , ppHiddenNoWindows = xmobarColor "#646464" "" . clickWrap
+                                                 , ppVisible = xmobarColor "gray" "" . wrap "(" ")" . clickWrap
+                                                 , ppUrgent  = xmobarColor "red" "yellow" . clickWrap
                                                  , ppTitle   = xmobarColor "green"  "" -- xmobar truncates at }{ 
                                                  }
+                    where clickWrap = if wsClickable then xmobarClickWrap else id
 
 -- dzen2 log hook configuration.  Note that in order to have clickable desktop names on older systems it
 -- may still be necessary to build the latest version from source, but that should be fairly simple.
 
-dzenWorkspaces = clickable $ workspaceNames
-  where clickable l = [ "^ca(1,xdotool key super+" ++ show (n) ++ ")" ++ ws ++ "^ca()" |
-                        (i,ws) <- zip [1..] l,
-                        let n = i ]
 dzenCommand = "dzen2 -x '0' -y '0' -h '20' -w '1000' -ta 'l' -fg '#646464' -bg 'black' -fn '"++font++"'"
 
+dzenClickWrap ws = wrap start end (dzenEscape ws)
+  where start = "^ca(1,xdotool key super+" ++ [ head ws ] ++ ")"
+        end   = "^ca()"
+
 dzenLogHook pipe = dynamicLogWithPP defaultPP    { ppOutput = hPutStrLn pipe
-                                                 , ppCurrent = dzenColor "yellow" "" . wrap "[" "]"
-                                                 , ppHidden  = dzenColor "gray" ""
-                                                 , ppHiddenNoWindows = dzenColor "#646464" ""
+                                                 , ppCurrent = dzenColor "yellow" "" . wrap "[" "]" . clickWrap
+                                                 , ppHidden  = dzenColor "gray" "" . dzenClickWrap
+                                                 , ppHiddenNoWindows = dzenColor "#646464" "" . clickWrap
+                                                 , ppVisible = dzenColor "gray" "" . wrap "(" ")" . clickWrap
+                                                 , ppUrgent  = dzenColor "red" "yellow" . clickWrap
                                                  , ppTitle   = dzenColor "green"  "" . shorten 50
                                                                --possibly 40 on laptops
-                                                 , ppVisible = dzenColor "gray" "" . wrap "(" ")"
-                                                 , ppUrgent  = dzenColor "red" "yellow"
                                                  }
+                   where clickWrap = if wsClickable then dzenClickWrap else id
 
 -- font and colors from xmobarrc
 font    =      "xft:Bitstream Vera Sans Mono:size=10:bold:antialias=true"
