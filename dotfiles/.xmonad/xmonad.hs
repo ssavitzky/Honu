@@ -46,6 +46,7 @@ main = do
         , manageHook = manageDocks <+> myManageHook <+> manageHook defaultConfig
         , workspaces = workspaceNames
         , logHook = myLogHook haveXmobar xmproc
+        , handleEventHook = fullscreenEventHook -- makes fullscreen work properly
         }
         `additionalKeys` myAdditionalKeys workspaceNames
         -- could use `additionalKeysP` for emacs-like key names; you can't mix them.
