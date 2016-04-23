@@ -3,8 +3,10 @@
 
 Config { 
 
-   -- appearance
-     font =         "xft:Bitstream Vera Sans Mono:size=10:bold:antialias=true"
+   -- appearance.  Note that height is set from the font height.
+   --              Inconsolata is more compact than liberation mono or vera sans mono, so it's a
+   --              good choice for a laptop.  Arguably not as good for a large screen.
+     font =         "xft:Inconsolata:size=11:bold:antialias=true"
    , bgColor =      "black"
    , fgColor =      "#646464"
    , position =     TopW L 90

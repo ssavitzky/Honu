@@ -24,12 +24,17 @@ trayer --edge top --align right --SetDockType true\
        --widthtype percent --width 10 --height 20\
        --transparent true --tint 0x000000 &
 
+sleep 1
+
 # Use a solid blue background to indicate that something is happening.
 xsetroot -xcf /usr/share/icons/Adwaita/cursors/left_ptr 16 -solid blue
 
 if [ -x /usr/bin/gnome-power-manager ] ; then
-   sleep 1
    gnome-power-manager &
+fi
+
+if [ /usr/bin/classicmenu-indicator ]; then
+    /usr/bin/classicmenu-indicator&
 fi
 
 if [ -x /usr/bin/nm-applet ] ; then
