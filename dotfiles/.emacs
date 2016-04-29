@@ -840,6 +840,10 @@ Paragraphs are delimited only by empty lines."
 ;;; Set the window manager's title.  This has the same format as mode-line-format
 (setq frame-title-format
       (quote ("%b  "  (vc-mode vc-mode) " - " invocation-name "@" system-name)))
+(add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
+(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+;;(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
+;;(add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -856,7 +860,7 @@ Paragraphs are delimited only by empty lines."
  '(display-time-mode t)
  '(font-use-system-font t)
  '(global-font-lock-mode t nil (font-lock))
- '(haskell-mode-hook (quote (turn-on-haskell-doc turn-on-haskell-indentation)))
+ ;; '(haskell-mode-hook (quote (turn-on-haskell-doc turn-on-haskell-indentation)))
  '(lj-default-headers "Music: 
 Preformatted: yes
 ")

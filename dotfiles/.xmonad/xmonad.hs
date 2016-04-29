@@ -40,16 +40,16 @@ main = do
   xmproc <- spawnPipe $ myLogCommand haveXmobar -- spawn the status bar.
  
   xmonad $ ewmh $ defaultConfig
-        { modMask = myModMask
-        , terminal =  if haveGoodTerminal then goodTerminal else "xterm"
-	, layoutHook = myLayoutHook
-        , manageHook = manageDocks <+> myManageHook <+> manageHook defaultConfig
-        , workspaces = workspaceNames
-        , logHook = myLogHook haveXmobar xmproc
-        , handleEventHook = fullscreenEventHook -- makes fullscreen work properly
-        }
-        `additionalKeys` myAdditionalKeys workspaceNames
-        -- could use `additionalKeysP` for emacs-like key names; you can't mix them.
+    { modMask = myModMask
+    , terminal =  if haveGoodTerminal then goodTerminal else "xterm"
+    , layoutHook = myLayoutHook
+    , manageHook = manageDocks <+> myManageHook <+> manageHook defaultConfig
+    , workspaces = workspaceNames
+    , logHook = myLogHook haveXmobar xmproc
+    , handleEventHook = fullscreenEventHook -- makes fullscreen work properly
+    }
+    `additionalKeys` myAdditionalKeys workspaceNames
+    -- could use `additionalKeysP` for emacs-like key names; you can't mix them.
 
 -- | The available layouts.  Note that each layout is separated by |||, which
 -- denotes layout choice. 
@@ -105,14 +105,15 @@ xmobarClickWrap :: String -> String
 xmobarClickWrap ws = wrap start end (xmobarEscape ws)
   where start = "<action=xdotool key super+" ++ [ head ws ] ++ ">"
         end   = "</action>"
-mobarLogHook pipe = dynamicLogWithPP xmobarPP    { ppOutput = hPutStrLn pipe
-                                                 , ppCurrent = xmobarColor "yellow" "" . wrap "[" "]" . clickWrap
-                                                 , ppHidden  = xmobarColor "gray" "" . clickWrap
-                                                 , ppHiddenNoWindows = xmobarColor "#646464" "" . clickWrap
-                                                 , ppVisible = xmobarColor "gray" "" . wrap "(" ")" . clickWrap
-                                                 , ppUrgent  = xmobarColor "red" "yellow" . clickWrap
-                                                 , ppTitle   = xmobarColor "green"  "" -- xmobar truncates at }{ 
-                                                 }
+mobarLogHook pipe = dynamicLogWithPP xmobarPP
+    { ppOutput = hPutStrLn pipe
+    , ppCurrent = xmobarColor "yellow" "" . wrap "[" "]" . clickWrap
+    , ppHidden  = xmobarColor "gray" "" . clickWrap
+    , ppHiddenNoWindows = xmobarColor "#646464" "" . clickWrap
+    , ppVisible = xmobarColor "gray" "" . wrap "(" ")" . clickWrap
+    , ppUrgent  = xmobarColor "red" "yellow" . clickWrap
+    , ppTitle   = xmobarColor "green"  "" -- xmobar truncates at }{ 
+    }
                     where clickWrap = if wsClickable then xmobarClickWrap else id
 
 -- dzen2 log hook configuration.  Note that in order to have clickable desktop names on older systems it
@@ -124,16 +125,16 @@ dzenClickWrap ws = wrap start end (dzenEscape ws)
   where start = "^ca(1,xdotool key super+" ++ [ head ws ] ++ ")"
         end   = "^ca()"
 
-dzenLogHook pipe = dynamicLogWithPP defaultPP    { ppOutput = hPutStrLn pipe
-                                                 , ppCurrent = dzenColor "yellow" "" . wrap "[" "]" . clickWrap
-                                                 , ppHidden  = dzenColor "gray" "" . dzenClickWrap
-                                                 , ppHiddenNoWindows = dzenColor "#646464" "" . clickWrap
-                                                 , ppVisible = dzenColor "gray" "" . wrap "(" ")" . clickWrap
-                                                 , ppUrgent  = dzenColor "red" "yellow" . clickWrap
-                                                 , ppTitle   = dzenColor "green"  "" . shorten 50
-                                                               --possibly 40 on laptops
-                                                 }
-                   where clickWrap = if wsClickable then dzenClickWrap else id
+dzenLogHook pipe = dynamicLogWithPP defaultPP
+    { ppOutput = hPutStrLn pipe
+    , ppCurrent = dzenColor "yellow" "" . wrap "[" "]" . clickWrap
+    , ppHidden  = dzenColor "gray" "" . dzenClickWrap
+    , ppHiddenNoWindows = dzenColor "#646464" "" . clickWrap
+    , ppVisible = dzenColor "gray" "" . wrap "(" ")" . clickWrap
+    , ppUrgent  = dzenColor "red" "yellow" . clickWrap
+    , ppTitle   = dzenColor "green"  "" . shorten 50
+                  --possibly 40 on laptops
+               where clickWrap = if wsClickable then dzenClickWrap else id
 
 -- font and colors from xmobarrc
 font    =      "xft:Bitstream Vera Sans Mono:size=10:bold:antialias=true"

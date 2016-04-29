@@ -27,31 +27,30 @@ trayer --edge top --align right --SetDockType true\
 sleep 1
 
 # Use a solid blue background to indicate that something is happening.
+# Also makes it easier for VGA monitors to sync up.
 xsetroot -xcf /usr/share/icons/Adwaita/cursors/left_ptr 16 -solid blue
 
-if [ -x /usr/bin/gnome-power-manager ] ; then
-   gnome-power-manager &
-fi
+if_defined () {
+    if [ -x $1 ]; then $* & fi
+}
 
-if [ /usr/bin/classicmenu-indicator ]; then
-    /usr/bin/classicmenu-indicator&
-fi
+if_defined /usr/bin/gnome-power-manager
+if_defined /usr/bin/classicmenu-indicator
+if_defined /usr/bin/nm-applet -applet --sm-disable 
 
-if [ -x /usr/bin/nm-applet ] ; then
-   nm-applet --sm-disable &
-fi
+# xscreensaver on gnome-oriented distros is old and crufty.  gnome-screensaver
+# is bland, but it's reliable and has a "switch user" feature to bring up an
+# alternate session, which is handy when sharing a computer.
+if_defined gnome-screensaver
 
 # I like to see directories listed in ASCII order, with dotfiles on top, then
 # uppercase, then lowercase.  I tend to start directory names with uppercase
 # letters to take advantage of this.
 export LC_COLLATE=C
 
-# xscreensaver on gnome-oriented distros is old and crufty.  gnome-screensaver
-# is bland, but it's reliable and has a "switch user" feature to bring up an
-# alternate session, which is handy when sharing a computer.
-gnome-screensaver&
-
-#Apparently any use of xmodmap on Ubuntu turns off VT switching!
+# Apparently any use of xmodmap on Ubuntu turns off VT switching!
+# If you need to make right alt into Super, use Gnome's  keyboard control
+# panel applet to say that right alt = altGr
 #if [ -e $HOME/.xmonad/.Xmodmap ]; then xmodmap $HOME/.xmonad/.Xmodmap; fi
 
 
