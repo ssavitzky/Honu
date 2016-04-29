@@ -59,7 +59,7 @@ main = do
 -- for the golden ratio stuff and some other config things.
 -- showWName $ looks awful with clickable workspace strings.  But we fixed that.
 myLayoutHook = smartBorders $ avoidStruts $ showWName
-               $ onWorkspace "0" Grid          -- 0 is a parking area, since xmonad doesn't have icons.
+               $ onWorkspace "0" Grid          -- 0 is a parking area, since xmonad doesn't use icons
                $ ( full ||| tiled ||| mtiled ) -- applies to all workspaces not otherwise mentioned
   where
     full    = named "Tabs" simpleTabbed
@@ -108,16 +108,17 @@ xmobarClickWrap ws = wrap start end (xmobarEscape ws)
 mobarLogHook pipe = dynamicLogWithPP xmobarPP
     { ppOutput = hPutStrLn pipe
     , ppCurrent = xmobarColor "yellow" "" . wrap "[" "]" . clickWrap
-    , ppHidden  = xmobarColor "gray" "" . clickWrap
-    , ppHiddenNoWindows = xmobarColor "#646464" "" . clickWrap
-    , ppVisible = xmobarColor "gray" "" . wrap "(" ")" . clickWrap
-    , ppUrgent  = xmobarColor "red" "yellow" . clickWrap
+    , ppHidden  = xmobarColor "gray" ""                  . clickWrap
+    , ppHiddenNoWindows = xmobarColor "#646464" ""       . clickWrap
+    , ppVisible = xmobarColor "gray" "" . wrap "(" ")"   . clickWrap
+    , ppUrgent  = xmobarColor "red" "yellow"             . clickWrap
     , ppTitle   = xmobarColor "green"  "" -- xmobar truncates at }{ 
     }
                     where clickWrap = if wsClickable then xmobarClickWrap else id
 
--- dzen2 log hook configuration.  Note that in order to have clickable desktop names on older systems it
--- may still be necessary to build the latest version from source, but that should be fairly simple.
+-- dzen2 log hook configuration.  Note that in order to have clickable
+-- desktop names on older systems it may still be necessary to build
+-- the latest version from source, but that should be simpler than xmobar.
 
 dzenCommand = "dzen2 -x '0' -y '0' -h '20' -w '1000' -ta 'l' -fg '#646464' -bg 'black' -fn '"++font++"'"
 
@@ -128,13 +129,13 @@ dzenClickWrap ws = wrap start end (dzenEscape ws)
 dzenLogHook pipe = dynamicLogWithPP defaultPP
     { ppOutput = hPutStrLn pipe
     , ppCurrent = dzenColor "yellow" "" . wrap "[" "]" . clickWrap
-    , ppHidden  = dzenColor "gray" "" . dzenClickWrap
-    , ppHiddenNoWindows = dzenColor "#646464" "" . clickWrap
-    , ppVisible = dzenColor "gray" "" . wrap "(" ")" . clickWrap
-    , ppUrgent  = dzenColor "red" "yellow" . clickWrap
-    , ppTitle   = dzenColor "green"  "" . shorten 50
-                  --possibly 40 on laptops
-               where clickWrap = if wsClickable then dzenClickWrap else id
+    , ppHidden  = dzenColor "gray" ""                  . clickWrap
+    , ppHiddenNoWindows = dzenColor "#646464" ""       . clickWrap
+    , ppVisible = dzenColor "gray" "" . wrap "(" ")"   . clickWrap
+    , ppUrgent  = dzenColor "red" "yellow"             . clickWrap
+    , ppTitle   = dzenColor "green"  "" . shorten 50                  --possibly 40 on laptops
+    }
+                  where clickWrap = if wsClickable then dzenClickWrap else id
 
 -- font and colors from xmobarrc
 font    =      "xft:Bitstream Vera Sans Mono:size=10:bold:antialias=true"
@@ -142,14 +143,15 @@ bgColor =      "black"
 fgColor =      "#646464"
        
 -- see http://softwareprocess.es/x/x/xmonad-burn.hs for some good documentation
+--
 -- The default number of workspaces (virtual screens) and their names.
 -- By default we use numeric strings, but any string may be used as a
--- workspace name. The number of workspaces is determined by the length
--- of this list.
--- https://arch-ed.dk/xmobar-clickable-workspaces/ makes workspaces clickable
--- by the horrible hack of wrapping the names in <action...> tags.
+-- workspace name. The number of workspaces is determined by the
+-- length of this list.
 --
--- A tagging example:
+-- Because of the way we make workspaces clickable, the first character of the name
+-- needs to be the name of the key.  It probably won't work with anything but numbers
+-- or lower-case letters.
 --
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 -- 
