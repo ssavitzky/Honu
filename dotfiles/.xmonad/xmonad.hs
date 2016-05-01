@@ -93,10 +93,9 @@ myManageHook = composeAll
     , className =? "panel"          --> doIgnore
     ]
 
--- | The status bar, controlled by usingMobar.  Mostly we use xmobar, but older versions
+-- | Select the status bar.  We use xmobar when it exists, but older versions
 --   don't support the full configuration file format, so if we're stuck on Ubuntu 12.04
---   we use dzen2.  It doesn't display status, so most people format a conky with a
---   similar color scheme and layout, sitting next to it.
+--   we use dzen2, which is drop-dead easy to recompile from source (see ../opt)
 myLogCommand mobar = if mobar then "xmobar" else dzenCommand
 myLogHook mobar    = if mobar then mobarLogHook else dzenLogHook
 
@@ -112,7 +111,8 @@ xmobarEscape = concatMap doubleLts
         doubleLts x   = [x]
 
 -- | make a workspace name clickable for xmobar.
--- Works as long as the first character of the name is the corresponding key
+--   Works as long as the first character of the name is the corresponding key.  If you
+--   want meaningful names, use things like 1-foo
 xmobarClickWrap :: String -> String
 xmobarClickWrap ws = wrap start end (xmobarEscape ws)
   where start = "<action=xdotool key super+" ++ [ head ws ] ++ ">"
@@ -126,7 +126,7 @@ mobarLogHook pipe = dynamicLogWithPP xmobarPP
     , ppUrgent  = xmobarColor "red" "yellow"             . clickWrap
     , ppTitle   = xmobarColor "green"  "" -- xmobar truncates at }{ 
     }
-                    where clickWrap = if wsClickable then xmobarClickWrap else id
+  where clickWrap = if wsClickable then xmobarClickWrap else id
 
 -- dzen2 log hook configuration.  Note that in order to have clickable
 -- desktop names on older systems it may still be necessary to build
@@ -180,12 +180,9 @@ wsKeys wsNames = zip [ xK_0 ] (drop 9 wsNames)
 myAdditionalKeys wsNames =
   [ ((myModMask .|. controlMask, xK_l)     , spawn "gnome-screensaver-command --lock" ) -- lock screen
   , ((myModMask .|. controlMask, xK_e)     , spawn "emacs" )                            -- editor
-                                   ] ++ [ -- regular and shifted bindings for myExtraWorkspaces
+  ] ++ [ -- regular and shifted bindings for myExtraWorkspaces
     ((myModMask, key), (windows $ W.greedyView ws))
     | (key, ws) <- wsKeys wsNames
-    ] ++ [
-    ((myModMask .|. shiftMask, key), (windows $ W.shift ws))
-    | (key, ws) <- wsKeys wsNames
-    ]
+  ] ++ [ ((myModMask .|. shiftMask, key), (windows $ W.shift ws)) | (key, ws) <- wsKeys wsNames ]
     
 -- END OF FILE ------------------------------------------------------------------------
