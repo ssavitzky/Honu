@@ -83,6 +83,7 @@ myManageHook = composeAll
     [ className =? "MPlayer"        --> doFloat
     , className =? "Vlc"            --> doFloat
     , className =? "Gimp"           --> doFloat
+    , className =? "XSane"           --> doFloat
     , className =? "XCalc"          --> doFloat
     , className =? "Dia"            --> doFloat
     , className =? "Inkscape"       --> doFloat
