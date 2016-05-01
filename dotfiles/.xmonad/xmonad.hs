@@ -80,14 +80,15 @@ myLayoutHook = smartBorders $ avoidStruts $ showWName
 -- | The manage hook, which specifies how we treat particular kinds of windows.
 --   Graphics programs tend to put up multiple windows, so they like a floating layout.    
 myManageHook = composeAll
-    [ className =? "MPlayer"        --> doFloat
-    , className =? "Vlc"            --> doFloat
+    [ className =? "Dia"            --> doFloat
     , className =? "Gimp"           --> doFloat
-    , className =? "XSane"           --> doFloat
-    , className =? "XCalc"          --> doFloat
-    , className =? "Dia"            --> doFloat
     , className =? "Inkscape"       --> doFloat
+    , className =? "MPlayer"        --> doFloat
+    , className =? "Vlc"            --> doFloat
+    , className =? "XCalc"          --> doFloat
     , className =? "XClock"         --> doFloat
+    , className =? "XSane"          --> doFloat
+      
     , className =? "stalonetray"    --> doIgnore
     , className =? "panel"          --> doIgnore
     ]
