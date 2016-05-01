@@ -3,6 +3,8 @@ import XMonad
 import System.Directory
 import System.IO                   -- hPutStrLn scope
 
+import XMonad.Actions.CycleWS 
+
 import XMonad.Hooks.DynamicLog     -- statusbar
 import XMonad.Hooks.EwmhDesktops   -- extended window manager hints
 import XMonad.Hooks.ManageDocks    -- dock/tray mgmt
@@ -49,7 +51,15 @@ main = do
     , handleEventHook = fullscreenEventHook -- makes fullscreen work properly
     }
     `additionalKeys` myAdditionalKeys workspaceNames
-    -- could use `additionalKeysP` for emacs-like key names; you can't mix them.
+    `additionalKeysP`
+    [
+    -- moving workspaces
+      ("M-<Left>",    prevWS )
+    , ("M-<Right>",   nextWS )
+    , ("M-S-<Left>",  shiftToPrev )
+    , ("M-S-<Right>", shiftToNext )
+    ]
+
 
 -- | The available layouts.  Note that each layout is separated by |||, which
 -- denotes layout choice. 
@@ -168,7 +178,7 @@ wsKeys wsNames = zip [ xK_0 ] (drop 9 wsNames)
 myAdditionalKeys wsNames =
   [ ((myModMask .|. controlMask, xK_l)     , spawn "gnome-screensaver-command --lock" ) -- lock screen
   , ((myModMask .|. controlMask, xK_e)     , spawn "emacs" )                            -- editor
-  ] ++ [                        -- regular and shifted bindings for myExtraWorkspaces
+                                   ] ++ [ -- regular and shifted bindings for myExtraWorkspaces
     ((myModMask, key), (windows $ W.greedyView ws))
     | (key, ws) <- wsKeys wsNames
     ] ++ [
