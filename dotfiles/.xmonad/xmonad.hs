@@ -15,6 +15,7 @@ import XMonad.Layout.Grid
 import XMonad.Layout.Named         -- custom layout names
 import XMonad.Layout.NoBorders     -- smart borders on solo clients
 import XMonad.Layout.ShowWName     -- show workspace name when switching
+import XMonad.Layout.Spiral        -- spiral layout
 import XMonad.Layout.Tabbed        -- tabs, sort of like TWM!
 
 import XMonad.Util.EZConfig        -- append key/mouse bindings
@@ -52,9 +53,7 @@ main = do
     }
     `additionalKeys` myAdditionalKeys workspaceNames
     `additionalKeysP`
-    [
-    -- moving workspaces
-      ("M-<Left>",    prevWS )
+    [ ("M-<Left>",    prevWS )  -- Moving between workspaces
     , ("M-<Right>",   nextWS )
     , ("M-S-<Left>",  shiftToPrev )
     , ("M-S-<Right>", shiftToNext )
@@ -69,13 +68,14 @@ main = do
 -- for the golden ratio stuff and some other config things.
 -- showWName $ looks awful with clickable workspace strings.  But we fixed that.
 myLayoutHook = smartBorders $ avoidStruts $ showWName
-               $ onWorkspace "0" Grid          -- 0 is a parking area, since xmonad doesn't use icons
+               $ onWorkspace "0" (Grid ||| spiral) -- 0 is a parking area, since xmonad doesn't use icons
                $ ( full ||| tiled ||| mtiled ) -- applies to all workspaces not otherwise mentioned
   where
     full    = named "Tabs" simpleTabbed
     mtiled  = named "Wide" $ Mirror tiled
     tiled   = Tall 1 (3/100) (2/(1+(toRational(sqrt(5)::Double))))
     -- sets default tile as: Tall nmaster (delta) (golden ratio)
+    spiral  = named "Spiral" $ spiralWithDir East CW (6/7)
 
 -- | The manage hook, which specifies how we treat particular kinds of windows.
 --   Graphics programs tend to put up multiple windows, so they like a floating layout.    
