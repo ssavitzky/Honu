@@ -11,12 +11,7 @@ GITDIRS :=
 #
 install:: | ljupdate
 install:: | html-helper-mode
-install:: | $(HOME)/Config
 install:: | $(HOME)/emacs
-
-# This will do for now.  Should really be in ..
-$(HOME)/Config:
-	cd ../dotfiles; $(MAKE) install
 
 $(HOME)/emacs: | $(HOME)/Config
 	cd $(HOME); ln -sf Config/emacs .
