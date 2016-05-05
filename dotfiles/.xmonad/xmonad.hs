@@ -27,11 +27,19 @@ import qualified XMonad.Layout.WorkspaceDir
 
 
 -- | Configuration options --
+--   These are the things you might want to tweak on different machines.
 
-myModMask = mod4Mask  -- mod3Mask would use right Alt; old keyboards don't have super.
-                      -- The bindings these days are in /usr/share/X11/xkb/symbols/pc
+-- | The Mod key.  mod3Mask would use right Alt; old keyboards don't have super.
+-- Ubuntu's key bindings these days are in /usr/share/X11/xkb/symbols/pc; you
+-- have to set Alt-R to Alt-Graphics in order to use right Alt as mod.  Or,...
+-- myModMask = (mod1Mask .|. controlMask) -- defines mod as Ctrl-Alt combo.
+myModMask = mod4Mask
+
 wsClickable = True    -- whether to make workspace names clickable in xmobar/dzen
-goodTerminal = "/usr/bin/xfce4-terminal" -- Use xterm if we don't have this
+
+-- | The "good" terminal.  We default to xterm if it's not installed.  Other reasonable
+-- possibilities include rxvt, gnome-terminal, and uxterm
+goodTerminal = "/usr/bin/xfce4-terminal"
 
 
 main = do
