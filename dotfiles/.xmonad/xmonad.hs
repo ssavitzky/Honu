@@ -33,12 +33,14 @@ import qualified XMonad.Layout.WorkspaceDir
 -- Ubuntu's key bindings these days are in /usr/share/X11/xkb/symbols/pc; you
 -- have to set Alt-R to Alt-Graphics in order to use right Alt as mod.  Or,...
 -- myModMask = (mod1Mask .|. controlMask) -- defines mod as Ctrl-Alt combo.
-myModMask = mod4Mask
+myModMask = mod4Mask            -- mod = Super
 
-wsClickable = True    -- whether to make workspace names clickable in xmobar/dzen
+-- | Whether to make the window names clickable.  Unless you're stuck on an older
+-- machine and unwilling to recompile dzen2, you should leave this True.
+wsClickable = True              --  clickable workspace names in xmobar/dzen
 
 -- | The "good" terminal.  We default to xterm if it's not installed.  Other reasonable
--- possibilities include rxvt, gnome-terminal, and uxterm
+-- possibilities include rxvt, gnome-terminal, etc.
 goodTerminal = "/usr/bin/xfce4-terminal"
 
 
@@ -79,10 +81,10 @@ myLayoutHook = smartBorders $ avoidStruts $ showWName
                $ onWorkspace "0" (Grid ||| spiral) -- 0 is a parking area, since xmonad doesn't use icons
                $ ( full ||| tiled ||| mtiled ) -- applies to all workspaces not otherwise mentioned
   where
+    phi     = (2/(1+(toRational(sqrt(5)::Double)))) -- Golden Ratio
     full    = named "Tabs" simpleTabbed
     mtiled  = named "Wide" $ Mirror tiled
-    tiled   = Tall 1 (3/100) (2/(1+(toRational(sqrt(5)::Double))))
-    -- sets default tile as: Tall nmaster (delta) (golden ratio)
+    tiled   = Tall 1 (2/100) phi     -- args to Tall:  nmaster delta golden ratio
     spiral  = named "Spiral" $ spiralWithDir East CW (6/7)
 
 -- | The manage hook, which specifies how we treat particular kinds of windows.
@@ -96,7 +98,7 @@ myManageHook = composeAll
     , className =? "XCalc"          --> doFloat
     , className =? "XClock"         --> doFloat
     , className =? "XSane"          --> doFloat
-      
+      -- ignore panels, bars, and the like.
     , className =? "stalonetray"    --> doIgnore
     , className =? "panel"          --> doIgnore
     ]
