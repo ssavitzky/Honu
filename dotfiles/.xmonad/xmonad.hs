@@ -10,10 +10,11 @@ import XMonad.Hooks.EwmhDesktops   -- extended window manager hints
 import XMonad.Hooks.ManageDocks    -- dock/tray mgmt
 import XMonad.Hooks.UrgencyHook    -- window alert bells 
 
-import XMonad.Layout.PerWorkspace
+import XMonad.Layout.Circle
 import XMonad.Layout.Grid
 import XMonad.Layout.Named         -- custom layout names
 import XMonad.Layout.NoBorders     -- smart borders on solo clients
+import XMonad.Layout.PerWorkspace
 import XMonad.Layout.ShowWName     -- show workspace name when switching
 import XMonad.Layout.Spiral        -- spiral layout
 import XMonad.Layout.Tabbed        -- tabs, sort of like TWM!
@@ -78,7 +79,7 @@ main = do
 -- for the golden ratio stuff and some other config things.
 -- showWName $ looks awful with clickable workspace strings.  But we fixed that.
 myLayoutHook = smartBorders $ avoidStruts $ showWName
-               $ onWorkspace "0" (Grid ||| spiral) -- 0 is a parking area, since xmonad doesn't use icons
+               $ onWorkspace "0" (Grid ||| spiral ||| Circle) -- 0 is a parking area, since xmonad doesn't use icons
                $ ( full ||| tiled ||| mtiled ) -- applies to all workspaces not otherwise mentioned
   where
     phi     = (2/(1+(toRational(sqrt(5)::Double)))) -- Golden Ratio
