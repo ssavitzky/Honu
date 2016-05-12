@@ -15,6 +15,7 @@ import XMonad.Layout.Grid
 import XMonad.Layout.Named         -- custom layout names
 import XMonad.Layout.NoBorders     -- smart borders on solo clients
 import XMonad.Layout.PerWorkspace
+import XMonad.Layout.SimpleFloat   -- float all windows.
 import XMonad.Layout.ShowWName     -- show workspace name when switching
 import XMonad.Layout.Spiral        -- spiral layout
 import XMonad.Layout.Tabbed        -- tabs, sort of like TWM!
@@ -79,6 +80,7 @@ main = do
 -- for the golden ratio stuff and some other config things.
 -- showWName $ looks awful with clickable workspace strings.  But we fixed that.
 myLayoutHook = smartBorders $ avoidStruts $ showWName
+               $ onWorkspace "9" simpleFloat
                $ onWorkspace "0" (Grid ||| spiral ||| Circle) -- 0 is a parking area, since xmonad doesn't use icons
                $ ( full ||| tiled ||| mtiled ) -- applies to all workspaces not otherwise mentioned
   where
