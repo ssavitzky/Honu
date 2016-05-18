@@ -1,0 +1,6 @@
+#!/bin/sh
+
+for s in 2 3; do 
+    while :; do date; sleep 1; done | dzen2 -geometry -0-0 -xs $s &
+done 
+
