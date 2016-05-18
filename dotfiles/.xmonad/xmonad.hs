@@ -65,8 +65,9 @@ main = do
     , layoutHook = myLayoutHook
     , manageHook = manageDocks <+> myManageHook <+> manageHook defaultConfig
     , workspaces = workspaceNames
-    , logHook = updatePointer (0.5, 0.5) (0, 0) -- center cursor on newly focused window
-                >> myLogHook haveXmobar mainbar
+    , logHook = -- updatePointer (Relative 0.5 0.5) -- center cursor on newly focused window
+                                                   -- unfortunately the API has changed!
+                myLogHook haveXmobar mainbar
                 >> mapM_ dzenLogHook dzens
     , handleEventHook = fullscreenEventHook -- makes fullscreen work properly
     }
@@ -156,7 +157,7 @@ mobarLogHook pipe = dynamicLogWithPP xmobarPP
 --   Note that we use dzenOnScreen for all screens other than the first.
 --   The first screen is often a laptop, so it might be smaller.
 dzenCommand = "dzen2 -x '0' -y '0' -h '20' -w '1000' -ta 'l' -fg '#646464' -bg 'black' -fn '"++font++"'"
-dzenOnScreen n = dzenCommand ++ "-xs " ++ show n
+dzenOnScreen n = dzenCommand ++ " -xs " ++ show n
 
 dzenClickWrap ws = wrap start end (dzenEscape ws)
   where start = "^ca(1,xdotool key super+" ++ [ head ws ] ++ ")"
@@ -188,11 +189,9 @@ fgColor =      "#646464"
 -- Because of the way we make workspaces clickable, the first character of the name
 -- needs to be the name of the key.  It probably won't work with anything but numbers
 -- or lower-case letters.
---
--- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 -- 
-workspaceNames = ["1","2","3","4","5","6","7","8","9" ] -- the predefined workspaces
-                 ++ [ "0", "-" ]                             -- extra workspaces.
+workspaceNames =    [ "1","2","3","4","5","6","7","8","9" ] -- the predefined workspaces
+                 ++ [ "0", "-" ]                            -- extra workspaces.
 
 -- assign keys to the extra workspaces (only "0" and "-" so far)
 -- has to be done this way in order to pick up the clickable-wrapped actual names.
