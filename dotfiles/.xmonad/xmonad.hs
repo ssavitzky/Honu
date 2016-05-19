@@ -186,11 +186,10 @@ fgColor =      "#646464"
 -- By default we use numeric strings, but any string may be used as a
 -- workspace name. The number of workspaces is determined by the
 -- length of this list.
---
--- Because of the way we make workspaces clickable, the first character of the name
--- needs to be the name of the key.  It probably won't work with anything but numbers
--- or lower-case letters.
--- 
+
+-- Because of the way this configuration makes workspaces clickable,
+-- the first character of the name needs to be the name of the key.
+
 workspaceNames =    [ "1","2","3","4","5","6","7","8","9" ] -- the predefined workspaces
                  ++ [ "0", "-" ]                            -- extra workspaces.
 

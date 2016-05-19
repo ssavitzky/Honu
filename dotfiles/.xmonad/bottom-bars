@@ -1,6 +1,21 @@
 #!/bin/sh
+# bottom-bars [-k | N...]
+#    Display a bottom bar on each of the listed screens, or kill them all.
 
-for s in 2 3; do 
-    while :; do date; sleep 1; done | dzen2 -geometry -0-0 -xs $s &
+FONT="xft:Inconsolata:size=10:bold:antialias=true"
+DZEN_OPTS="-bg black -fg #646464 -ta r -fn '$FONT' "
+
+if [ "$1" = "-k" ]; then
+    kill `ps x | grep [b]ottom | cut -d p -f 1`
+else
+
+text () {
+    echo `ansiweather -a false -l Seattle,WA -u imperial` \
+	 '||' u`uptime | cut -d u -f 2-` '||' `date` ' '
+}
+
+for s in $*; do 
+    while :; do text; sleep 10; done | dzen2 $DZEN_OPTS -geometry -0-0 -xs $s &
 done 
-
+    
+fi
