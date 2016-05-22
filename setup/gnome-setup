@@ -1,6 +1,11 @@
 #!/bin/sh
 # Setup for Gnome on Ubuntu
 
+if [ ! -x /usr/bin/gsettings ]; then
+    echo "You don't have gnome installed, so gnome-setup is not useful"
+    exit 0
+fi
+
 S="gsettings set"
 
 ### To find a schema:
