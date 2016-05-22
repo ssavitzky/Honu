@@ -3,4 +3,6 @@ Config/setup
 There are two sets of files here:
 
   * *-setup -- these are run from "make install" in the parent directory
-  * *-pkgs  -- these contain apt-get commands, so have to be run as root.
+  * *-pkgs  -- these contain apt-get commands and use sudo.  Generally run
+    	       from "make install-pkgs" in the parent directory.  It's
+	       called from bootstrap.sh.

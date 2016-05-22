@@ -18,6 +18,9 @@ install::
 install::			# This should eventually be moved to ./setup
 	cd setup; for f in *setup*; do ./$$f; done
 
+install-pkgs::
+	cd setup; for f in *pkgs; do ./$$f; done
+
 # Link Config into home directory.
 $(HOME)/Config:
 	pwd=`pwd`; cd $(HOME); ln -s $$pwd .

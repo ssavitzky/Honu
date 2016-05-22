@@ -2,12 +2,18 @@
 #    Sourced by the xmonad gdm/lightdm session.  Initially from
 #    /usr/share/doc/xmonad/README.Debian
 
-# This is used by GTK applications to get their defaults.
-gnome-settings-daemon&
+if_defined () {
+    if [ -x $1 ]; then $* & fi
+}
 
-# This combines ssh-agent and gpg-agent for key management.
-# $(...) sources the command output to set variables.
-$(gnome-keyring-daemon --start --daemonize)
+# This is used by GTK applications to get their defaults.
+if_defined gnome-settings-daemon
+
+if [ -x /usr/bin/gnome-keyring-daemon ]; then
+    # This combines ssh-agent and gpg-agent for key management.
+    # $(...) sources the command output to set variables.
+    $(gnome-keyring-daemon --start --daemonize)
+fi
 
 # This is used by X toolkit applications, notably xterm, to get their defaults.
 # They will also read .Xdefaults-<hostname> for local overrides; I use this to
@@ -29,10 +35,6 @@ sleep 1
 # Use a solid blue background to indicate that something is happening.
 # Also makes it easier for VGA monitors to sync up.
 xsetroot -xcf /usr/share/icons/Adwaita/cursors/left_ptr 16 -solid blue
-
-if_defined () {
-    if [ -x $1 ]; then $* & fi
-}
 
 if_defined /usr/bin/gnome-power-manager
 if_defined /usr/bin/classicmenu-indicator
