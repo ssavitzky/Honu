@@ -1,0 +1,6 @@
+Config/setup
+
+There are two sets of files here:
+
+  * *-setup -- these are run from "make install" in the parent directory
+  * *-pkgs  -- these contain apt-get commands, so have to be run as root.
