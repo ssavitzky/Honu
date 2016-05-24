@@ -8,6 +8,7 @@ fi
 if [ -z $SSH_AUTH_SOCK ]; then
     echo "Trying to run this without ssh-add will lead to frustration."
 fi
+cd $HOME
 
 # Required packages: if we don't get these, all is lost.
 REQUIRED="git gitk git-gui curl wget make rsync openssh-client"
