@@ -24,7 +24,7 @@ sudo apt-get install $REQUIRED $MAY_NEED_UPDATE $HIGHLY_RECOMMENDED
 ### Now that we have git, we can fetch the repos we need:
 
 # Prefix for the git repos
-REPO=savitzky@savitzky.net:vv/git/users/steve
+REPO=savitzky@savitzky.net:git/users/steve
 
 # destination for the fetched repos.
 DEST=vv/users/steve
@@ -33,10 +33,10 @@ mkdir -p $DEST
 
 # fetch the repositories we need.
 (cd $DEST; for r in Config Tools; do
-	       if [ ! -d $$r ]; then git clone $REPO/$r; fi
+	       if [ ! -d $$r ]; then git clone $REPO/$r.git; fi
 	   done)
 
 # Install the dotfiles and other goodies.
-(cd $DEST/steve/Config; make install-pkgs install)
+(cd $DEST/Config; make install-pkgs install)
 
 echo Welcome to this fully-armed and operational workstation.
