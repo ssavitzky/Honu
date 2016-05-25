@@ -1,0 +1,20 @@
+#!/bin/sh
+# bottom-mobars [-k | N...]
+#    Display a bottom bar on each of the listed screens, or kill them all.
+
+FONT="xft:Bitstream Vera Sans:size=12:antialias=true"
+DZEN_OPTS="-bg black -fg #646464 -ta r "
+
+if [ "$1" = "-k" ]; then
+    /bin/kill `ps x | grep [x]mobarrc-status | cut -d p -f 1`
+    exit 0
+fi
+
+status () {
+    echo monitor $1 '||' u`uptime | cut -d u -f 2-` 
+}
+
+for s in $*; do 
+    while :; do status $s; sleep 10; done | xmobar -x $s ~/.xmonad/xmobarrc-status &
+done 
+

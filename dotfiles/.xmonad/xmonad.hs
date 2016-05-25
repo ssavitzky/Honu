@@ -38,6 +38,11 @@ import XMonad.Layout.IndependentScreens (countScreens)
 -- myModMask = (mod1Mask .|. controlMask) -- defines mod as Ctrl-Alt combo.
 myModMask = mod4Mask            -- mod = Super
 
+-- | Whether to use xmobar for the top status bar on monitor 1.  Normally we
+-- just use a short dzen, which leaves room for a gnome-panel or some such, but
+-- if you don't want to waste space on a bottom bar it makes sense to use xmobar.
+wantXmobar = False
+
 -- | Whether to make the window names clickable.  Unless you're stuck on an older
 -- machine and unwilling to recompile dzen2, you should leave this True.
 wsClickable = True              --  clickable workspace names in xmobar/dzen
@@ -52,7 +57,9 @@ main = do
 
   haveGoodTerminal <- doesFileExist goodTerminal -- detect terminal emulator
   haveXmobar <- doesFileExist "/usr/bin/xmobar"  -- detect status bar program
-  mainbar <- spawnPipe $ myLogCommand haveXmobar -- spawn the status bar.
+
+  let useXmobar = wantXmobar && haveXmobar
+  mainbar <- spawnPipe $ myLogCommand useXmobar -- spawn the status bar.
 
   -- All screens except the first get a dzen bar.  The first is generally smaller, and
   -- in any case might have a gnome panel, system tray, etc.
@@ -65,9 +72,9 @@ main = do
     , layoutHook = myLayoutHook
     , manageHook = manageDocks <+> myManageHook <+> manageHook defaultConfig
     , workspaces = workspaceNames
-    , logHook = -- updatePointer (Relative 0.5 0.5) -- center cursor on newly focused window
-                                                   -- unfortunately the API has changed!
-                myLogHook haveXmobar mainbar
+    , logHook =  updatePointer (0.5, 0.5) (0, 0)     -- center cursor on newly focused window
+                 -- updatePointer (Relative 0.5 0.5) -- unfortunately the API has changed!
+                >> myLogHook useXmobar mainbar
                 >> mapM_ dzenLogHook dzens
     , handleEventHook = fullscreenEventHook -- makes fullscreen work properly
     }
