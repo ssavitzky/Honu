@@ -58,8 +58,8 @@ main = do
   haveGoodTerminal <- doesFileExist goodTerminal -- detect terminal emulator
   haveXmobar <- doesFileExist "/usr/bin/xmobar"  -- detect status bar program
 
-  let useXmobar = wantXmobar && haveXmobar
-  mainbar <- spawnPipe $ myLogCommand useXmobar -- spawn the status bar.
+  let useXmobar = wantXmobar && haveXmobar       -- use it if we want it and have it
+  mainbar <- spawnPipe $ myLogCommand useXmobar  -- spawn the status bar.
 
   -- All screens except the first get a dzen bar.  The first is generally smaller, and
   -- in any case might have a gnome panel, system tray, etc.
@@ -200,15 +200,14 @@ fgColor =      "#646464"
 workspaceNames =    [ "1","2","3","4","5","6","7","8","9" ] -- the predefined workspaces
                  ++ [ "0", "-" ]                            -- extra workspaces.
 
--- assign keys to the extra workspaces (only "0" and "-" so far)
+-- assign keys to the extra workspaces (only "0" and "-" so far, and - isn't clickable in
+-- dzen2 apparently because of key naming issues.)
 -- has to be done this way in order to pick up the clickable-wrapped actual names.
 wsKeys wsNames = zip [ xK_0, xK_minus ] (drop 9 wsNames)
 
--- took me hours to figure out that modMask was bound to something unhelpful here
--- You have to pass the fully-munged workspace names, which are only known after
--- we've figured out which status bar to mung them for.
+-- key bindings to start programs.  Note that the lock binding is the traditional Ctl-Alt-l.
 myAdditionalKeys wsNames =
-  [ ((myModMask .|. controlMask, xK_l)     , spawn "gnome-screensaver-command --lock" ) -- lock screen
+  [ ((mod1Mask  .|. controlMask, xK_l)     , spawn "gnome-screensaver-command --lock" ) -- lock screen
   , ((myModMask .|. controlMask, xK_e)     , spawn "emacs" )                            -- editor
   ] ++ [ -- regular and shifted bindings for myExtraWorkspaces
     ((myModMask, key), (windows $ W.greedyView ws))
