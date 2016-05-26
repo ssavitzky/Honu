@@ -2,9 +2,6 @@
 # bottom-mobars [-k | N...]
 #    Display a bottom bar on each of the listed screens, or kill them all.
 
-FONT="xft:Bitstream Vera Sans:size=12:antialias=true"
-DZEN_OPTS="-bg black -fg #646464 -ta r "
-
 if [ "$1" = "-k" ]; then
     /bin/kill `ps x | grep [x]mobarrc-status | cut -d p -f 1`
     exit 0
