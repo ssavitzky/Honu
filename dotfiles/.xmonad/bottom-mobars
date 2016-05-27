@@ -8,11 +8,13 @@ if [ "$1" = "-k" ]; then
     exit 0
 fi
 
+HOST=`hostname`
+
 monitor () {
     case $1 in
-	(1) echo '1 (w)';;
-	(2) echo '2 (e)';;
-	(3) echo '3 (r)';;
+	(1) echo '1(w)';;
+	(2) echo '2(e)';;
+	(3) echo '3(r)';;
 	(*) echo $1 ;;
     esac
 }
@@ -22,7 +24,7 @@ up () {
 }
 
 status () {
-    echo 'screen' `monitor $1` on  `hostname` '||' `up`
+    echo 'screen<fc=#ABABAB>' `monitor $1` '</fc>on'  $HOST '||' `up`
 }
 
 for s in $*; do 
