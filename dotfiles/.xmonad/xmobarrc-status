@@ -13,7 +13,7 @@ Config {
    , border =       TopB
    , borderColor =  "#646464"
 
-   -- layout
+   -- layout.  For some bizarre reason it won't accept a multi-line string in template
    , sepChar =  "%"   -- delineator between plugin names and straight text
    , alignSep = "}{"  -- separator between left-right alignment
    , template = "%UnsafeStdinReader% }%KBFI%{%multicpu%--%memory%|%swap%--%dynnetwork%--%battery%--%date% "
@@ -101,6 +101,9 @@ Config {
         --   (%F = y-m-d date, %a = day of week, %T = h:m:s time)
         , Run Date           "<fc=#ABABAB>%a %F %I:%M:%S%P</fc>" "date" 10
           
-        , Run Weather "KBFI" [ "--template", "<skyCondition> | <fc=#4682B4><tempF></fc>°F | <fc=#4682B4><rh></fc>% | <fc=#4682B4><pressure></fc>hPa" ] 6000
+        , Run Weather "KBFI" [ "--template", "<fc=#4682B4><skyCondition></fc> | \
+                                             \<fc=#4682B4><tempF></fc>°F | \
+                                             \<fc=#4682B4><rh></fc>% | \
+                                             \<fc=#4682B4><windCardinal> <windMph></fc>mph" ] 6000
         ]
    }

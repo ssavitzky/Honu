@@ -10,12 +10,30 @@ if [ "$1" = "-k" ]; then
     exit 0
 fi
 
-text () {
-    echo 'SEA Temp ='`ansiweather -a false -l Seattle,WA -u imperial | cut -d '=' -f 2-` \
-	 '||' u`uptime | cut -d u -f 2-` '||^fg(white)' `date '+%a %b %d %I:%M%P'` ' '
+monitor () {
+    case $1 in
+	(1) echo '1 (w)';;
+	(2) echo '2 (e)';;
+	(3) echo '3 (r)';;
+	(*) echo $1 ;;
+    esac
+}
+
+up () {
+     echo u`uptime | cut -d u -f 2- | sed -e 's/ days,/d/' -e 's/load average/ldavg/'` 
+}
+
+weather () {
+    echo 'SEA Temp:'`ansiweather -a false -l Seattle,WA -u imperial | cut -d '>' -f 2- | \
+         sed -e s/idity// -e s/sure// -e 's/ =>/:/g'`
+}
+
+status () {
+    echo 'screen' `monitor $1` on `hostname` '||' `up` '||' `weather` \
+	 '||^fg(white)' `date '+%a %b %d %I:%M%P'` ' '
 }
 
 for s in $*; do 
-    while :; do text; sleep 10; done | dzen2 $DZEN_OPTS -fn '$FONT' -geometry -0-0 -xs $s &
+    while :; do status $s; sleep 60; done | dzen2 $DZEN_OPTS -fn '$FONT' -geometry -0-0 -xs $s &
 done 
 
