@@ -121,6 +121,8 @@ myManageHook = composeAll
       -- ignore panels, bars, and the like even if they don't set the appropriate WM hint
     , className =? "stalonetray"    --> doIgnore
     , className =? "panel"          --> doIgnore
+    , className =? "dzen2"          --> doIgnore
+    , className =? "xmobar"         --> doIgnore
     ]
 
 -- | Select the status bar for the main screen.  We prefer xmobar, but older versions
