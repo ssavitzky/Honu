@@ -16,7 +16,7 @@ Config {
    -- layout.  For some bizarre reason it won't accept a multi-line string in template
    , sepChar =  "%"   -- delineator between plugin names and straight text
    , alignSep = "}{"  -- separator between left-right alignment
-   , template = "%UnsafeStdinReader% }%KBFI%{%multicpu%--%memory%|%swap%--%dynnetwork%--%battery%--%date% "
+   , template = "%UnsafeStdinReader% }%KBFI%{%multicpu%-%memory%|%swap%-%dynnetwork%-%battery%-%date% "
 
    -- general behavior
    , lowerOnStart =     True    -- send to bottom of window stack on start
@@ -100,7 +100,7 @@ Config {
 
         -- time and date indicator 
         --   (%F = y-m-d date, %a = day of week, %T = h:m:s time)
-        , Run Date           "<fc=#ABABAB>%a %F %I:%M:%S%P</fc>" "date" 10
+        , Run Date           "<fc=#ABABAB>%F %I:%M%P</fc>" "date" 10
           
         , Run Weather "KBFI" [ "--template", "<fc=#4682B4><skyCondition></fc> | \
                                              \<fc=#4682B4><tempF></fc>°F | \

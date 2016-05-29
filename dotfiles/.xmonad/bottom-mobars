@@ -20,11 +20,11 @@ monitor () {
 }
 
 up () {
-     echo u`uptime | cut -d u -f 2- | sed -e 's/ days,/d/' -e 's/load average/ldavg/'` 
+     echo u`uptime | cut -d u -f 2- | sed -e 's/ days,/d/' -e 's/load average/ld/'` 
 }
 
 status () {
-    echo 'screen<fc=#ABABAB>' `monitor $1` '</fc>on'  $HOST '||' `up`
+    echo   $HOST '<fc=#ABABAB>'`monitor $1` '</fc>||' `up`
 }
 
 for s in $*; do 
