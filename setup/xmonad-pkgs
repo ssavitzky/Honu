@@ -2,12 +2,13 @@
 # apt-get packages for xmonad and friends on Debian or Ubuntu
 
 
-sudo apt-get install xmonad trayer dzen2 dmenu xfce4-terminal \
+sudo apt-get -y install xmonad trayer dzen2 suckless-tools    \
+     xfce4-terminal xfce4-power-manager                       \
      gnome-power-manager classicmenu-indicator nm-applet      \
      x11-xserver-utils xterm
 
 if grep -qs "trusty main" /etc/apt/sources.list; then
     echo "we appear to be on Ubuntu 14.04 -- simplify xmonad"
 else
-    sudo apt-get install ansiweather xmobar
+    sudo apt-get -y install xmobar
 fi
