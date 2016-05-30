@@ -5,6 +5,9 @@
 if_defined () {
     if [ -x $1 ]; then $* & fi
 }
+if_defined_else () {
+    if [ -x $1 ]; then $1 & else $2 & fi
+}
 
 # This is used by GTK applications to get their defaults.
 if_defined gnome-settings-daemon
@@ -36,8 +39,8 @@ sleep 1
 # Also makes it easier for VGA monitors to sync up.
 xsetroot -xcf /usr/share/icons/Adwaita/cursors/left_ptr 16 -solid blue
 
-if_defined /usr/bin/gnome-power-manager
 if_defined /usr/bin/classicmenu-indicator
+if_defined_else /usr/bin/xfce4-power-manager /usr/bin/gnome-power-manager
 if_defined /usr/bin/nm-applet -applet --sm-disable 
 
 # xscreensaver on gnome-oriented distros is old and crufty.  gnome-screensaver
