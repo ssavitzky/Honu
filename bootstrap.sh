@@ -17,7 +17,7 @@ REQUIRED="git gitk git-gui curl wget make rsync openssh-client"
 MAY_NEED_UPDATE="emacs24"
 
 # Highly recommended packages
-HIGHLY_RECOMMENDED="git-doc git.el"
+HIGHLY_RECOMMENDED="git-doc git.el gnome-session-flashback"
 
 sudo apt-get install $REQUIRED $MAY_NEED_UPDATE $HIGHLY_RECOMMENDED
 
