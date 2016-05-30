@@ -51,6 +51,10 @@ wsClickable = True              --  clickable workspace names in xmobar/dzen
 -- possibilities include rxvt, gnome-terminal, etc.
 goodTerminal = "/usr/bin/xfce4-terminal"
 
+-- | The width of the top dzen2 bar.  This is not just because we can't specify
+--   it as a percentage -- sometimes we want to leave room for a gnome-panel,
+--   xclock, or something else.
+topBarWidth = 920
 
 main = do
     -- everything that reads files or environment variables has to go inside of main.
@@ -164,9 +168,10 @@ mobarLogHook pipe = dynamicLogWithPP xmobarPP
 --   desktop names on older systems it may still be necessary to build
 --   the latest version from source, but that should be simpler than xmobar.
 --   Note that we use dzenOnScreen for all screens other than the first.
---   The first screen is often a laptop, so it might be smaller.
-dzenCommandBase = "dzen2 -x '0' -y '0' -h '20' -ta 'l' -fg '#646464' -bg 'black' -fn '"++font++"'"
-dzenCommand = dzenCommandBase ++ " -w '1000' "
+--   The first screen will normally have a trayer or gnome-panel on it.
+dzenCommandBase = "dzen2 -x '0' -y '0' -h '20' -ta 'l' " ++
+                  "-fg '#646464' -bg 'black' -fn '"++font++"'"
+dzenCommand = dzenCommandBase ++ " -w " ++ show topBarWidth
 dzenOnScreen n = dzenCommand ++ " -xs " ++ show n
 
 dzenClickWrap ws = wrap start end (dzenEscape ws)
