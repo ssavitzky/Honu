@@ -101,10 +101,13 @@ Config {
         -- time and date indicator 
         --   (%F = y-m-d date, %a = day of week, %T = h:m:s time)
         , Run Date           "<fc=#ABABAB>%F %I:%M%P</fc>" "date" 10
-          
-        , Run Weather "KBFI" [ "--template", "<fc=#4682B4><skyCondition></fc> | \
-                                             \<fc=#4682B4><tempF></fc>°F | \
-                                             \<fc=#4682B4><rh></fc>% | \
-                                             \<fc=#4682B4><windCardinal> <windMph></fc>mph" ] 6000
+
+        -- Weather.  KBFI is Boeing Field
+        , Run Weather "KBFI" [ "--template"
+	      	      	     , "<fc=#4682B4><skyCondition></fc>, \
+                               \<fc=#4682B4><tempF></fc>°F, \
+                               \<fc=#4682B4><rh></fc>%, \
+                               \<fc=#4682B4><windCardinal> <windMph></fc>mph"
+			     ] 6000
         ]
    }
