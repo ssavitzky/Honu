@@ -20,7 +20,7 @@ monitor () {
 
 up () {
     echo u$( uptime | cut -d u -f 2- \
-	   | sed -e 's/ min/m/' -e 's/ users/u/' -e 's/ days,/d/' -e 's/load average/ld/'
+	   | sed -e 's/ min/m/' -e 's/ users/u/' -e 's/ days*,/d/' -e 's/load average/ld/'
 	   ) 
 }
 
