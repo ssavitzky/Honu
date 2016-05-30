@@ -3,9 +3,8 @@
 #    Display a bottom bar on each of the listed screens, or kill them all.
 
 if [ "$1" = "-k" ]; then
-    # killall bottom-mobars works, but exits with a non-zero status
-    /bin/kill `ps x | grep [x]mobarrc-status | cut -d p -f 1`
-    exit 0
+    # If we don't exec, it will complain because it tries to kill its parent.
+    exec killall bottom-mobars
 fi
 
 HOST=`hostname`
@@ -20,11 +19,13 @@ monitor () {
 }
 
 up () {
-     echo u`uptime | cut -d u -f 2- | sed -e 's/ days,/d/' -e 's/load average/ld/'` 
+    echo u$( uptime | cut -d u -f 2- \
+	   | sed -e 's/ min/m/' -e 's/ users/u/' -e 's/ days,/d/' -e 's/load average/ld/'
+	   ) 
 }
 
 status () {
-    echo   $HOST '<fc=#ABABAB>'`monitor $1` '</fc>||' `up`
+    echo   $HOST '<fc=#ABABAB>'`monitor $1`'</fc>,' `up`
 }
 
 for s in $*; do 
