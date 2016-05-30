@@ -99,9 +99,11 @@ main = do
 myLayoutHook = smartBorders $ avoidStruts $ showWName
                -- 0 uses simpleFloat, so you don't have to add a doFloat to the manageHook
                $ onWorkspace "0" float
-               -- - is a parking area, since xmonad doesn't use icons
+               -- - is a parking area, since xmonad doesn't use icons.  I also use it
+               --   for xterms that I use for things like kinit or keep-screen-on
                $ onWorkspace "-" (Grid ||| spiral ||| Circle)
-               $ ( tabs ||| tall ||| wide ) -- applies to all workspaces not otherwise mentioned
+               -- Default layouts for all workspaces not otherwise mentioned
+               $ ( tabs ||| tall ||| wide )
   where
     phi     = (2/(1+(toRational(sqrt(5)::Double)))) -- Golden Ratio
     tabs    = named "Tabs" simpleTabbed
@@ -122,6 +124,7 @@ myManageHook = composeAll
     , className =? "XCalc"          --> doFloat
     , className =? "XClock"         --> doFloat
     , className =? "XSane"          --> doFloat
+    , className =? "Xcal"           --> doFloat
       -- ignore panels, bars, and the like even if they don't set the appropriate WM hint
     , className =? "stalonetray"    --> doIgnore
     , className =? "panel"          --> doIgnore
