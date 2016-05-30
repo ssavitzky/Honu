@@ -2,9 +2,9 @@
 # apt-get packages for xmonad and friends on Debian or Ubuntu
 
 
-sudo apt-get -y install xmonad trayer dzen2 suckless-tools    \
-     xfce4-terminal xfce4-power-manager                       \
-     gnome-power-manager classicmenu-indicator nm-applet      \
+sudo apt-get -y install xmonad trayer dzen2 suckless-tools     \
+     xfce4-terminal xfce4-power-manager xdotool                \
+     gnome-power-manager classicmenu-indicator                 \
      x11-xserver-utils xterm
 
 if grep -qs "trusty main" /etc/apt/sources.list; then
