@@ -6,7 +6,7 @@ if_defined () {
     if [ -x $1 ]; then $* & fi
 }
 if_defined_else () {
-    if [ -x $1 ]; then $1 & else $2 & fi
+    if [ -x $1 ]; then $1 & elsif [ -x $2 ]; then $2 & fi
 }
 
 # This is used by GTK applications to get their defaults.
