@@ -1,166 +1,10 @@
 ! .Xdefaults for Steve Savitzky
 !
-
-! NOTE:
-!       DO NOT permit a session manager or window manager (e.g. dxsession or
-!	mwm) to scribble its defaults on your copy of this file -- this is 
-!	guaranteed to lose.  In particular, you lose all the C preprocessor 
-!	defines and conditionals.
-!
 ! Note that trailing blanks on a line are significant (and usually wrong)!
 !      In particular they invisibly screw up font names.
 !
-! Note: We no longer count on having CPP, so no more includes.
-
-! === Really ought to #define aliases for common fonts 
-
-!*** DEFINES ************************************************************
-!
-! All defines have been expanded:  we rarely have to deal with any screen
-! with a width less than 1280
-
-#if (WIDTH > 1900)		/* 1980x1200 -- full-resolution HDTV */
-#define EditSIZE	81x51
-#define EditGEOM	937x1109-0+52
-#define EmacsGEOM	81x51-0+52
-#define FH		18
-#define HH		20
-#define TH		24
-#define EditFONT  -adobe-courier-medium-r-normal--18-*-*-*-m-*-*-1
-#define fixed 		8x13
-#define serif10		serif12
-#define	serifb10	serifb12
-#define serifi10	serifi12
-
-#else
-#if (WIDTH > 1601)		/* 1680x1050 -- minimal HDTV */
-#define EditSIZE	81x47
-#define EditGEOM	852x890-0+52
-#define EmacsGEOM	81x57-0+52
-#define FH		16
-#define HH		20
-#define TH		24
-! go a little smaller because the 22'' monitor has bigger dots
-#define EditFONT  -adobe-courier-medium-r-normal--16-*-*-*-m-*-*-1
-#define fixed 		8x13
-#define serif10		serif12
-#define	serifb10	serifb12
-#define serifi10	serifi12
-
-#else
-#if (WIDTH > 1281)		/* 1600x1200 -- old 100dpi Suns, Linux */
-#define EditSIZE	81x51
-#define EditGEOM	937x1109-0+52
-#define EmacsGEOM	81x51-0+52
-#define FH		18
-#define HH		20
-#define TH		24
-#define EditFONT  -adobe-courier-medium-r-normal--16-*-*-*-m-*-*-1
-#define fixed 		8x13
-#define serif10		serif12
-#define	serifb10	serifb12
-#define serifi10	serifi12
-
-#else
-#if (WIDTH > 1153)		/* 1280x1024 -- monochrome Apollos, Linux */
-#if SMALL
-#ifdef EMACS21
-!!! for Emacs 21 -- it's wider and computes height differently.
-#define EditSIZE	81x47
-#define EditGEOM	937x885-0+52
-#define EmacsGEOM	81x47-0+52
-#else
-#define EditSIZE	81x41
-#define EditGEOM	915x892-0+52
-#define EmacsGEOM	81x41-0+52
-#endif
-#define FH		18
-#define EditFONT -adobe-courier-medium-r-normal--16-*-*-*-m-*-*-1
-#define HH		20
-#define TH		24
-#else
-#define EditSIZE	81x47
-#define EditGEOM	836x929-0+52
-#define EmacsGEOM	81x47-0+52
-#define FH		16
-#define EditFONT -adobe-courier-medium-r-normal--16-*-*-*-m-*-*-1
-#define HH		18
-#define TH		24
-#endif
-
-#else
-#if (WIDTH > 1024)		/* 1152x900 -- most Suns, some Linux */
-#if SMALL
-#define EditSIZE	81x49
-#define EditGEOM	753x816-0+52
-#define EmacsGEOM	81x49-0+52
-#define FH		14
-#define HH		16
-#define TH		18
-#define EditFONT	-adobe-courier-medium-r-normal--14-*-*-*-m-*-*-1
-#else
-#define EditSIZE	81x41
-#define EditGEOM	836x814-0+52
-#define EmacsGEOM	81x41-0+52
-#define FH		16
-#define HH		18
-#define TH		24
-#define EditFONT	-adobe-courier-medium-r-normal--16-*-*-*-m-*-*-1
-#endif
-#define LoginFONT	-adobe-courier-medium-r-normal--14-*-*-*-m-*-*-1
-
-#else
-#if (WIDTH > 800)
-#if HEIGHT > 768)		/* 1024x864 -- DECstations */
-#define EditSIZE	81x54
-#define EditGEOM	587x705-0+52
-#define EmacsGEOM	81x54-0+52
-#define FH		12
-#define HH		16
-#define TH		28
-#define EditFONT	-adobe-courier-medium-r-normal--12-*-*-*-m-*-*-1
-#define FixedFONT	-adobe-courier-medium-r-normal--12-*-*-*-m-*-*-1
-#else				/* 1024x768 -- most PCs */
-#define EditSIZE	81x40
-#define EditGEOM	669x674-0+52
-#define EmacsGEOM	81x40-0+52
-#define FH		16
-#define HH		18
-#define TH		24
-#define FixedFONT	8x16
-#define EditFONT	8x16
-#endif
-
-#else
-#if (WIDTH > 640)		/* 800x600 -- SVGA */
-#define EditSIZE	81x37
-#define EditGEOM	587x513-0+52
-#define EmacsGEOM	81x37-0+52
-#define FH		12
-#define HH		16
-#define TH		28
-#define FixedFONT	7x13
-#define EditFONT	7x13
-
-#else				/* 640x480 -- VGA/Laptop/projector. */
-#define EditSIZE	81x46
-#define EditGEOM	587x392-0+52
-#define EmacsGEOM	81x46-0+52
-#define FH		8
-#define HH		10
-#define TH		12
-#define FixedFONT	-*-clean-medium-r-normal--8-80-75-75-c-60-iso8859-1
-#define EditFONT	FixedFONT
-!#define FixedFONT	6x10
-!#define EditSIZE	81x28
-
-#endif
-#endif
-#endif
-#endif
-#endif
-#endif
-#endif
+! Note: We no longer count on having CPP, so no more includes or defines.
+! 	See Archive/.Xdefaults-starport
 
 ! **************************************************************** 
 !
@@ -248,13 +92,8 @@ NXTerm*charClass:		33:48,37:48,45-47:48,64:48
 
 xterm*VT100.geometry:		80x24+0-50
 
-color_xterm*VT100.geometry:	JJ(80x24,0-50)
 color_xterm*VT100.background:	white
-NXTerm*VT100.geometry:		JJ(80x24,0-50)
 NXTterm*VT100.background:	white
-
-login*font:			LoginFONT
-login*VT100.geometry:		JJ(LoginSIZE,0-50)
 
 xterm-r*VT100.geometry:		80x24-0-20
 xterm-s*VT100.geometry:		80x12-0-395
@@ -267,11 +106,7 @@ sh*VT100.font: -adobe-courier-medium-r-normal--10-100-75-75-m-60-iso8859-1
 console*VT100.geometry: 	80x4-50+0
 console*VT100.font: -adobe-courier-medium-r-normal--10-100-75-75-m-60-iso8859-1
 
-rn*font:			EditFONT
-rn*VT100.geometry:		EJ(EditSIZE,0+52)
-
 nethack*font:			10x20
-nethack*geometry:		JJ(,50-50)
 nethack*VT100.Translations:	#override\
 	<KeyPress> KP_1:	  string(b)\n\
 	<KeyPress> KP_2:	  string(j)\n\
@@ -290,7 +125,6 @@ nethack*VT100.Translations:	#override\
 	<KeyPress> Next:	  scroll-forw(1,page)\n\
 	<KeyPress> F35:		  scroll-forw(1,page)
 
-#ifndef EditFONT
 ! Environments that don't use xrdb or don't have a RESOURCE_MANAGER property
 ! on the root window (e.g Widoze X servers) will pick up these resources.
 XTerm*font:	-adobe-courier-medium-r-normal--*-120-*-*-m-*-*-1
@@ -298,7 +132,6 @@ NXTerm*font:	-adobe-courier-medium-r-normal--*-120-*-*-m-*-*-1
 xterm*VT100.geometry:		80x24+0-0
 console*VT100.geometry: 	80x4-55+0
 console*font:			fixed
-#endif
 
 
 ! ****************************************************************
@@ -306,10 +139,6 @@ console*font:			fixed
 ! Editor defaults
 !
 
-!Emacs.geometry:			EJ(EditSIZE,0+52)
-Emacs.geometry:			EmacsGEOM
-Emacs*font:			EditFONT
-Emacs.Font:			EditFONT
 Emacs.BorderWidth:		3
 Emacs.InternalBorder:		2
 Emacs.Cursor:			xterm
@@ -320,13 +149,12 @@ Emacs.Cursor:			xterm
 !Emacs*foreground:			white
 !Emacs*Foreground:			white
 
-#ifndef EditFONT
-! Environments that don't use xrdb or don't have a RESOURCE_MANAGER property
-! on the root window (e.g the PC) will pick up these resources.
+! We suppress the toolbar in .emacs, but doing it here keeps emacs from resizing,
+! which it does because it shows the toolbar on startup and then deletes it
+! when the option is set.
 Emacs*font:	-adobe-courier-medium-r-normal--*-120-*-*-m-*-*-1
 Emacs.geometry:			80x35+0+52
-#endif
-
+Emacs*toolBar:			0
 
 ! ****************************************************************
 !
@@ -340,8 +168,6 @@ xbiff*geometry:			48x48-0+0
 xbiff.wm_option.title:		off
 xbiff*update:			5
 xbiff*shapeWindow:		true
-
-xbiff++*geometry:		JJ(48x48,106+0)
 
 ! Note the use of different names to get different defaults
 ! for analog and digital clocks
@@ -359,10 +185,6 @@ xclock-d*chime:			off
 !xclock-d*font:			9x15bold
 xclock-d*analog:		false
 
-! Dclock is an InterViews client and might not always be present,
-! but it's a huge win if it is.
-dclock*geometry:		JJ(100x48,50+0)
-
 xload.wm_option.title:		off
 xload.geometry:			100x48+155+0
 xload-r.geometry:		100x48+265+0
@@ -371,24 +193,12 @@ xload*borderWidth:		1
 
 ! Calendars: (second line of dashboard)
 
-! ical (help window resource name unknown)
-Ical.Dayview.geometry:		JJ(,0+28)
-Ical.Listing.geometry:		JJ(,22+55)
-Ical.Reminder.geometry:		JJ(,22+55)
-Ical.Userguide.geometry:	JJ(,22+55)
-
 ! xcal: obsolete.
 
 XCal.UseWmTitle:		False
 XCal.wm_option.title:		off
-XCal.geometry:			JJ(150x20,0+52)
-XCal.edit.geometry:		JJ(360x150,0+78)
-XCal.memo.geometry:		JJ(360x500,0+78)
-XCal.alarm.geometry:		JJ(360x100,0+78)
-XCal.help.geometry:		JJ(600x300,0+78)
 XCal.XcalendarCompat:		True
 XCal.MinStripWidth:		150
-XCal*geometry:			JJ(,0+78)
 XCal*Command.shapeStyle:	roundedRectangle
 xcal.Update:			61
 xcal.Countdown:			10,5,0
@@ -402,30 +212,17 @@ XCal*Font:			-*-courier-bold-r-*--12-*
 XCal*info.Font:			-*-helvetica-medium-r-*--10-*
 XCal*alarmText*Font:		-*-fixed-medium-r-*--20-*
 
-#ifdef COLOR
-! Original colors re-jiggered by SS to avoid colormap pollution
-! and provide a uniform look and feel
-
-! XCal*background:        	LightSteelBlue
-! XCal*foreground:		Black
 XCal.MarkForeground:		Black
 XCal.MarkBackground:		CornflowerBlue
-!XCal.edit.background:		CornflowerBlue
-!XCal.edit.foreground:		OliveGreen
-!XCal*exit.background:		MediumTurquoise
-!XCal*exit.foreground:		SlateGrey
 XCal*check.background:		lavender
-!XCal*help*background:		wheat
-!XCal*help*foreground:		blue
-!XCal*newdate*background:	plum
-!XCal*newdate*foreground:	red
 XCal*quit.background:	 	green
 XCal*back.background:		yellow
 XCal*next.background:		yellow
 XCal*no.background:   		green
 XCal*yes.background:		red
-#endif
 
+! xcalendar was a great little calendar with events in text files.
+! apparently obsolete now.
 XCalendar*font:			-*-courier-bold-r-*--12-*
 XCalendar*date.font:		-*-courier-bold-r-*--12-*
 XCalendar*daynames*font:	-*-courier-bold-r-*--12-*
@@ -433,8 +230,6 @@ XCalendar*command.font:		-*-courier-bold-r-*--12-*
 XCalendar*editorTitle.font:	-*-courier-bold-r-*--12-*
 XCalendar.markOnStartup:	true
 XCalendar.firstDay:		1
-XCalendar*dayEditor*geometry:	JJ(300x160,270+52)
-XCalendar*geometry:		JJ(260x160,0+52)
 XCalendar*daynumbers.1*Foreground: Black
 XCalendar*daynumbers.8*Foreground: Black
 XCalendar*daynumbers.15*Foreground: Black
@@ -446,12 +241,6 @@ XCalendar*daynumbers.14*Foreground: Red
 XCalendar*daynumbers.21*Foreground: Red
 XCalendar*daynumbers.28*Foreground: Red
 XCalendar*daynumbers.35*Foreground: Red
-
-! ******************************************************************
-! 
-!  Web Browsers:
-! 
-!	Thses are grouped together because they're mostly the same.
 
 
 ! ****************************************************************
@@ -472,13 +261,8 @@ xlock.mode:			random
 
 Xman*topBox:			false
 Xman*bothShown:			true
-Xman*manualBrowser.geometry:	EditGEOM
 Xman*iconX:			390
 Xman*iconY:			0
-Xman*manualFontNormal:		EditFont
-Xman*manualFontBold:		bFONT
-Xman*manualFontItalic:		iFONT
-Xman*directoryFontNormal:	EditFont
 
 XMessage*font:			*-times-bold-r-*--14-*
 
@@ -493,6 +277,4 @@ XTerm*background:		white
 ! Terminal-mode apps are designed to look better on a black bg:
 XTerm*VT100.background:		black
 XTerm*VT100.foreground:		white
-
-
 
