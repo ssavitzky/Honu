@@ -92,7 +92,8 @@ main = do
 
 
 -- | The available layouts.  Note that each layout in a parenthesized choice group is
---   separated by |||, which denotes layout choice. 
+--   separated by |||, which denotes layout choice.  Mod-space cycles through layouts.
+--   Mod-Shift-space moves the focused window to the master position.
 --
 --   see https://wiki.haskell.org/Xmonad/Config_archive/Thayer_Williams%27_xmonad.hs
 --   for the golden ratio stuff and some other config things.
@@ -124,7 +125,7 @@ myManageHook = composeAll
     , className =? "XCalc"          --> doFloat
     , className =? "XClock"         --> doFloat
     , className =? "XSane"          --> doFloat
-    , className =? "Xcal"           --> doFloat
+    , className =? "XCal"           --> doFloat
       -- ignore panels, bars, and the like even if they don't set the appropriate WM hint
     , className =? "stalonetray"    --> doIgnore
     , className =? "panel"          --> doIgnore
@@ -139,11 +140,6 @@ myLogCommand mobar = if mobar then "xmobar" else dzenCommand
 myLogHook mobar    = if mobar then mobarLogHook else dzenLogHook
 
 -- xmobar log hook configuration
-
-mobarWorkspaces' = clickable . (map xmobarEscape) $ workspaceNames
-  where clickable l = [ "<action=xdotool key super+" ++ show (n) ++ ">" ++ ws ++ "</action>" |
-                        (i,ws) <- zip ([1..9] ++ [0]) l,                                        
-                        let n = i ]
 
 xmobarEscape = concatMap doubleLts
   where doubleLts '<' = "<<"
@@ -163,7 +159,7 @@ mobarLogHook pipe = dynamicLogWithPP xmobarPP
     , ppHiddenNoWindows = xmobarColor "#646464" ""       . clickWrap
     , ppVisible = xmobarColor "gray" "" . wrap "(" ")"   . clickWrap
     , ppUrgent  = xmobarColor "red" "yellow"             . clickWrap
-    , ppTitle   = xmobarColor "green"  "" -- xmobar truncates at }{ 
+    , ppTitle   = xmobarColor "green"  ""
     }
   where clickWrap = if wsClickable then xmobarClickWrap else id
 
