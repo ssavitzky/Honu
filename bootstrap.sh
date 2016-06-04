@@ -39,4 +39,5 @@ mkdir -p $DEST
 # Install the dotfiles and other goodies.
 (cd $DEST/Config; make install-pkgs install)
 
-echo Welcome to this fully-armed and operational workstation.
+echo Behold the power of this fully armed and operational workstation.
+echo Remember to set up both gnome and xfce power managers.
