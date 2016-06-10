@@ -13,6 +13,7 @@ S () {
 ### To find a schema:
 # gsettings list-schemas | sort
 # gsettings list-recursively <schema>
+# for s in `gsettings list-schemas | sort`; do gsettings list-recursively $s; done
 
 ### Fix focus:
 S org.gnome.desktop.wm.preferences raise-on-click true
