@@ -6,38 +6,40 @@ if [ ! -x /usr/bin/gsettings ]; then
     exit 0
 fi
 
-S="gsettings set"
+S () {
+    [ -z "`gsettings set $1 $2 "$3" 2>&1`" ] || echo failed to set $1 $2
+}
 
 ### To find a schema:
 # gsettings list-schemas | sort
 # gsettings list-recursively <schema>
 
 ### Fix focus:
-$S org.gnome.desktop.wm.preferences raise-on-click true
-$S org.gnome.desktop.wm.preferences auto-raise true
-$S org.gnome.desktop.wm.preferences focus-mode 'sloppy'
-$S org.gnome.desktop.wm.preferences auto-raise-delay 500
+S org.gnome.desktop.wm.preferences raise-on-click true
+S org.gnome.desktop.wm.preferences auto-raise true
+S org.gnome.desktop.wm.preferences focus-mode 'sloppy'
+S org.gnome.desktop.wm.preferences auto-raise-delay 500
 
 ### Fix key bindings:
-$S org.gnome.desktop.wm.keybindings activate-window-menu "['<Control><Alt>space']"
-$S org.gnome.desktop.wm.keybindings cycle-panels "['<Control><Alt>Escape']"
-$S org.gnome.desktop.wm.keybindings switch-panels "['<Control><Alt>Tab']"
+S org.gnome.desktop.wm.keybindings activate-window-menu "['<Control><Alt>space']"
+S org.gnome.desktop.wm.keybindings cycle-panels "['<Control><Alt>Escape']"
+S org.gnome.desktop.wm.keybindings switch-panels "['<Control><Alt>Tab']"
 # this is particularly nasty because it's not in the same place as the others
-$S org.freedesktop.ibus.general.hotkey triggers [] || :
+S org.freedesktop.ibus.general.hotkey triggers []
 
 ### Fix fonts:
-$S org.gnome.desktop.interface document-font-name 'Sans 11'
-$S org.gnome.desktop.interface font-name 'Cantarell 11'
-$S org.gnome.desktop.interface monospace-font-name 'Inconsolata 12'
+S org.gnome.desktop.interface document-font-name 'Cantarel 11'
+S org.gnome.desktop.interface font-name 'Cantarell 11'
+S org.gnome.desktop.interface monospace-font-name 'Inconsolata 12'
 
 ### Fix window behavior
-$S org.gnome.shell.overrides edge-tiling false || :
+S org.gnome.shell.overrides edge-tiling false
 
 ### Ubuntu-specific fixes:
 if gsettings list-schemas | grep -q canonical; then
 
     ## fix the clock applet, which is badly broken in post-unity Ubuntu
-    $S com.canonical.indicator.datetime time-format 'custom' || : 
-    $S com.canonical.indicator.datetime custom-time-format '%a %Y-%m-%d %H:%M' || :
+    S com.canonical.indicator.datetime time-format 'custom'
+    S com.canonical.indicator.datetime custom-time-format '%a %Y-%m-%d %H:%M'
 
 fi
