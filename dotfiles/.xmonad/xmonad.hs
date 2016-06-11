@@ -56,6 +56,12 @@ goodTerminal = "/usr/bin/xfce4-terminal"
 --   xclock, or something else.
 topBarWidth = 920
 
+-- | font and colors.  These are defined in .mobarrc, but we use them with dzen2
+--   "xft:Bitstream Vera Sans Mono:size=10:bold:antialias=true" -- original.
+font    =      "xft:Inconsolata:style=medium:size=12"
+bgColor =      "black"
+fgColor =      "#646464"
+
 main = do
     -- everything that reads files or environment variables has to go inside of main.
 
@@ -187,11 +193,6 @@ dzenLogHook pipe = dynamicLogWithPP defaultPP
     , ppTitle   = dzenColor "green"  ""
     }
   where clickWrap = if wsClickable then dzenClickWrap else id
-
--- font and colors from xmobarrc
-font    =      "xft:Bitstream Vera Sans Mono:size=10:bold:antialias=true"
-bgColor =      "black"
-fgColor =      "#646464"
        
 -- see http://softwareprocess.es/x/x/xmonad-burn.hs for some good documentation
 --
