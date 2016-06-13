@@ -22,7 +22,7 @@ HIGHLY_RECOMMENDED="git-doc git.el gnome-session-flashback"
 sudo apt-get install $REQUIRED $MAY_NEED_UPDATE $HIGHLY_RECOMMENDED
 
 ### Now that we have git, we can fetch the repos we need:
-
+ 
 # Prefix for the git repos
 REPO=savitzky@savitzky.net:git/users/steve
 
