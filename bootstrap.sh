@@ -11,18 +11,23 @@ fi
 cd $HOME
 
 # Required packages: if we don't get these, all is lost.
-REQUIRED="git gitk git-gui curl wget make rsync openssh-client"
+REQUIRED="git gitk git-gui curl wget make rsync openssh-client openssh-server"
 
 # Packages with names that may require updating from time to time
 MAY_NEED_UPDATE="emacs24"
 
 # Highly recommended packages
-HIGHLY_RECOMMENDED="git-doc git.el gnome-session-flashback"
+HIGHLY_RECOMMENDED="git-doc git.el gnome-session-flashback xdu"
 
 sudo apt-get install $REQUIRED $MAY_NEED_UPDATE $HIGHLY_RECOMMENDED
 
+# ensure that shared ssh connections work.  This not only speeds up the
+# git cloning, but keeps dreamhost's limit on ssh connections in quick
+# succession from kicking in.
+mkdir -p .ssh/controlmasters
+
 ### Now that we have git, we can fetch the repos we need:
- 
+
 # Prefix for the git repos
 REPO=savitzky@savitzky.net:git/users/steve
 
