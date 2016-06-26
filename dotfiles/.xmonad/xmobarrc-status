@@ -6,7 +6,7 @@ Config {
    -- appearance.  Note that height is set from the font height.
    --              Inconsolata is more compact than liberation mono or vera sans mono, so it's a
    --              good choice for a laptop.  Arguably not as good for a large screen.
-     font =         "xft:Inconsolata:style=medium:size=12"
+     font =         "xft:Inconsolata:style=medium:size=14"
    , bgColor =      "black"
    , fgColor =      "#646464"
    , position =     BottomW L 100

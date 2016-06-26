@@ -109,6 +109,8 @@ myLayoutHook = smartBorders $ avoidStruts $ showWName
                -- - is a parking area, since xmonad doesn't use icons.  I also use it
                --   for xterms that I use for things like kinit or keep-screen-on
                $ onWorkspace "-" (Grid ||| spiral ||| Circle)
+	       -- 2 is where I keep my to-do list and a terminal
+	       $ onWorkspace "2" ( tall ||| wide ||| tabs )
                -- Default layouts for all workspaces not otherwise mentioned
                $ ( tabs ||| tall ||| wide )
   where
@@ -137,6 +139,8 @@ myManageHook = composeAll
     , className =? "panel"          --> doIgnore
     , className =? "dzen2"          --> doIgnore
     , className =? "xmobar"         --> doIgnore
+    , title =? "tdc"                --> doIgnore -- almost useless: can't set geometry
+      	       			    		 -- xclock -name tdc # works, though.
     ]
 
 -- | Select the status bar for the main screen.  We prefer xmobar, but older versions
@@ -196,10 +200,10 @@ dzenLogHook pipe = dynamicLogWithPP defaultPP
        
 -- see http://softwareprocess.es/x/x/xmonad-burn.hs for some good documentation
 --
--- The default number of workspaces (virtual screens) and their names.
--- By default we use numeric strings, but any string may be used as a
--- workspace name. The number of workspaces is determined by the
--- length of this list.
+-- | The default number of workspaces (virtual screens) and their names.
+--   By default we use numeric strings, but any string may be used as a
+--   workspace name. The number of workspaces is determined by the
+--   length of this list.  The 1-9 keys are predefined.
 
 -- Because of the way this configuration makes workspaces clickable,
 -- the first character of the name needs to be the name of the key.
@@ -220,5 +224,7 @@ myAdditionalKeys wsNames =
     ((myModMask, key), (windows $ W.greedyView ws))
     | (key, ws) <- wsKeys wsNames
   ] ++ [ ((myModMask .|. shiftMask, key), (windows $ W.shift ws)) | (key, ws) <- wsKeys wsNames ]
-    
--- END OF FILE ------------------------------------------------------------------------
+
+-- Local Variables:
+--    fill-column:90
+-- End:
