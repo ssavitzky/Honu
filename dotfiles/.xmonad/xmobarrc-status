@@ -100,7 +100,7 @@ Config {
 
         -- time and date indicator 
         --   (%F = y-m-d date, %a = day of week, %T = h:m:s time)
-        , Run Date           "<fc=#ABABAB>%F %I:%M%P</fc>" "date" 10
+        , Run Date           "<fc=#eeeeee>%F %I:%M%P</fc>" "date" 10
 
         -- Weather.  KBFI is Boeing Field
         , Run Weather "KBFI" [ "--template"

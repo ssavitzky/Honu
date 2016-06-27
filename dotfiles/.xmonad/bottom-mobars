@@ -25,7 +25,7 @@ up () {
 }
 
 status () {
-    echo   $HOST '<fc=#ABABAB>'`monitor $1`'</fc>,' `up`
+    echo   $HOST '<fc=#eeeeee>'`monitor $1`'</fc>,' `up`
 }
 
 for s in $*; do 

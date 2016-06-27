@@ -2,6 +2,11 @@
 #    Sourced by the xmonad gdm/lightdm session.  Initially from
 #    /usr/share/doc/xmonad/README.Debian
 
+# Configuration options:
+
+# fbpanel is a plausible alternative to trayer, but it's not as good as it should be.
+systemTray=trayer
+
 if_defined () {
     if [ -x $1 ]; then $* & fi
 }
@@ -25,19 +30,23 @@ if [ -e  $HOME/.Xdefaults ]; then
     xrdb -merge $HOME/.Xdefaults
 fi
 
-# This contains the indicators, most notably the network manager applet.
-# The width is set to 10% of the screen to leave room for xmobar, which
-# is started by xmonad so that it can pipe its log into it.
-trayer --edge top --align right --SetDockType true\
-       --SetPartialStrut true --expand true\
-       --widthtype percent --width 10 --height 20\
-       --transparent true --tint 0x000000 &
-
-sleep 1
-
 # Use a solid blue background to indicate that something is happening.
 # Also makes it easier for VGA monitors to sync up.
 xsetroot -xcf /usr/share/icons/Adwaita/cursors/left_ptr 16 -solid blue
+
+if [ trayer = "$systemTray" ]; then
+    # This contains the indicators, most notably the network manager applet.
+    # The width is set to 10% of the screen to leave room for xmobar, which
+    # is started by xmonad so that it can pipe its log into it.
+    trayer --edge top --align right --SetDockType true\
+	   --SetPartialStrut true --expand true\
+	   --widthtype percent --width 10 --height 20\
+	   --transparent true --tint 0x000000 &
+    xclock -digital -name xmonad-ignore -geometry -188+0 -padding 0 -bg black -fg green&
+else
+    $systemTray &
+fi
+sleep 1
 
 if_defined /usr/bin/classicmenu-indicator
 if_defined_else /usr/bin/xfce4-power-manager /usr/bin/gnome-power-manager

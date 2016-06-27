@@ -39,8 +39,8 @@ import XMonad.Layout.IndependentScreens (countScreens)
 myModMask = mod4Mask            -- mod = Super
 
 -- | Whether to use xmobar for the top status bar on monitor 1.  Normally we
--- just use a short dzen, which leaves room for a gnome-panel or some such, but
--- if you don't want to waste space on a bottom bar it makes sense to use xmobar.
+--   just use a short dzen, which leaves room for a gnome-panel or some such, but
+--   if you don't want to waste space on a bottom bar it makes sense to use xmobar.
 wantXmobar = False
 
 -- | Whether to make the window names clickable.  Unless you're stuck on an older
@@ -60,7 +60,8 @@ topBarWidth = 920
 --   "xft:Bitstream Vera Sans Mono:size=10:bold:antialias=true" -- original.
 font    =      "xft:Inconsolata:style=medium:size=12"
 bgColor =      "black"
-fgColor =      "#646464"
+fgColor =      "#646464"	-- normal foreground color for status bars
+hiColor =      "#dddddd"	-- highlight color for status bars
 
 main = do
     -- everything that reads files or environment variables has to go inside of main.
@@ -139,18 +140,19 @@ myManageHook = composeAll
     , className =? "panel"          --> doIgnore
     , className =? "dzen2"          --> doIgnore
     , className =? "xmobar"         --> doIgnore
-    , title =? "tdc"                --> doIgnore -- almost useless: can't set geometry
-      	       			    		 -- xclock -name tdc # works, though.
+      -- set title for special handling.  This is the -name argument for xtoolkit apps
+    , title =? "xmonad-ignore"	    --> doIgnore  -- eg xclock -name xmonad-ignore
+    , title =? "xmonad-float"	    --> doFloat
     ]
 
--- | Select the status bar for the main screen.  We prefer xmobar, but older versions
---   don't support the full configuration file format, so if we're stuck on Ubuntu < 15.04
---   we use dzen2, which is drop-dead easy to recompile from source (see ../opt)
+-- | Select the status bar for the main screen.  dzen2 is easier to configure from the
+--   command line, but xmobar has its advantages, especially if you're on Ubuntu >=15.10.
 myLogCommand mobar = if mobar then "xmobar" else dzenCommand
 myLogHook mobar    = if mobar then mobarLogHook else dzenLogHook
 
 -- xmobar log hook configuration
 
+xmobarEscape :: String -> String
 xmobarEscape = concatMap doubleLts
   where doubleLts '<' = "<<"
         doubleLts x   = [x]
@@ -164,11 +166,11 @@ xmobarClickWrap ws = wrap start end (xmobarEscape ws)
         end   = "</action>"
 mobarLogHook pipe = dynamicLogWithPP xmobarPP
     { ppOutput = hPutStrLn pipe
-    , ppCurrent = xmobarColor "yellow" "" . wrap "[" "]" . clickWrap
-    , ppHidden  = xmobarColor "gray" ""                  . clickWrap
-    , ppHiddenNoWindows = xmobarColor "#646464" ""       . clickWrap
-    , ppVisible = xmobarColor "gray" "" . wrap "(" ")"   . clickWrap
-    , ppUrgent  = xmobarColor "red" "yellow"             . clickWrap
+    , ppCurrent = xmobarColor "yellow" "" . wrap "[" "]"  . clickWrap
+    , ppHidden  = xmobarColor hiColor ""                  . clickWrap
+    , ppHiddenNoWindows = xmobarColor fgColor ""          . clickWrap
+    , ppVisible = xmobarColor hiColor "" . wrap "(" ")"   . clickWrap
+    , ppUrgent  = xmobarColor "red" "yellow"              . clickWrap
     , ppTitle   = xmobarColor "green"  ""
     }
   where clickWrap = if wsClickable then xmobarClickWrap else id
@@ -178,10 +180,14 @@ mobarLogHook pipe = dynamicLogWithPP xmobarPP
 --   the latest version from source, but that should be simpler than xmobar.
 --   Note that we use dzenOnScreen for all screens other than the first.
 --   The first screen will normally have a trayer or gnome-panel on it.
-dzenCommandBase = "dzen2 -x '0' -y '0' -h '20' -ta 'l' " ++
-                  "-fg '#646464' -bg 'black' -fn '"++font++"'"
-dzenCommand = dzenCommandBase ++ " -w " ++ show topBarWidth
-dzenOnScreen n = dzenCommand ++ " -xs " ++ show n
+dzenCommandBase = unwords [ "dzen2 -x '0' -y '0' -h '20' -ta 'l' "
+                  	  , "-fg", quote fgColor
+			  , "-bg", quote bgColor
+			  , "-fn", quote font
+		          ]
+			  where quote s = wrap "'" "'" s					
+dzenCommand  =   unwords [dzenCommandBase, "-w", show topBarWidth]
+dzenOnScreen n = unwords [dzenCommandBase, "-xs", show n]
 
 dzenClickWrap ws = wrap start end (dzenEscape ws)
   where start = "^ca(1,xdotool key super+" ++ [ head ws ] ++ ")"
@@ -189,11 +195,11 @@ dzenClickWrap ws = wrap start end (dzenEscape ws)
 
 dzenLogHook pipe = dynamicLogWithPP defaultPP
     { ppOutput = hPutStrLn pipe
-    , ppCurrent = dzenColor "yellow" "" . wrap "[" "]" . clickWrap
-    , ppHidden  = dzenColor "gray" ""                  . clickWrap
-    , ppHiddenNoWindows = dzenColor "#646464" ""       . clickWrap
-    , ppVisible = dzenColor "gray" "" . wrap "(" ")"   . clickWrap
-    , ppUrgent  = dzenColor "red" "yellow"             . clickWrap
+    , ppCurrent = dzenColor "yellow" "" . wrap "[" "]"  . clickWrap
+    , ppHidden  = dzenColor hiColor ""                  . clickWrap
+    , ppHiddenNoWindows = dzenColor fgColor ""          . clickWrap
+    , ppVisible = dzenColor hiColor "" . wrap "(" ")"   . clickWrap
+    , ppUrgent  = dzenColor "red" "yellow"              . clickWrap
     , ppTitle   = dzenColor "green"  ""
     }
   where clickWrap = if wsClickable then dzenClickWrap else id
