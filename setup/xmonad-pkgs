@@ -5,7 +5,7 @@
 sudo apt-get -y install xmonad trayer dzen2 suckless-tools     \
      xfce4-terminal xfce4-power-manager xdotool                \
      gnome-power-manager classicmenu-indicator                 \
-     x11-xserver-utils xterm
+     x11-xserver-utils xterm gsimplecal fbpanel
 
 if grep -qs "trusty main" /etc/apt/sources.list; then
     echo "we appear to be on Ubuntu 14.04 -- simplify xmonad"

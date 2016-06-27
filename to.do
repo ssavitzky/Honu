@@ -7,7 +7,7 @@ o Some dotfiles, e.g. .gitconfig, really need to be modified by a script rather 
   
 o regular dotfiles should start with "_" rather than ".", to make them visible.
 
-==============================================================================
+========================================================================================>
 Work Log:
 ========
 
@@ -30,6 +30,16 @@ Work Log:
 
 0215Mo
   * added adobe-source-code-pro font, tell emacs to use system font.
+
+... Really ought to copy the config-related stuff out of starport/Admin/admin.to.do
+
+0626
+  ~ alltray lookeed useful - lets you put an icon for any program into the tray.
+    It starts the program if it's not already running, but fails in xmonad because it's
+    waiting for the program to be iconified.
+  * gsimplecal, fbpanel, and probably others have subdirectories in .config
+    probably best is to make another directory called dotconfig, parallel to dotfiles
+ 
 
 ==============================================================================
 Local Variables:

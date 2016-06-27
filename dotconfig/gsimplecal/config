@@ -1,0 +1,27 @@
+# sample gsimplecal config file
+# to be copied to $XDG_CONFIG_HOME/gsimplecal/config 
+# (usually, it will be ~/.config/gsimplecal/config)
+
+show_calendar = 1
+show_timezones = 1
+show_week_numbers = 0
+mark_today = 1
+close_on_unfocus = 0
+# Double-click a day to run this.  Ideally it would let you edit an event.
+# apparently iceowl was what thunderbird became before it became icedove
+# In ubuntu, it is xul-ext-lightning; in Debian it's iceowl-extension
+external_viewer = iceowl -showdate "%Y-%m-%d"
+clock_format = %a %d %b %H:%M
+mainwindow_decorated = 0
+mainwindow_keep_above = 1
+mainwindow_sticky = 0
+mainwindow_skip_taskbar = 1
+mainwindow_resizable = 0
+mainwindow_position = mouse
+mainwindow_xoffset = 0
+# This works for a calendar started by a click in a top panel.
+mainwindow_yoffset = 20
+clock_label = UTC
+clock_tz = :UTC
+clock_label = Local
+clock_tz =
