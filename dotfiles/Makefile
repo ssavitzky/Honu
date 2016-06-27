@@ -31,14 +31,13 @@ cleanup::
 	    fi						\
 	done
 
-
+# If we're using the Tools package, chain in its Makefile
 CHAIN = $(wildcard ../../Tools/Makefile)
-list:
-	@echo CFG = $(CFG)
-	@echo DOTFILES=$(DOTFILES)
-	@echo CHAIN=$(CHAIN)
-
-
 ifneq ($(CHAIN),)
     include ../../Tools/Makefile
 endif
+
+report-vars::
+	@echo CFG= $(CFG)
+	@echo DOTFILES=$(DOTFILES)
+	@echo CHAIN=$(CHAIN)
