@@ -40,6 +40,8 @@ Work Log:
   * gsimplecal, fbpanel, and probably others have subdirectories in .config
     probably best is to make another directory called dotconfig, parallel to dotfiles
  
+0627Mo
+  * made the Makefiles independendent of Tools/Makefile.
 
 ==============================================================================
 Local Variables:
