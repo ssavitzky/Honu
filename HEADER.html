@@ -1,0 +1,90 @@
+<h2><a href="../" >*.savitzky.net</a>
+  / <a href="./" ><code>Config</code></a> /</h2>
+<p> <a href="../">[..]</a>
+    <a href="#files">[files]</a></p>
+<link rel="stylesheet" type="text/css" href="/style.css" />
+
+<p> Unlike most other directories on this website, where the
+    <code>HEADER.html</code> file is hidden from casual browsing by an
+    <code>index.html</code> file, <em>this</em> directory deliberately leaves
+    <code>HEADER.html</code> out where you can see it. (See <a
+    href="../Tools">../Tools</a> for details.)
+</p>
+<p> This particular directory contains my personal configuration files and
+    configuration-related setup scripts -- with those, I can go from a minimal
+    Debian or Ubuntu installation to a system set up (almost) exactly the way
+    I like it in a matter of minutes.  (There are a few things that have to be
+    done manually, unfortunately.)
+</p>
+<p> If you're <em>not</em> me, you will undoubtedly need to do some
+    customizing.  Possibly a lot of customizing.  But this should be a good
+    jumping-off point, and it will become more general over time.
+</p>
+
+<h2>Annotated Contents</h2>
+
+<h3>Files</h3>
+<dl>
+  <dt> <code><a href="bootstrap.sh">bootstrap.sh</a></code>
+  <dd> This is the shell script that I use to configure a system.  Set up your
+       ssh keys, and say:<br>
+      <code>wget http://steve.savitzky.net/Config/bootstrap.sh | /bin/bash<
+      /code><br>
+      or something of the sort.  You can also download it and source it, but
+      that takes half the fun out of it.
+  <dt> <code><a href="Makefile">Makefile</a></code>
+  <dd> Once things get bootstrapped, the entire configuration process is run
+       via the Makefile.  <code>make&nbsp;install</code> is the main target;
+       eventually there will be targets for partial installs, e.g. on tiny
+      systems or systems where I don't have <code>sudo</code> access.
+  <dt> <code><a href="to.do">to.do</a></code>
+  <dd> My to-do list, of course.    The format is trivial: an open circle
+       (lowercase "o") is something that's not finished yet; a filled circle
+       (asterisk) is finished.  "~" indicates something I've decided not to
+       do, and "?" indicates something I'm dithering about.  "&amp;" indicates
+       something I did that I wasn't planning to do.  Eventually
+       finished items move to a "done" section or, when they start getting
+       moldy, a separate file under <code>Archive</code>.
+</dl>
+
+
+<h3>Directories</h3>
+<dl>
+  <dt> <code><a href="Archive/" >Archive/</a></code>
+  <dd> Yeah; I know -- I could just delete stuff and let <code>git</code> keep
+       track of it for me.  This is mainly for stuff that I want to refer to
+       later, or keep around for sentimental value (like my old Usenet
+       <code>.sig</code> files).
+  <dt> <code><a href="dotconfig/" >dotconfig/</a></code>
+  <dd> Configuration files and directories that go into
+       <code>~/.config/</code>.  
+  <dt> <code><a href="dotfiles/" >dotfiles/</a></code>
+  <dd> Configuration files that go into the home directory.  They are
+       symlinked rather than being copied; some may need customization if
+       you're not me, or are me using a different username.
+  <dt> <code><a href="emacs/" >emacs/</a></code>
+  <dd> Like it says on the tin:  configuration files for emacs.  This doesn't
+       include <code>.emacs</code>, which you'll find in <code>dotfiles</code>.
+  <dt> <code><a href="gpg/" >gpg/</a></code>
+  <dd> Public keys and config files for Gnu Privacy Guard.  Under-utilized at
+       present; I'm not positive I can still find the private key D6AF6635
+       goes with.
+  <dt> <code><a href="opt/" >opt/</a></code>
+  <dd> The Makefile here lets you download and install various optional
+       programs from elsenet.  (Right now the only one is <code>dzen2</code>
+       -- older releases of Debian and Ubuntu don't have one that's recent
+       enough to include all the features I want to use with
+       <code>monad</code>.) 
+  <dt> <code><a href="setup/" >setup/</a></code>
+  <dd> Scripts for configuring the things that can't (easily) be installed by
+       simply symlinking a dotfile.  This includes a lot of Gnome options.
+       There are also files with a <code>-pkgs</code> suffix, that install
+       programs using <code>apt</code>.
+  <dt> <code><a href="web/" >web/</a></code>
+  <dd> Bookmarks, and the page (<a href="web/h.home.html">h.home.html</a>)
+       that I use as a home page.
+</dl>
+
+<hr />
+<b>Copyright &copy;  Stephen R. Savitzky (HyperSpace Express)</b><br />
+<a name="files"><hr></a>
