@@ -31,7 +31,17 @@ install:: $(DIRS)
 		; ln -sf ../$(REL)/$$d/* . ; rm -f *~  			\
 		) done
 
-list:
+
+### If we're using the Tools package, chain in its Makefile
+#	See ../Makefile for more information about Tools.
+#
+CHAIN = $(wildcard ../../Tools/Makefile)
+ifneq ($(CHAIN),)
+    include ../../Tools/Makefile
+endif
+
+report-vars::
 	@echo CFGFILES=$(CFGFILES)
 	@echo FILES = $(FILES)
 	@echo DIRS = $(DIRS)
+	@echo CHAIN=$(CHAIN)

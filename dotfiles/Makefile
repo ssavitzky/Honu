@@ -31,7 +31,9 @@ cleanup::
 	    fi						\
 	done
 
-# If we're using the Tools package, chain in its Makefile
+### If we're using the Tools package, chain in its Makefile
+#	See ../Makefile for more information about Tools.
+#
 CHAIN = $(wildcard ../../Tools/Makefile)
 ifneq ($(CHAIN),)
     include ../../Tools/Makefile
