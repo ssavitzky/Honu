@@ -46,6 +46,10 @@ Work Log:
 0627Mo
   * made the Makefiles independendent of Tools/Makefile.
 
+0704Mo
+  * git subtree add --prefix bin ../bin master
+  * The idea is that if there's a pre-existing ~/bin, we can symlink into it.
+
 ==============================================================================
 Local Variables:
     fill-column:90
