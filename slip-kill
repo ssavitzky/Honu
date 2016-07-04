@@ -1,4 +1,0 @@
-#!/bin/sh
-/sbin/dip -k
-killall ping
-echo "dip is dead."

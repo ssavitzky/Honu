@@ -1,5 +1,0 @@
-#!/bin/sh
-#  $Id$
-#  Get all a2i local man pages and cache them in /usr/local/man/man1
-#
-scp 'savitzky@waltz.rahul.net:/usr/local/man/man1/a2i*' .

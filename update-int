@@ -1,6 +1,0 @@
-#!/bin/sh
-#	$Id: update-int,v 1.1 1999/07/11 06:20:57 steve Exp $
-#	update int using ssh from CRC
-
-export CVS_RSH=$HOME/bin/crcssh
-cd $HOME/int; cvs update -d -P
