@@ -7,6 +7,9 @@ o Some dotfiles, e.g. .gitconfig, really need to be modified by a script rather 
   
 o regular dotfiles should start with "_" rather than ".", to make them visible.
 
+o bloggish directories should have a "make wc" target that subtracts the word count of the
+  template file.  Or, better, use sed to filter out tags.
+  
 ========================================================================================>
 Work Log:
 ========
