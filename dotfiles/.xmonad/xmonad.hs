@@ -44,12 +44,13 @@ myModMask = mod4Mask            -- mod = Super
 wantXmobar = False
 
 -- | Whether to make the window names clickable.  Unless you're stuck on an older
--- machine and unwilling to recompile dzen2, you should leave this True.
+--   machine and unwilling to recompile dzen2, you should leave this True.
 wsClickable = True              --  clickable workspace names in xmobar/dzen
 
 -- | The "good" terminal.  We default to xterm if it's not installed.  Other reasonable
--- possibilities include rxvt, gnome-terminal, etc.
-goodTerminal = "/usr/bin/xfce4-terminal"
+--   possibilities include rxvt, gnome-terminal, etc.  Not using xfce-terminal anymore
+--   because it has too many keybindings that can't be overridden, and only one profile.
+goodTerminal = "/usr/bin/gnome-terminal"
 
 -- | The width of the top dzen2 bar.  This is not just because we can't specify
 --   it as a percentage -- sometimes we want to leave room for a gnome-panel,
