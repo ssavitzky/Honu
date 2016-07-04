@@ -1,0 +1,24 @@
+#!/bin/csh -f
+#	$Id: du-sx,v 1.1 1997/09/19 04:27:19 steve Exp $
+#	Same as du-x except it actually does the du | sort > .du first.
+#
+# df . produces something like:
+# wd 1: filesystem kbytes used avail capacity Mounted on
+# wd 8: towerhost:/sci/local 943278 620858 228092 73% /tmp_mnt/usr/local
+
+if ($#argv == 0) set argv = .
+@ xy = 0
+
+foreach f ($argv)
+  cd $f
+  du | sort +1 -t/ > .du
+
+  set df = `df . | tail -1`
+  if ("$f" == ".") then
+     set dir = $cwd:t
+  else
+     set dir = $f
+  endif
+  xdu -name "xdu: $dir $df" -g 600x800+$xy-$xy < .du &
+  @ xy = $xy + 10
+end

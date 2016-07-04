@@ -1,0 +1,11 @@
+#!/bin/csh -f
+#  cptree src dst
+#  	$Id: cptree,v 1.2 2011-05-20 15:16:43 steve Exp $
+# 	copy a directory tree (on the same machine)
+#
+if ($#argv != 2) then
+	echo usage: $0 src dst
+	exit
+endif
+if (! -e "$2") mkdir "$2"
+(cd "$1"; tar cf - .) | (cd "$2"; tar xvpBf -)

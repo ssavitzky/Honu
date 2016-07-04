@@ -1,0 +1,20 @@
+#!/bin/sh
+#
+# Set up X applications on, e.g., nova.  Assumes a single 1920x1200 monitor,
+# which has room for two conky's, an xterm, and xdaliclock along the right-
+# hand edge.  Relies on .Xdefaults-host for color and devilspie for things
+# that most window managers are unwilling to do automatically.
+#
+# Run with:  ssh -X nova xsetup
+
+if ps x | egrep -q "[c]onky -a br"; then
+    true;			# no need to restart clock and conky
+else
+    xdaliclock -builtin1 -geometry 375x82-0-426 -name xdaliclock &
+    conky -a br&
+    sleep 1
+fi
+# The vertical position includes the title bar, which gets removed by devilspie
+exec xterm -geometry  60x21-0+385 -name xsetup
+
+

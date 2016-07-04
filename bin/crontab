@@ -1,0 +1,2 @@
+# NOTE: master is ~steve/bin/crontab
+8 3 * * * $HOME/bin/daily

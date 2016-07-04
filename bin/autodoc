@@ -1,0 +1,23 @@
+# autodoc filename...
+#
+#   extract block comments.
+#
+#   Options:  -a    all comments
+#               else beginning comment only.
+#
+set aflag=0
+
+foreach f ($*)
+    if ("$f" == "-a") then
+        set aflag=1
+        continue
+    endif
+    echo ' '
+    echo '------>>' $f '<<-----------------------------------------------------'
+    echo ' '
+    if ($aflag == 0) then 
+        expand -4 $f | sed '/^$/q' | grep '^.\*' | sed 's/^../  /'
+    else
+        expand -4 $f | grep '^.\*' | sed 's/^../  /'
+    endif
+    end

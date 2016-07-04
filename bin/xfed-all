@@ -1,0 +1,10 @@
+#
+# edit all fonts in a directory with xfed,
+#	using a junk file as a temporary to get around a bug.
+#
+foreach f (*.bdf)
+  grep -v COMMENT $f > foo.bdf
+  echo $f
+  xfed foo.bdf
+end
+

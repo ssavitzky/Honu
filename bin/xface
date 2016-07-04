@@ -1,0 +1,8 @@
+#!/bin/sh
+#
+# x_funnies -- set up clock face and analog clock
+#
+
+oclock -geometry 500x500+250+250 -transparent&
+xeyes  -geometry 275x250+350+350 -bg red&
+xclock -geometry 300x28+350+650 -digital -update 10 -fn 8x16 &

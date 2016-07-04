@@ -1,0 +1,27 @@
+#! /usr/local/bin/perl
+
+#	begin 644 suction.gif
+#	M1TE&.#=A\@'\ <8  &DD)+Z1;:Y01)UM65 $"+*!?:YE4'4\)(UA3+)=4% ,
+#	M&)5I3*5]:95=3,IY;:%A/*%]<:%5/+)M6<9]?40 !+)E-+)E88U,++IY8;YM
+#	         1         2         3         4         5         6
+#	1234567890123456789012345678901234567890123456789012345678901
+
+for $f (@ARGV) {
+	open(f, "<$f") || die "$f: $!";
+	while (<f>) {
+		last if (/^begin \d+ [\w\.]+$/);
+		last if (/^M/ && length == 62);
+	}
+	next if eof;
+	print;
+	while (<f>) {
+		last if (length == 1);		# only a \n
+		last if (/^--/);		# .signature
+		last if (/cut/i && /here/i);	# ---cut here---
+		print;
+	}
+} continue {
+	close(f);
+}
+
+exit 0;

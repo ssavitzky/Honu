@@ -1,0 +1,26 @@
+# Fix the directory tree rooted at .
+#     The group of all files and directories is set to $1
+#	  (default eng)
+#     All directories become group writeable if they are writable at all.
+#     The setgid bit is set for all directories.
+#
+
+if ($#argv) then
+   set grp=$1
+else
+   set grp=eng
+endif
+
+echo '<<<' $cwd --- $grp ---
+if ($#argv <= 1) chgrp -R $grp .
+
+foreach f (.??* *)
+   if (-d $f) then
+      chmod g+s $f
+      chmod ug+rwx $f
+      (cd $f; fixDirGroups $grp -)
+   else if (-w $f) then
+      chmod g+w $f
+   endif
+end
+echo '>>>'

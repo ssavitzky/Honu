@@ -1,0 +1,13 @@
+#!/bin/bash
+#	$Id: list-installed-pkgs,v 1.1 2004/03/12 01:23:13 steve Exp $
+#	List all installed Debian or RPM packages.
+
+if [ -x /usr/bin/dpkg ]; then
+    COLUMNS=200 dpkg -l | awk '/ii/{print $2}'
+elif [ -x /bin/rpm ]; then
+    rpm -qa --qf "%{NAME}\n" | sort
+else
+    echo `basename $0`:\
+	"unknown package format: neither .deb nor .rpm -- sorry."
+    exit -1
+fi

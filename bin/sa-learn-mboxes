@@ -1,0 +1,22 @@
+#!/bin/sh
+#	To be executed in a mail folder directory, e.g.
+#	~/News/nnml+Mail/mail -- learns from, and optionally deletes, 
+#	all mailbox files called "spam" or "ham" in any of the subdirectories.
+#	
+cd $HOME/News/nnml+Mail/mail
+for d in *; do
+    if [ -f $d/spam ]; then
+	echo learning from $d/spam
+	sa-learn --mbox --spam $d/spam 
+	echo rm $* $d/spam
+	rm $* $d/spam
+    fi
+    # ham is done _after_ spam so you can cancel something you hastily
+    # misclassified.
+    if [ -f $d/ham ]; then
+	echo learning from $d/ham
+	sa-learn --mbox --ham $d/ham 
+	echo rm $* $d/ham
+	rm $* $d/ham
+    fi
+done

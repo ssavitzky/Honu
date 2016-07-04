@@ -1,0 +1,12 @@
+#!/bin/sh
+#	$Id$
+#	Run firefox (or iceweasel), damnit
+#
+if [ -x /usr/bin/iceweasel ]; then
+    ff=iceweasel
+else
+    ff=firefox
+fi
+rm -f .mozilla/firefox/*default/{lock,.parentlock}
+exec $ff $*
+

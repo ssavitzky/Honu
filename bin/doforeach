@@ -1,0 +1,9 @@
+# foreach cmd file...
+#
+set cmd = "$1"
+
+shift
+foreach f ($*)
+	echo $f
+	$cmd $f
+	end

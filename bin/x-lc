@@ -1,0 +1,8 @@
+#!/bin/sh
+#	Display linecounts using xdu.
+#	$Id: x-lc,v 1.1 1997/09/19 04:31:19 steve Exp $
+
+find ${*-.} -type f ! -name '*~' ! -name '#*' ! -name '.#*' \
+    ! -name '*.class' ! -name '*.o' ! -name '*.log' ! -name '*.zip' \
+    -exec wc -l {} \; \
+    | xdu -c 4 -name "Line Counts: $*" -geom +105+80

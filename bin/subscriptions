@@ -1,0 +1,3 @@
+# list current usenet subscriptions
+#
+grep ':' ~/.newsrc | awk -F: '{print $1}'

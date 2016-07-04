@@ -1,0 +1,3 @@
+# xmac  file -- view macpaint file in X
+#
+macptopbm $1 | pbmtoxwd | xwud -geometry +30+30

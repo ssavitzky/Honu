@@ -1,0 +1,6 @@
+#!/bin/bash
+# List packages that have been explicitly installed.
+# The comm command filters out the ones that were part of the initial installation.
+
+comm -23 <(apt-mark showmanual | sort -u) \
+     	 <(gzip -dc /var/log/installer/initial-status.gz | sed -n 's/^Package: //p' | sort -u)

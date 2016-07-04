@@ -1,0 +1,5 @@
+#!/bin/sh
+#  Keep the screensaver from starting by injecting fake keypresses
+
+while sleep 300 ; do xdotool keydown Shift_L keyup Shift_L ; done
+

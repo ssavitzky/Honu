@@ -1,0 +1,9 @@
+#!/bin/bash
+#	List empty track directories
+
+for d in *; do
+    if [ -d $d ] && [ "`ls $d`" = "" ]; then
+	echo -n  $d" "
+    fi
+done
+echo 

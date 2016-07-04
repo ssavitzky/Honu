@@ -1,0 +1,4 @@
+#
+set f = $1
+shift
+cc -o $f $f.c $* -lX11 -lm

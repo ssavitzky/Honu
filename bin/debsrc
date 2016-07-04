@@ -1,0 +1,14 @@
+#!/bin/bash
+# point your default browser at the source code for any file that's part of a
+# Debian package.
+# From http://matthieu.io/blog/2015/08/16/one-liner-to-catch-em-all/
+
+function debsrc {
+    readlink -f $1 | xargs dpkg-query --search | cut -d: -f1 \
+    | xargs apt-cache showsrc | head -n 1 | grep-dctrl -s 'Package' -n '' \
+    | awk -F " " '{print "http://sources.debian.net/src/"$1"/latest/"}' \
+    | xargs x-www-browser
+}
+
+CMD="$1"
+debsrc ${CMD}

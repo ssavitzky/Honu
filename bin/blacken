@@ -1,0 +1,10 @@
+#!/usr/local/bin/perl -pi.bak
+#	$Id: blacken,v 1.1 1997/09/19 04:27:17 steve Exp $
+# Blacken a WWW page or set of pages in protest.  
+
+s'<body>'
+<BODY BGCOLOR="#000000" TEXT="#FFFFFF" link="0099ff" vlink="#00ff99">
+<a href="http://www.vtw.org/speech/">My World Wide Web Pages are black
+to protest second-class treatment from the US Government for free
+speech.  Read about it at this WWW page.</a>
+';

@@ -1,0 +1,1 @@
+echo | mail -s "ping" starport\!nobody@rahul.net

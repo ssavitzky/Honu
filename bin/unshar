@@ -1,0 +1,9 @@
+#
+if ($#argv) then
+  foreach f ($*)
+	echo $f
+	sed -e '/^#/,$ p' -e 'd' $f | sh
+  end
+else
+  sed -e '/^#/,$ p' -e 'd' | sh
+endif

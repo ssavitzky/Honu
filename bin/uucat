@@ -1,0 +1,15 @@
+#!/bin/sh
+
+if [ X$1 != X ] ; then cat $* ; else cat <& 0 ; fi		| \
+awk '/begin [0-9]/				{ok = 1}
+     /^Message/					{ok = 0;next}
+     /^M/ && (length == 61 || length == 62)	{ok = 1}
+     /[cC]ut [hH]ere/				{ok = 0;next}
+     /^END-----/				{ok = 0;next}
+     /^Path:/					{ok = 0;next}
+     /^$/					{ok = 0;next}
+     /^-/					{ok = 0;next}
+     /^_/					{ok = 0;next}
+     {if (ok) print}
+     /^end/					{ok = 0}' $* 	| \
+uudecode
