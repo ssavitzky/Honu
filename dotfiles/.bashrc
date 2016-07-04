@@ -16,39 +16,16 @@ fi
 
 export PATH
 
-export WWW_HOME=http://localweb/~steve/home.html
-
-export IRCNICK=mdlbear
-export IRCNAME="The Mandelbear"
-
-CVS_RSH=ssh
-export CVS_RSH
-
-if [ ! -z "$LC_ALL" ]; then
-   unset LC_ALL
-   LANG=en_US.UTF-8
-   export LANG
-fi
-LC_COLLATE=C
-export LC_COLLATE   # ASCII collation order, like God & Hollerith intended.
-
-no_proxy () {
-    unset http_proxy
-    unset wais_proxy
-    unset ftp_proxy
-    unset gopher_proxy
-    export http_proxy wais_proxy ftp_proxy gopher_proxy
-} 
-
 #unalias rm
 
 if [ "$PS1" ]; then
   PS1='(\h:$USER\W \!) '
 
-  if [ "$TERM" = 'xterm' ]; then
-    PS1='\[\033]1;\h:\u\]\[\033]2;\h:$USER \w\](\h:\W \!) '
-  fi
-
+  case "$TERM" in
+      xterm*)
+	  PS1='\[\033]1;\h:\u\]\[\033]2;\h:$USER \w\](\h:\W \!) ';;
+  esac
+  
   pwgrep () {
       echo "you mean pw"
       pw $1
