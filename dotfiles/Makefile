@@ -12,7 +12,9 @@ DOTFILES = $(wildcard _*)
 ### Install dotfiles in $(HOME).
 #
 install::	| $(HOME)/$(REL)
-	for f in $(DOTFILES); do (cd $(DST); ln -sf $(REL)/$$f `echo $$f|tr _ .`) done
+	for f in $(DOTFILES); do (cd $(DST) 				\
+				 ; ln -nsf $(REL)/$$f `echo $$f|tr _ .`	\
+				 ) done
 
 # We may have installed or changed .fonts, so update the cache
 install::
