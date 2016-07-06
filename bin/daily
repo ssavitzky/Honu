@@ -1,8 +1,5 @@
 #!/bin/bash
-#  $Id: daily,v 1.3 2011-05-20 15:16:43 steve Exp $
-#  Called from ./idle in the X console window, and sometimes crontab.
-
-# === really should split idle and crontab versions ===
+#  Called from ./idle in the X console window
 
 cd
 
@@ -13,6 +10,18 @@ cd
 
 sshOK=false
 [ -z $SSH_AUTH_SOCK ] || sshOK=true
+
+### See where things are:
+
+if [ -d /vv/users ]; then
+    VV=/vv
+elif [ -d $HOME/vv ]; then
+    VV=$HOME/vv
+else
+    echo Nothing to back up.
+    exit 1
+fi
+
 
 ### Backups
 #   This is obsolete; backups are now done with cron on nova only.
@@ -26,23 +35,29 @@ backups() {
     fi	
 }
 
+pushIfPresent() {
+    if [ -d $1/.git ] && (cd $1; git status > /dev/null); then
+	echo -n in $1: " "
+	(cd $1 && make push) 2>&1
+    fi
+}
+
 uploads() {
-    # Do git pushes.  Use make push.  Private needs to be pushed from nova
+    # Sync using make push.
     #
-    if $sshOK && [ -d /vv/users ]; then
-	for u in lgf steve tg; do
-	    echo -n from $u/Lyrics: " "
-	    (cd /users/$u/Lyrics && make push) 2>&1
+    if $sshOK; then
+	for u in lgf starport steve tg; do
+	    pushIfPresent $VV/users/$u
+	    pushIfPresent $VV/users/$u/Lyrics
 	done
 	for d in Tools Config Private; do 
-	    echo -n from steve/$d: " "
-	    (cd /users/steve/$d && make push) 2>&1
+	    pushIfPresent $VV/users/steve/$d
 	done
     fi
 }
 
 # Email a status ping:  uptime, disk, users, and backup report
-(uptime; df; uploads; w)
+(uptime; df | grep -v tmpfs; w; uploads)
 # FIXME: backups not called, and we're not emailing results.
 #    | mail -s "STATUS: `hostname` `date +%Y-%m-%d`" \
 #      steve@theStarport.org steve@savitzky.net
