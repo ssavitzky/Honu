@@ -6,22 +6,17 @@
 
 cd
 
-### Email reminders, if there are any
+### Email reminders to myself, if there are any
+# This will have to wait for a new calendar app.
 
-if [ -x /usr/bin/ical ]; then
-   # could probably just use the command here...
-   bash -c 'source .profile; /usr/bin/ical -list > remind'
-   # was using -calendar /pia1/home/steve/.calendar -list
-   if [ -s remind ]; then
-      mail -s "REMINDERS: `date`" steve@theStarport.org < remind
-   fi
-fi
-
-### See whether we can run backups over ssh
+### See whether we can use ssh
 
 sshOK=false
 [ -z $SSH_AUTH_SOCK ] || sshOK=true
 
+### Backups
+#   This is obsolete; backups are now done with cron on nova only.
+#   We could, however, use it to keep a secondary mirror up to date.
 backups() {
     # Do the backups if there's a mirror mountpoint on this machine
     # It's done in idle because we need ssh for nova's root partition
@@ -32,24 +27,24 @@ backups() {
 }
 
 uploads() {
-    # Do uploads and pushes
+    # Do git pushes.  Use make push.  Private needs to be pushed from nova
     #
     if $sshOK && [ -d /vv/users ]; then
-	if [ -x /vv/push-offsite ]; then /vv/push-offsite -v 2>&1; fi
 	for u in lgf steve tg; do
 	    echo -n from $u/Lyrics: " "
-	    (cd /users/$u/Lyrics && git push) 2>&1
+	    (cd /users/$u/Lyrics && make push) 2>&1
 	done
-	for d in Tools Config; do 
+	for d in Tools Config Private; do 
 	    echo -n from steve/$d: " "
-	    (cd /users/steve/$d && git push) 2>&1
+	    (cd /users/steve/$d && make push) 2>&1
 	done
     fi
 }
 
 # Email a status ping:  uptime, disk, users, and backup report
-(uptime; df; uploads; backups; w) \
-    | mail -s "STATUS: `hostname` `date +%Y-%m-%d`" \
-      steve@theStarport.org steve@savitzky.net
+(uptime; df; uploads; w)
+# FIXME: backups not called, and we're not emailing results.
+#    | mail -s "STATUS: `hostname` `date +%Y-%m-%d`" \
+#      steve@theStarport.org steve@savitzky.net
 
 
