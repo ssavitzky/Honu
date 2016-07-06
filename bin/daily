@@ -36,7 +36,7 @@ backups() {
 }
 
 pushIfPresent() {
-    if [ -d $1/.git ] && git -C $1 status --short > /dev/null; then
+    if [ -d $1/.git ] && git -C $1 status --short; then
 	echo -n in $1: " "
 	(cd $1 && make push) 2>&1
     fi
