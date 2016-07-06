@@ -5,14 +5,14 @@ DST = $(HOME)
 REL = Config/dotfiles
 CFG = $(shell dirname `/bin/pwd`)
 
-DOTFILES = $(filter-out ., $(wildcard .[A-Za-z]*[^~]))
+DOTFILES = $(wildcard _*)
 
 .PHONY: install
 
 ### Install dotfiles in $(HOME).
 #
 install::	| $(HOME)/$(REL)
-	for f in $(DOTFILES); do (cd $(DST); ln -sf $(REL)/$$f .) done
+	for f in $(DOTFILES); do (cd $(DST); ln -sf $(REL)/$$f `echo $$f|tr _ .`) done
 
 # We may have installed or changed .fonts, so update the cache
 install::
