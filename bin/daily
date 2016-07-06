@@ -36,9 +36,9 @@ backups() {
 }
 
 pushIfPresent() {
-    if [ -d $1/.git ] && git -C $1 status --short; then
-	echo -n in $1: " "
-	(cd $1 && make push) 2>&1
+    if [ -d $1/.git ] && [ ! -z "`git -C $1 status --porcelain`" ]; then
+	    echo -n in $1: " "
+	    (cd $1 && make push) 2>&1
     fi
 }
 
