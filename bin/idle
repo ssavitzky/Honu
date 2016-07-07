@@ -4,15 +4,14 @@
 #	and notification tasks from an environment in which I'm
 #	logged in and running the ssh-agent for authentication.
 #	
-#
 
 odate=`date +%Y-%m-%d`
-
+echo idling `date`
 while true; do
     date=`date +%Y-%m-%d`
     if [ ! "$date" = "$odate" ]; then
 	odate=$date
-	date
+	echo running daily at `date`
 	$HOME/bin/daily < /dev/null >& /dev/null
     fi
     sleep 3600
