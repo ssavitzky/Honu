@@ -1,13 +1,13 @@
-#!/bin/csh -f
+#!/bin/sh
 #  cptree src dst
-#  	$Id: cpltree,v 1.1 1997/09/19 04:27:18 steve Exp $
 #
 # 	copy a directory tree (on the same machine)
-# 	STAY ON ONE FILE SYSTEM
+# 	STAY ON ONE FILE SYSTEM (tar -cl)
 
-if ($#argv != 2) then
-	echo usage: $0 src dst
-	exit
-endif
-if (! -e $2) mkdir $2
+if [ -z "$2" ]; then
+    echo usage: $0 src dst
+    echo "    " copy a tree quickly using tar -cl
+    exit
+fi
+[! -e $2] || mkdir -p $2
 (cd $1; tar clf - .) | (cd $2; tar xvpBf -)
