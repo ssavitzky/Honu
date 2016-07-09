@@ -7,7 +7,7 @@ CFG = $(shell dirname `/bin/pwd`)
 
 DOTFILES = $(wildcard _*)
 
-.PHONY: install
+.PHONY: install cleanup report-vars
 
 ### Install dotfiles in $(HOME).
 #

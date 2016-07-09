@@ -1,8 +1,6 @@
 ### Makefile for dotconfig
 #
 
-.PHONY: install
-
 DST = $(HOME)/.config
 REL = ../Config/dotconfig
 
@@ -11,7 +9,7 @@ CFGFILES = $(filter-out %.sh, $(wildcard [a-z]*[^~]))
 FILES = $(shell for f in $(CFGFILES); do [ -d $$f ] || echo $$f; done)
 DIRS  = $(shell for f in $(CFGFILES); do [ -d $$f ] && echo $$f; done)
 
-.PHONY: install list
+.PHONY: install report-vars
 
 ### Install plain files
 

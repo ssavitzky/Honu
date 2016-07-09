@@ -4,19 +4,19 @@
 #	install
 #
 
-INSTALL_DIRS := dotfiles emacs 
+# Which subdirectories have an install target?
+makeable := $(shell for f in *; do [ -e $$f/Makefile ] && echo $$f; done)
+INSTALL_DIRS := $(shell for f in $(makeable); do grep -sq install:: $$f/Makefile	\
+						 && echo $$f; done)
 
 ###
 
-.PHONY: install fetch
+.PHONY: install install-pkgs report-vars
 
 install:: | $(HOME)/Config
 
 install::
 	for d in $(INSTALL_DIRS); do (cd $$d; $(MAKE) install) done
-
-install::			# This should eventually be moved to ./setup
-	cd setup; for f in *setup*; do ./$$f; done
 
 install-pkgs::
 	cd setup; for f in *pkgs; do ./$$f; done
@@ -42,6 +42,8 @@ endif
 #	report-vars is also defined in the Tools package, so you can use it to
 #	see whether Tools/Makefile is properly chained in.
 report-vars::
+	@echo makeable= $(makeable)
+	@echo INSTALL_DIRS= $(INSTALL_DIRS)
 	@echo CFG= $(CFG)
 	@echo DOTFILES=$(DOTFILES)
 	@echo CHAIN=$(CHAIN)
