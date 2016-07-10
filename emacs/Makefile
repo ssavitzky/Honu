@@ -25,3 +25,14 @@ ljupdate:
 # This used to be shipped with Ubuntu, but went missing in 2015 or so.
 html-helper-mode:
 	git clone  https://github.com/emacsattic/html-helper-mode
+
+### If we're using the Tools package, chain in its Makefile
+#	See ../Makefile for more information about Tools.
+#
+CHAIN = $(wildcard ../../Tools/Makefile)
+ifneq ($(CHAIN),)
+    include ../../Tools/Makefile
+endif
+
+report-vars::
+	@echo CHAIN=$(CHAIN)
