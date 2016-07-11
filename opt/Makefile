@@ -16,7 +16,7 @@ fetch:: | $(OPT)
 #
 install::
 	@echo The opt directory contains optional software, mostly from github
-	@echo Individual install-xxx targets can be used; it may be necessary
+	@echo Individual install-xxx targets can be used\; it may be necessary
 	@echo to do some configuration first.  When in doubt, make fetch
 	@echo targets: $(INSTALL_TARGETS)
 
