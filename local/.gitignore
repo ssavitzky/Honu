@@ -1,0 +1,5 @@
+# .gitignore for local.
+#
+# Ignore files with names starting with local_. 
+
+local_*
