@@ -8,5 +8,6 @@ sudo apt-get install -y texlive \
 
 # These are what you need for the audio processing in Tools/music
 sudo apt-get -y install ffmpeg pacpl sox libsox-fmt-all mpg321 lame lame-doc \
-      normalize-audio ogmtools
+      normalize-audio ogmtools shntool cuetools flac
+
 
