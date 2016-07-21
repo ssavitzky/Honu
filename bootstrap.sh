@@ -11,15 +11,16 @@ fi
 cd $HOME
 
 # Required packages: if we don't get these, all is lost.
-REQUIRED="git gitk git-gui curl wget make rsync openssh-client openssh-server"
+REQUIRED="git gitk git-gui curl wget make rsync openssh-client \
+          openssh-server"
 
-# Packages with names that may require updating from time to time
-MAY_NEED_UPDATE="emacs24"
+# Life is difficult without these, but it's possible.
+ALMOST_ESSENTIAL="emacs xttitle mailutils memtest86+ xbase-clients"
 
 # Highly recommended packages
-HIGHLY_RECOMMENDED="git-doc git.el xdu"
+HIGHLY_RECOMMENDED="git-doc git.el zile xdu ntp"
 
-sudo apt-get install $REQUIRED $MAY_NEED_UPDATE $HIGHLY_RECOMMENDED
+sudo apt-get install $REQUIRED $ALMOST_ESSENTIAL $HIGHLY_RECOMMENDED
 
 # ensure that shared ssh connections work.  This not only speeds up the
 # git cloning, but keeps dreamhost's limit on ssh connections in quick
@@ -29,6 +30,7 @@ mkdir -p .ssh/controlmasters
 ### Now that we have git, we can fetch the repos we need:
 
 # Prefix for the git repos
+# TODO:  make the main one github, with savitzky.net as an alternate.
 REPO=savitzky@savitzky.net:git/users/steve
 
 # destination for the fetched repos.

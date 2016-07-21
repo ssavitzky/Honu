@@ -1,0 +1,12 @@
+#!/bin/sh
+# apt-get packages for text processing
+
+# The texlive package is most of what you need for handling text and lyricsbvgggg
+# using the makefiles in Tools/make and Tools/music
+sudo apt-get install -y texlive \
+     latex2html auctex perl-tk dvidvi catdvi dvipng texlive-doc-en
+
+# These are what you need for the audio processing in Tools/music
+sudo apt-get -y install ffmpeg pacpl sox libsox-fmt-all mpg321 lame lame-doc \
+      normalize-audio ogmtools
+

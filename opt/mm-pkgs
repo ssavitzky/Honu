@@ -1,0 +1,12 @@
+#!/bin/sh
+# apt-get packages for multimedia.
+
+# These are what you want for audio editing.
+sudo apt-get install -y audacity ams \
+      tap-plugins swh-plugins ladspa-sdk mcp-plugins fil-plugins rev-plugins \
+      vco-plugins libfftw3-3 libfftw3-dev amb-plugins ams cmt lam-mpidoc      \
+      sfftw-dev
+
+# CD and DVD ripping
+sudo apt-get install -y jack abcde dvdrip-doc dvdrip xine-ui subtitleripper
+ 
