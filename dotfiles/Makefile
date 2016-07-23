@@ -36,9 +36,9 @@ cleanup::
 ### If we're using the Tools package, chain in its Makefile
 #	See ../Makefile for more information about Tools.
 #
-CHAIN = $(wildcard ../../Tools/Makefile)
+CHAIN = $(wildcard ../../Tools/Makefile ../../../Tools/Makefile)
 ifneq ($(CHAIN),)
-    include ../../Tools/Makefile
+    include $(CHAIN)
 endif
 
 report-vars::
