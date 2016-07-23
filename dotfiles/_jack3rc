@@ -1,0 +1,54 @@
+# jackrc-version:31
+
+# Global jackrc file for Debian, documenting some of the most important
+# options. The default options are commented out.
+
+# You can copy this to ~/.jack3rc and customize it youself. But beware,
+# the syntax is not trivial and might result in errors.
+
+# The preferred way to set options is to add --save to the command-line,
+# which sets the respective option in your ~/.jack3rc.
+
+##########################################################################
+
+# The directory where jack puts the files by default.
+# This defaults to the current directory if unset:
+base_dir:/mm/audio
+
+# The default ripper. You can choose from 'cdparanoia'(default), 'cdda2wav',
+# 'tosha' or 'dagrab' (The last two are not avaiable in Debian).
+ripper:cdparanoia
+
+# The default encoder. You can choose from 'oggenc'(default), 'flac', 'xing',
+# 'mppenc', 'lame', 'l3enc', 'gogo', 'mp3enc' or (only oggenc and flac are
+# available in Debian).
+encoder:oggenc
+
+# The VBR-quality of the encoded OGGs. -1 is lowest, 10 is highest.
+vbr_quality:7
+
+# rename_fmt specifies how the resulting files are named:
+#   %n: track number
+#   %a: artist
+#   %t: track title
+#   %l: album title
+#   %y: album release year - individual track years are unsupported
+#   %g: album genre - individual track genres are unsupported
+#rename_fmt:%a/%l/%n-%t   # "Artist/Album/01-Tracktitle.[ext]"
+rename_fmt:%n-%t # "01-Tracktitle.[ext]"
+unusable_chars:[' ', '/']
+replacement_chars:['_', '_']
+
+# be less demanding about various artists
+freedb_pedantic:0
+
+# If this is set, always query freedb when starting to rip a CD.
+# By default, jack does not query freedb
+query_on_start
+
+# If this is set, continue work even if the freedb-query failed.
+# By default, jack stops with an error
+#cont_failed_query
+
+# server to use -- freedb is mostly abandoned
+

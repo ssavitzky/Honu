@@ -9,5 +9,9 @@ sudo apt-get install -y audacity ams \
 
 # CD and DVD ripping
 sudo apt-get install -y jack dvdrip-doc dvdrip xine-ui subtitleripper		\
-     abcde id3 id3v2 eyed3 vorbisgain mkcue
+     abcde id3 id3v2 eyed3 vorbisgain mkcue glyr
+
+# CD and DVD ripping
+sudo apt-get install -y jack abcde dvdrip-doc dvdrip xine-ui \
+     subtitleripper glyr
  
