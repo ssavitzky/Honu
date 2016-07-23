@@ -28,15 +28,14 @@ $(HOME)/Config:
 ### If we're using the Tools package, chain in its Makefile
 #	This is optional -- it doesn't affect basic functionality -- but it
 #	brings in a lot of useful extras like "make push", recursive "make all",
-#	and so on.
+#	and so on.  Note that include does the right thing if the file list is
+#	empty, so we don't have to test for that.
 #
 #	Normally Makefile is a symlink, and local dependencies go into
 #	depends.make; I decided to try something different this time.
 #
 CHAIN = $(wildcard ../Tools/Makefile)
-ifneq ($(CHAIN),)
-    include ../Tools/Makefile
-endif
+include $(CHAIN)
 
 ### report-vars
 #	report-vars is also defined in the Tools package, so you can use it to
@@ -44,6 +43,4 @@ endif
 report-vars::
 	@echo makeable= $(makeable)
 	@echo INSTALL_DIRS= $(INSTALL_DIRS)
-	@echo CFG= $(CFG)
-	@echo DOTFILES=$(DOTFILES)
 	@echo CHAIN=$(CHAIN)

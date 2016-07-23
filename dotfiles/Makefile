@@ -36,10 +36,8 @@ cleanup::
 ### If we're using the Tools package, chain in its Makefile
 #	See ../Makefile for more information about Tools.
 #
-CHAIN = $(wildcard ../../Tools/Makefile ../../../Tools/Makefile)
-ifneq ($(CHAIN),)
-    include $(CHAIN)
-endif
+CHAIN = $(firstword $(wildcard ../../Tools/Makefile ../../../Tools/Makefile))
+include $(CHAIN)
 
 report-vars::
 	@echo CFG= $(CFG)
