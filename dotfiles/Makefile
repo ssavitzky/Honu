@@ -12,9 +12,10 @@ DOTFILES = $(wildcard _*)
 ### Install dotfiles in $(HOME).
 #
 install::	| $(HOME)/$(REL)
-	for f in $(DOTFILES); do (cd $(DST) 				\
-				 ; ln -nsf $(REL)/$$f `echo $$f|tr _ .`	\
-				 ) done
+	@for f in $(DOTFILES); do \
+		(cd $(DST) 						\
+		; ln -nsf $(REL)/$$f `echo $$f| sed -e 's/_/./'`	\
+		) done
 
 # We may have installed or changed .fonts, so update the cache
 install::
@@ -29,13 +30,11 @@ cleanup::
 	@for f in $(HOME)/.*; do			\
 	    if [ -L $$f -a ! -e $$f ]; then		\
 	    	echo removing broken symlink $$f;	\
-	    	rm ~/.gitignore;			\
+	    	rm $$f;					\
 	    fi						\
 	done
 
 ### If we're using the Tools package, chain in its Makefile
-#	See ../Makefile for more information about Tools.
-#
 CHAIN = $(firstword $(wildcard ../../Tools/Makefile ../../../Tools/Makefile))
 include $(CHAIN)
 
