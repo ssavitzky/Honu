@@ -57,9 +57,7 @@ export local_gitconfig
 #	See ../Makefile for more information about Tools.
 #
 CHAIN = $(firstword $(wildcard ../../Tools/Makefile ../../../Tools/Makefile))
-ifneq ($(CHAIN),)
-    include $(CHAIN)
-endif
+include $(CHAIN)
 
 report-vars::
 	@echo CFG= $(CFG)
