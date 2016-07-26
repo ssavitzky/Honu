@@ -2,6 +2,8 @@
 	
   o bloggish directories should have a "make wc" target that subtracts the word count of
     the template file.  Or, better, use sed to filter out tags.
+
+  o use dzen for workspace labels?  Note that dzen is smaller
     
 ========================================================================================>
 Work Log:
