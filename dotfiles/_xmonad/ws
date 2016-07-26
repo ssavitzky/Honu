@@ -1,0 +1,28 @@
+#!/bin/bash
+#  Select and label a workspace
+
+colors () {
+    # Resistor color codes
+    case $1 in
+        (0) echo " -bg black -fg white";;
+        (1) echo " -bg brown -fg white";;
+        (2) echo " -bg red -fg black";;
+        (3) echo " -bg orange -fg black";;
+        (4) echo " -bg yellow -fg black";;
+        (5) echo " -bg green -fg black";;
+        (6) echo " -bg blue -fg black";;
+        (7) echo " -bg violet -fg black";;
+        (8) echo " -bg grey -fg black";;
+        (9) echo " -bg white -fg black";;
+        (-) echo " -bg gold -fg black";;
+        (*) echo ;;
+    esac
+}
+
+key () {
+    if [ $1 = "-" ]; then echo minus; else echo $1; fi
+}
+
+xdotool key super+`key $1`
+sleep 1
+xclock -digital -geometry +920+0 `colors $1`  -padding 0 -strftime "-- %H:%M -- WS=$1 --"&
