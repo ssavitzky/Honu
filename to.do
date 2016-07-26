@@ -71,7 +71,7 @@ Work Log:
   * the ability to make ad-hoc workspace labels might help.  Put the list in a file that
     can be read in either xmonad or the bottom-bars script.  Possibly a top dbar with
     vertical menu. (0719) -> add a second argument to ws.
-    Re-running ws N should grep ps for the appropriate color code and kill it.
+  * Re-running ws N should grep ps for the appropriate color code and kill it.
     An alternative to xclock would be dzen -p.
 
 ========================================================================================>|

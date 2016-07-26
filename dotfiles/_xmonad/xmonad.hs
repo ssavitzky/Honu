@@ -153,7 +153,7 @@ dzenCommandBase = unwords [ "dzen2 -x '0' -y '0' -h '20' -ta 'l' "
 			  , "-bg", quote bgColor
 			  , "-fn", quote font
 		          ]
-			  where quote s = wrap "'" "'" s					
+			  where quote s = wrap "'" "'" s
 dzenCommand  =   unwords [dzenCommandBase, "-w", show topBarWidth]
 dzenOnScreen n = unwords [dzenCommandBase, "-xs", show n]
 
