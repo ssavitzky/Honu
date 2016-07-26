@@ -4,17 +4,17 @@
 colors () {
     # Resistor color codes
     case $1 in
-        (0) echo " -bg black -fg white";;
-        (1) echo " -bg brown -fg white";;
-        (2) echo " -bg red -fg black";;
-        (3) echo " -bg orange -fg black";;
-        (4) echo " -bg yellow -fg black";;
-        (5) echo " -bg green -fg black";;
-        (6) echo " -bg blue -fg black";;
-        (7) echo " -bg violet -fg black";;
-        (8) echo " -bg grey -fg black";;
-        (9) echo " -bg white -fg black";;
-        (-) echo " -bg gold -fg black";;
+        (0) echo "-bg black -fg white";;
+        (1) echo "-bg brown -fg white";;
+        (2) echo "-bg red -fg black";;
+        (3) echo "-bg orange -fg black";;
+        (4) echo "-bg yellow -fg black";;
+        (5) echo "-bg green -fg black";;
+        (6) echo "-bg blue -fg black";;
+        (7) echo "-bg violet -fg black";;
+        (8) echo "-bg grey -fg black";;
+        (9) echo "-bg white -fg black";;
+        (-) echo "-bg gold -fg black";;
         (*) echo ;;
     esac
 }
@@ -23,6 +23,17 @@ key () {
     if [ $1 = "-" ]; then echo minus; else echo $1; fi
 }
 
-xdotool key super+`key $1`
+N=$1; shift
+COLORS="$(colors $N)"
+
+if ps x | grep -q -e "$COLORS"; then
+    # should kill any pre-existing bar
+    for pid in $(ps x | grep -e "$COLORS" | grep -v grep | cut -c 1-5); do
+        kill $pid;
+    done
+fi
+
+xdotool key super+`key $N`
 sleep 1
-xclock -digital -geometry +920+0 `colors $1`  -padding 0 -strftime "-- %H:%M -- WS=$1 --"&
+xclock -digital -geometry +920+0 $COLORS  -padding 0 \
+       -strftime "-- %H:%M -- WS=$N -- $*"&
