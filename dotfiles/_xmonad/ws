@@ -35,5 +35,5 @@ fi
 
 xdotool key super+`key $N`
 sleep 1
-xclock -digital -geometry +920+0 $COLORS  -padding 0 \
-       -strftime "-- %H:%M -- WS=$N -- $*"&
+exec xclock -digital -geometry +920+0 $COLORS  -padding 0 \
+            -strftime "-- %H:%M -- WS=$N -- $*"&
