@@ -3,8 +3,6 @@
   o bloggish directories should have a "make wc" target that subtracts the word count of
     the template file.  Or, better, use sed to filter out tags.
 
-  o use dzen for workspace labels?  Note that dzen is smaller
-    
 ========================================================================================>
 Work Log:
 ========
@@ -76,6 +74,11 @@ Work Log:
   * Re-running ws N should grep ps for the appropriate color code and kill it.
     An alternative to xclock would be dzen -p.
 
+0726Tu
+  x use dzen for workspace labels?  Note that dzen is smaller, but only slightly.
+    Problem is that it doesn't seem possible to have it shrinkwrap text.
+  * separate widths for first and other top bars; make default 950; adjust ws
+    
 ========================================================================================>|
 Local Variables:
     fill-column:90

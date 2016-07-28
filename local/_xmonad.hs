@@ -27,10 +27,12 @@ wsClickable = True              --  clickable workspace names in xmobar/dzen
 --   because it has too many keybindings that can't be overridden, and only one profile.
 goodTerminal = "/usr/bin/gnome-terminal"
 
--- | The width of the top dzen2 bar.  This is not just because we can't specify
---   it as a percentage -- sometimes we want to leave room for a gnome-panel,
---   xclock, or something else.
-topBarWidth = 920
+-- | The width of the top dzen2 bars.  We define the first one (the one on Screen 1)
+--   separately in case we want to allow space for a gnome-panel or such-like, or to
+--   account for the fact that floating window positions scale with monitor size and
+--   we want to label workspaces with ws
+firstTopBarWidth = 950
+otherTopBarWidth = 950
 
 -- | font and colors.  These are defined in .mobarrc, but we use them with dzen2
 --   "xft:Bitstream Vera Sans Mono:size=10:bold:antialias=true" -- original.
@@ -39,3 +41,6 @@ bgColor =      "black"
 fgColor =      "#646464"	-- normal foreground color for status bars
 hiColor =      "#dddddd"	-- highlight color for status bars
 
+-- Local Variables:
+--    fill-column:90
+-- End:

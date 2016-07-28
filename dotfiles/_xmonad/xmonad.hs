@@ -85,8 +85,9 @@ myLayoutHook = smartBorders $ avoidStruts $ showWName
   where
     phi     = (2/(1+(toRational(sqrt(5)::Double)))) -- Golden Ratio
     tabs    = named "Tabs" simpleTabbed
-    tall    = Tall 1 (2/100) phi     -- args to Tall:  nmaster delta ratio
-    wide    = named "Wide" $ Mirror tall
+    -- the ratios for tall and wide probably ought to be local parameters
+    tall    = Tall 1 (2/100) (1/2)     -- args to Tall:  nmaster delta ratio
+    wide    = named "Wide" $ Mirror $ Tall 1 (2/100) phi
     spiral  = named "Spiral" $ spiralWithDir East CW (6/7)
     float   = named "Float" simpleFloat
 
@@ -154,8 +155,8 @@ dzenCommandBase = unwords [ "dzen2 -x '0' -y '0' -h '20' -ta 'l' "
 			  , "-fn", quote font
 		          ]
 			  where quote s = wrap "'" "'" s
-dzenCommand  =   unwords [dzenCommandBase, "-w", show topBarWidth]
-dzenOnScreen n = unwords [dzenCommandBase, "-xs", show n]
+dzenCommand  =   unwords [dzenCommandBase, "-w", show firstTopBarWidth]
+dzenOnScreen n = unwords [dzenCommandBase, "-w", show otherTopBarWidth, "-xs", show n]
 
 dzenClickWrap ws = wrap start end (dzenEscape ws)
   where start = "^ca(1,xdotool key super+" ++ [ head ws ] ++ ")"

@@ -4,18 +4,18 @@
 colors () {
     # Resistor color codes
     case $1 in
-        (0) echo "-bg black -fg white";;
-        (1) echo "-bg brown -fg white";;
-        (2) echo "-bg red -fg black";;
-        (3) echo "-bg orange -fg black";;
-        (4) echo "-bg yellow -fg black";;
-        (5) echo "-bg green -fg black";;
-        (6) echo "-bg blue -fg black";;
-        (7) echo "-bg violet -fg black";;
-        (8) echo "-bg grey -fg black";;
-        (9) echo "-bg white -fg black";;
-        (-) echo "-bg gold -fg black";;
-        (*) echo ;;
+        (0) echo "-fg white -bg black";;
+        (1) echo "-fg white -bg brown";;
+        (2) echo "-fg black -bg red";;
+        (3) echo "-fg black -bg orange";;
+        (4) echo "-fg black -bg yellow";;
+        (5) echo "-fg black -bg green";;
+        (6) echo "-fg black -bg blue";;
+        (7) echo "-fg black -bg violet";;
+        (8) echo "-fg black -bg grey";;
+        (9) echo "-fg black -bg white";;
+        (-) echo "-fg black -bg gold";;
+        (*) echo "-bg grey -fg black";;
     esac
 }
 
@@ -35,5 +35,5 @@ fi
 
 xdotool key super+`key $N`
 sleep 1
-exec xclock -digital -geometry +920+0 $COLORS  -padding 0 \
-            -strftime "-- %H:%M -- WS=$N -- $*"&
+exec xclock -digital -geometry +950+0 $COLORS  -padding 0 \
+            -strftime "%H:%M -- WS=$N -- $*"&
