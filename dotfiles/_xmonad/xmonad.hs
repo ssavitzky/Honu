@@ -9,6 +9,8 @@ import XMonad.Actions.UpdatePointer
 import XMonad.Hooks.DynamicLog     -- statusbar
 import XMonad.Hooks.EwmhDesktops   -- extended window manager hints
 import XMonad.Hooks.ManageDocks    -- dock/tray mgmt
+import XMonad.Hooks.ManageHelpers  -- help in placing windows
+import XMonad.Hooks.Place	   -- control window placement
 import XMonad.Hooks.UrgencyHook    -- window alert bells 
 
 import XMonad.Layout.Circle
@@ -18,13 +20,14 @@ import XMonad.Layout.NoBorders     -- smart borders on solo clients
 import XMonad.Layout.PerWorkspace
 import XMonad.Layout.SimpleFloat   -- float all windows.
 import XMonad.Layout.ShowWName     -- show workspace name when switching
-import XMonad.Layout.Spiral        -- spiral layout
 import XMonad.Layout.Tabbed        -- tabs, sort of like TWM!
 
 import XMonad.Util.EZConfig        -- append key/mouse bindings
 import XMonad.Util.Run             -- spawnPipe and hPutStrLn
 
 import qualified XMonad.Layout.Circle
+import qualified XMonad.Layout.Spiral as Sp      -- spiral layout
+
 import qualified XMonad.StackSet as W
 import qualified XMonad.Layout.WorkspaceDir
 import XMonad.Layout.IndependentScreens (countScreens)
@@ -88,15 +91,16 @@ myLayoutHook = smartBorders $ avoidStruts $ showWName
     -- the ratios for tall and wide probably ought to be local parameters
     tall    = Tall 1 (2/100) (1/2)     -- args to Tall:  nmaster delta ratio
     wide    = named "Wide" $ Mirror $ Tall 1 (2/100) phi
-    spiral  = named "Spiral" $ spiralWithDir East CW (6/7)
+    spiral  = named "Spiral" $ Sp.spiralWithDir Sp.East Sp.CW (6/7)
     float   = named "Float" simpleFloat
 
 -- | The manage hook, which specifies how we treat particular kinds of windows.
 --   In addition to className one can use resourceName or title
 myManageHook = composeAll
-    [ -- doFloat for programs that put up lots of small windows.
+    [ -- doFloat for programs that put up many small windows or want a fixed size
       className =? "Dia"            --> doFloat
     , className =? "Gimp"           --> doFloat
+    ,     title =? "gsimplecal"	    --> placeHook upperRight <+> doFloat
     , className =? "Inkscape"       --> doFloat
     , className =? "MPlayer"        --> doFloat
     , className =? "Vlc"            --> doFloat
@@ -113,6 +117,9 @@ myManageHook = composeAll
     , title =? "xmonad-ignore"	    --> doIgnore  -- eg xclock -name xmonad-ignore
     , title =? "xmonad-float"	    --> doFloat
     ]
+    where
+      upperRight = (withGaps (20,20,20,20) (fixed (1, 0)))
+      lowerRight = (withGaps (20,20,20,20) (fixed (1, 1)))
 
 -- | Select the status bar for the main screen.  dzen2 is easier to configure from the
 --   command line, but xmobar has its advantages, especially if you're on Ubuntu >=15.10.

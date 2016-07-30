@@ -47,9 +47,6 @@ else
 fi
 sleep 1
 
-# this clock is aligned with the right-hand edge of the dzen status bar on screen 1
-xclock -digital -name xmonad-ignore -geometry +921+0 -padding 0 -bg black -fg green&
-
 if_defined /usr/bin/classicmenu-indicator
 if_defined_else /usr/bin/xfce4-power-manager /usr/bin/gnome-power-manager
 if_defined /usr/bin/nm-applet -applet --sm-disable 
