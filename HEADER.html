@@ -56,9 +56,15 @@
        track of it for me.  This is mainly for stuff that I want to refer to
        later, or keep around for sentimental value (like my old Usenet
        <code>.sig</code> files).
+  <dt> <code><a href="bin/" >bin/</a></code>
+  <dd> Programs.  Mostly small shell scripts; I don't think there are any
+       actual binary files in there at the moment.  Some are symlinks into
+       other parts of the tree, e.g. dotfiles/_xmonad.  No doubt many are
+       useless at this point; some date back to the days of usenet.
   <dt> <code><a href="dotconfig/" >dotconfig/</a></code>
   <dd> Configuration files and directories that go into
-       <code>~/.config/</code>.  
+       <code>~/.config/</code>.  These are symlinked so as not to conflict
+       with the stuff already there.
   <dt> <code><a href="dotfiles/" >dotfiles/</a></code>
   <dd> Configuration files that go into the home directory.  They are
        symlinked rather than being copied; some may need customization if
