@@ -15,11 +15,15 @@ fetch:: | $(OPT)
 ### Install target
 #
 install::
-	@echo The opt directory contains optional software, mostly from github
-	@echo Individual install-xxx targets can be used\; it may be necessary
-	@echo to do some configuration first.  When in doubt, make fetch
-	@echo targets: $(INSTALL_TARGETS)
+	@echo The opt directory contains optional software, mostly from github.
+	@echo Local patches, in ./patches, are applied automatically on fetch.
+	@echo Targets: fetch "(all)", clean, and the individual install targets:
+	@echo "        " $(INSTALL_TARGETS)
 
+### Cleanup
+#
+clean::
+	rm -rf $(OPT)
 
 # dzen2 is one of the status bars we use with xmonad; it's the simplest to compile.
 dzen:
