@@ -24,8 +24,8 @@ install::
 # dzen2 is one of the status bars we use with xmonad; it's the simplest to compile.
 dzen:
 	git clone git@github.com:robm/dzen
-	@echo dzen may have to be configured for xinerama.  See README
-
+	cd dzen; git am ../patches/dzen*.patch
+	cd dzen; $(MAKE)
 
 install-dzen:: | dzen
 	@echo NOTE:  dzen installs into /usr/local by default
