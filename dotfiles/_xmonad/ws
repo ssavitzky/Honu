@@ -1,6 +1,8 @@
 #!/bin/bash
 #  Select and label a workspace
 
+USAGE="$0 [-h][-d] workspace text..."
+
 colors () {
     # Resistor color codes
     case $1 in
@@ -19,21 +21,41 @@ colors () {
     esac
 }
 
+# Map workspace into key name: "-" is minus
 key () {
     if [ $1 = "-" ]; then echo minus; else echo $1; fi
 }
+
+STRFTIME=%H:%M
+case $1 in
+    (-h) echo $USAGE; exit;;
+    (-d) STRFTIME="%a %F %H:%M"; shift;;
+esac
 
 N=$1; shift
 COLORS="$(colors $N)"
 
 if ps x | grep -q -e "$COLORS"; then
     # should kill any pre-existing bar
-    for pid in $(ps x | grep -e "$COLORS" | grep -v grep | cut -c 1-5); do
+    for pid in $(ps x | grep -e "$COLORS" | grep xclock | cut -c 1-5); do
         kill $pid;
     done
 fi
 
+# Get the x position from the xmonad local parameters:
+XMLOCAL=$HOME/.xmonad/lib/Local.hs
+WIDTH=$(grep firstTopBarWidth $XMLOCAL | sed -e 's/[^0-9]*//')
+
+if [ -z "$*" ]; then
+    S=
+else
+    S=--
+fi
+
+# Switch to the indicated workspace; allow time to get there.
 xdotool key super+`key $N`
 sleep 1
-exec xclock -digital -geometry +950+0 $COLORS  -padding 0 \
-            -strftime "%H:%M -- WS=$N -- $*"&
+
+# Run the label program (xclock)
+exec xclock -digital -geometry +$WIDTH+0 $COLORS -padding 0 \
+            -strftime "$STRFTIME--WS=$N$S$*"&
