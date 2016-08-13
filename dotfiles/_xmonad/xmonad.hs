@@ -1,5 +1,6 @@
 import XMonad
 
+import Data.List                   -- provides isPrefixOf, isSuffixOf, and isInfixOf
 import System.Directory
 import System.IO                   -- hPutStrLn scope
 
@@ -96,7 +97,7 @@ myLayoutHook = smartBorders $ avoidStruts $ showWName
 
 -- | The manage hook, which specifies how we treat particular kinds of windows.
 --   In addition to className one can use resourceName or title
-myManageHook = composeAll
+myManageHook = composeAll $
     [ -- doFloat for programs that put up many small windows or want a fixed size
       className =? "Dia"            --> doFloat
     , className =? "Gimp"           --> doFloat
@@ -116,7 +117,10 @@ myManageHook = composeAll
       -- set title for special handling.  This is the -name argument for xtoolkit apps
     , title =? "xmonad-ignore"	    --> doIgnore  -- eg xclock -name xmonad-ignore
     , title =? "xmonad-float"	    --> doFloat
-    ]
+    ] ++
+    -- shift anything with a title that contains "xmonad-ws=N" to workspace N
+    [fmap (("xmonad-ws="++(show n)) `isInfixOf`) title --> doShift (show n) | n <- [0..9]]
+    
     where
       upperRight = (withGaps (20,20,20,20) (fixed (1, 0)))
       lowerRight = (withGaps (20,20,20,20) (fixed (1, 1)))
