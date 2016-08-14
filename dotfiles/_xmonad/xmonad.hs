@@ -33,14 +33,28 @@ import qualified XMonad.StackSet as W
 import qualified XMonad.Layout.WorkspaceDir
 import XMonad.Layout.IndependentScreens (countScreens)
 
+-- | The local configuration options are in .xmonad/lib/Local.hs, wich in my
+--    configuration is a symlink to ../../../local/local_xmonad.hs (or, in other
+--    words, Config/local/local_xmonad.hs).  It gets initialized when you install
+--    Config; the intent is that you can customize xmonad for a particular machine.
+--    This is particularly useful if you have multiple laptop and desktop systems
+--    with different screen sizes and keyboard layouts.  See Config/local/_xmonad.hs
+--    for the default values.
+--   
 import Local			   -- local configuration options
 
-main = do
-    -- everything that reads files or environment variables has to go inside of main.
+-- | There is a lot of good information on the wiki, at
+--   https://wiki.haskell.org/Xmonad/General_xmonad.hs_config_tips
 
+-- | Xmonad is, well... a monad.  So you need do notation in order to get anything done.
+--   It's an alias for IO, so everything that  reads files or environment variables is
+--   here.  
+main = do
+  -- see whether we have some of the programs we might be using
   haveGoodTerminal <- doesFileExist goodTerminal -- detect terminal emulator
   haveXmobar <- doesFileExist "/usr/bin/xmobar"  -- detect status bar program
 
+  -- Spawn the status bar for the first screen.  Might be xmobar, but probably not.
   let useXmobar = wantXmobar && haveXmobar       -- use it if we want it and have it
   mainbar <- spawnPipe $ myLogCommand useXmobar  -- spawn the status bar.
 
@@ -120,7 +134,6 @@ myManageHook = composeAll $
     ] ++
     -- shift anything with a title that contains "xmonad-ws=N" to workspace N
     [fmap (("xmonad-ws="++(show n)) `isInfixOf`) title --> doShift (show n) | n <- [0..9]]
-    
     where
       upperRight = (withGaps (20,20,20,20) (fixed (1, 0)))
       lowerRight = (withGaps (20,20,20,20) (fixed (1, 1)))
@@ -204,7 +217,7 @@ wsKeys wsNames = zip [ xK_0, xK_minus ] (drop 9 wsNames)
 
 -- key bindings to start programs.  Note that the lock binding is the traditional Ctl-Alt-l.
 myAdditionalKeys wsNames =
-  [ ((mod1Mask  .|. controlMask, xK_l)     , spawn "gnome-screensaver-command --lock" ) -- lock screen
+  [ ((mod1Mask  .|. controlMask, xK_l)     , spawn "gnome-screensaver-command --lock" ) -- lock
   , ((myModMask .|. controlMask, xK_e)     , spawn "emacs" )                            -- editor
   ] ++ [ -- regular and shifted bindings for myExtraWorkspaces
     ((myModMask, key), (windows $ W.greedyView ws))
