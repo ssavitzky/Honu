@@ -86,17 +86,18 @@ main = do
 
 -- | The available layouts.  Note that each layout in a parenthesized choice group is
 --   separated by |||, which denotes layout choice.  Mod-space cycles through layouts.
---   Mod-Shift-space moves the focused window to the master position.
+--   Mod-enter moves the focused window to the master position.
 --
 --   see https://wiki.haskell.org/Xmonad/Config_archive/Thayer_Williams%27_xmonad.hs
 --   for the golden ratio stuff and some other config things.
 myLayoutHook = smartBorders $ avoidStruts $ showWName
-               -- 0 uses simpleFloat, so you don't have to add a doFloat to the manageHook
+               -- 0 uses simpleFloat, so I don't have to add a doFloat to the manageHook
+	       --   when I'm trying something new.
                $ onWorkspace "0" float
                -- - is a parking area, since xmonad doesn't use icons.  I also use it
-               --   for xterms that I use for things like kinit or keep-screen-on
+               --   for the xterm that I use for things like kinit or keep-screen-on
                $ onWorkspace "-" (Grid ||| spiral ||| Circle)
-	       -- 2 is where I keep my to-do list and a terminal
+	       -- 2 is where I keep my to-do list and a terminal; Tall works best for that.
 	       $ onWorkspace "2" ( tall ||| wide ||| tabs )
                -- Default layouts for all workspaces not otherwise mentioned
                $ ( tabs ||| tall ||| wide )
