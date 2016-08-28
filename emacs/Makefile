@@ -29,7 +29,8 @@ html-helper-mode:
 ### If we're using the Tools package, chain in its Makefile
 #	See ../Makefile for more information about Tools.
 #
-CHAIN = $(firstword $(wildcard ../../Tools/Makefile ../../../Tools/Makefile))
+CHAIN = $(firstword $(wildcard ../../MakeStuff/Makefile ../../../MakeStuff/Makefile \
+			       ../../Tools/Makefile     ../../../Tools/Makefile))
 include $(CHAIN)
 
 report-vars::

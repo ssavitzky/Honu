@@ -35,7 +35,8 @@ cleanup::
 	done
 
 ### If we're using the Tools package, chain in its Makefile
-CHAIN = $(firstword $(wildcard ../../Tools/Makefile ../../../Tools/Makefile))
+CHAIN = $(firstword $(wildcard ../../MakeStuff/Makefile ../../../MakeStuff/Makefile \
+			       ../../Tools/Makefile     ../../../Tools/Makefile))
 include $(CHAIN)
 
 report-vars::

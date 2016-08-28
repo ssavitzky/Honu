@@ -50,7 +50,7 @@ uploads() {
 	    pushIfPresent $VV/users/$u
 	    pushIfPresent $VV/users/$u/Lyrics
 	done
-	for d in Tools Config Private; do 
+	for d in MakeStuff Config Private; do 
 	    pushIfPresent $VV/users/steve/$d
 	done
     fi

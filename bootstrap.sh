@@ -64,7 +64,7 @@ mkdir -p $DEST
 
 # fetch the repositories we need.
 (cd $DEST;
- for r in Config Tools; do
+ for r in Config MakeStuff; do
      if [ ! -d $$r ]; then git clone $REPO/$r.git; fi
  done
 )

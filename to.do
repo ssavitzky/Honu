@@ -3,6 +3,8 @@
   o bloggish directories should have a "make wc" target that subtracts the word count of
     the template file.  Or, better, use sed to filter out tags.
 
+  o bootstrap should check ~/.ssh to see whether to use savitzky.net or github.
+  
 ========================================================================================>
 Work Log:
 ========
@@ -78,7 +80,11 @@ Work Log:
   x use dzen for workspace labels?  Note that dzen is smaller, but only slightly.
     Problem is that it doesn't seem possible to have it shrinkwrap text.
   * separate widths for first and other top bars; make default 950; adjust ws
-    
+
+0827Sa
+  * Allow MakeStuff as well as Tools.  Eventually it will be possible to drop Tools as
+    an alternative.
+
 ========================================================================================>|
 Local Variables:
     fill-column:90

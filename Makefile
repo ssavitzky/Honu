@@ -34,7 +34,7 @@ $(HOME)/Config:
 #	Normally Makefile is a symlink, and local dependencies go into
 #	depends.make; I decided to try something different this time.
 #
-CHAIN = $(wildcard ../Tools/Makefile)
+CHAIN = $(firstword $(wildcard ../MakeStuff/Makefile ../Tools/Makefile))
 include $(CHAIN)
 
 ### report-vars
