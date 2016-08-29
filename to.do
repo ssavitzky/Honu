@@ -85,6 +85,15 @@ Work Log:
   * Allow MakeStuff as well as Tools.  Eventually it will be possible to drop Tools as
     an alternative.
 
+0828Su
+  * Config -> Honu.  The only real question is whether I want to make Honu a separate
+    version, cleaned up and generalized for distribution. -> I don't think so.  It would
+    be hard to keep them in sync.  The main me-specific things are the link pages in web,
+    and some of the stuff in Archive, but there are also some of the dotfiles (e.g.
+    .signature and .Xdefaults-*), stuff in the emacs config, and...  On second thought: I
+    think I'd be a very uncomfortable about putting .mailrc, .gnus, and the bookmarks out
+    there.  So there's going to have to be a rewrite anyway.  Those can go in Personal.
+
 ========================================================================================>|
 Local Variables:
     fill-column:90
