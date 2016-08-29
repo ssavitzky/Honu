@@ -4,7 +4,7 @@
     the template file.  Or, better, use sed to filter out tags.
 
   o bootstrap should check ~/.ssh to see whether to use savitzky.net or github.
-  
+
 ========================================================================================>
 Work Log:
 ========
@@ -86,13 +86,18 @@ Work Log:
     an alternative.
 
 0828Su
-  * Config -> Honu.  The only real question is whether I want to make Honu a separate
+  ^ Config -> Honu.  The only real question is whether I want to make Honu a separate
     version, cleaned up and generalized for distribution. -> I don't think so.  It would
     be hard to keep them in sync.  The main me-specific things are the link pages in web,
     and some of the stuff in Archive, but there are also some of the dotfiles (e.g.
     .signature and .Xdefaults-*), stuff in the emacs config, and...  On second thought: I
     think I'd be a very uncomfortable about putting .mailrc, .gnus, and the bookmarks out
-    there.  So there's going to have to be a rewrite anyway.  Those can go in Personal.
+    there.  So there's going to have to be a rewrite anyway.  Those can go in -Personal-
+  ^ Problematic stuff -- bookmarks, .mailrc, .gnus, etc. belongs in a separate git repo
+    that's a subdirectory of local!  Can of course have dotfiles and dotconfig subdirs.
+    Can have its own bootstrap, which would get the user-specific out of there, too.  In
+    fact, call it local/local-Config or local/My-Honu or some such and derive it from the
+    original, with all the old history.  Make a relatively clean start for Honu.
 
 ========================================================================================>|
 Local Variables:
