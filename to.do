@@ -99,6 +99,10 @@ Work Log:
     fact, call it local/local-Config or local/My-Honu or some such and derive it from the
     original, with all the old history.  Make a relatively clean start for Honu.
 
+0829Mo
+  o bootstrap and the first run of make should log messages, and print out the log on
+    exit. 
+    
 ========================================================================================>|
 Local Variables:
     fill-column:90
