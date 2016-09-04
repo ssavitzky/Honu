@@ -101,8 +101,23 @@ Work Log:
 
 0829Mo
   o bootstrap and the first run of make should log messages, and print out the log on
-    exit. 
-    
+    exit.
+
+0904Su
+  * clone from Config; clean up with bfg:
+    78  alias bfg='java -jar ~/Downloads/bfg-1.12.13.jar'
+    85  bfg --help
+    87  git commit -m "deletions before bfg"
+    88  bfg --delete-folders Archive
+    91  bfg --delete-folders Archive
+    92  bfg --delete-folders web
+    94  bfg -D [._]mailrc
+    95  bfg -D [._]gnus
+    96  bfg -D [._]sig*
+    97  bfg -D [hw].home.html
+   107  git filter-branch --prune-empty
+   110  git reflog expire --expire=now --all && git gc --prune=now --aggressive
+
 ========================================================================================>|
 Local Variables:
     fill-column:90
