@@ -9,26 +9,23 @@ Because home is wherever:
 > -- [Windward](http://steve.savitzky.net/Songs/windward/), by Stephen
 > Savitzky, 2015
 
-This project contains a set of configuration files, with Makefiles for
-setup and installation, that allow you to set up a home directory
-exactly the way I like it, with a single command. Unlike its
-predecessor, which was very specific to me, it's meant to be reasonably
-general -- it expects to find its repository on github, leaves your
-.mailrc and .signature files alone, and preserves most of your old
-configuration in case you didn't really mean it.
+This project contains a set of configuration files, with Makefiles for setup
+and installation, that allow you to set up a home directory exactly the way I
+like it, with a single command. Unlike its predecessor, which was very
+specific to me, it's meant to be reasonably general -- it expects to find its
+repository on github, leaves your .mailrc and .signature files alone, and
+preserves most of your old configuration in case you didn't really mean it.
 
-On the other hand, it still sets up my favorite aliases, gnome
-configuration options, emacs options, and `xmonad.hs`. Forking is not
-only encouraged, it's practically mandatory if you want to stay sane.
+On the other hand, it still sets up my favorite aliases, gnome configuration
+options, emacs options, and `xmonad.hs`. Forking is not only encouraged, it's
+practically mandatory if you want to stay sane.
 
 That said, it also has provisions for personal and machine-local
-customizations. I first started putting those in to accommodate laptop
-and desktop systems with a wide range of screen sizes; it's gotten
-somewhat more general since then.
-
-**Note:** this file is meant for incorporation into my website. If
-you're looking at it on github, you may already have noticed that it's
-mostly a duplicate of `README.md`.
+customizations. I first started putting those in to accommodate laptop and
+desktop systems with a wide range of screen sizes; it's gotten somewhat more
+general since then.  A sample customization package will soon become
+available, called (of course) Myrtle.  (I have my own, too; it's called
+Mathilda.) 
 
 Annotated Contents
 ------------------
@@ -37,11 +34,13 @@ Annotated Contents
 
 `bootstrap.sh`
 
-This is the shell script that I use to configure a system. Set up your
-ssh keys, and say:\
+This is the shell script that runs the configuration process.  Just say:\
 `wget -O - https://github.com/ssavitzky/Honu/bootstrap.sh | bash`\
 or something of the sort. You can also clone the repo and source it, but
-that takes half the fun out of it.
+half the fun is watching the magic unfold.
+
+Honu will install itself in whatever directory you run the script in, and make
+a symlink in your home directory if necessary.
 
 `MIT-LICENSE.txt`
 

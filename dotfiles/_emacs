@@ -1,6 +1,6 @@
 ;;; Gnu Emacs Initialization File -- Steve Savitzky
 
-(setq my-home-emacs-dir (concat (getenv "HOME") "/Config/emacs"))
+(setq my-home-emacs-dir (concat (getenv "HOME") "/Honu/emacs"))
 (if (file-exists-p my-home-emacs-dir)
     (setq load-path (cons my-home-emacs-dir load-path))
   (setq my-home-emacs-dir nil))
@@ -453,19 +453,20 @@ makes it buffer-local.")
 
 (setq html-helper-do-write-file-hooks nil)
 (setq html-helper-build-new-buffer t)
-
-(setq my-html-domain "savitzky.net")
-(setq my-html-home-site
-      (concat "http://"
-	      (user-real-login-name) "." my-html-domain)
-      )
-
+      
 (setq html-helper-address-string
-      (concat "<a href=\"" my-html-home-site "\""
-	      "\n         >" (user-full-name) "</a> " 
-	      "\n         &lt;"
-	      (user-real-login-name) "&nbsp;&#64;&nbsp;" my-html-domain "&gt;"
-	      ))
+      (if (fboundp 'my-html-home-site)
+	  (concat "<a href=\"" my-html-home-site "\""
+		  "\n         >" (user-full-name) "</a> " 
+		  "\n         &lt;"
+		  (user-real-login-name)
+		  (if (fboundp 'my-email-domain)
+		      "&nbsp;&#64;&nbsp;" my-email-domain "&gt;"
+		      ""
+		      )
+		  )
+	(user-full-name)))
+
 
 (setq html-helper-new-buffer-template
       '("<html><head>\n"
@@ -845,6 +846,10 @@ Paragraphs are delimited only by empty lines."
 ;;(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 ;;(add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
 
+;;; FIXME:  for Honu, we need to make sure that the user has their own copy of
+;;;         the customization variables.  Probably the only way to do that is to
+;;;         generate the .emacs file instead of symlinking it, and load the rest
+;;;         from ~/Honu/emacs.
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
