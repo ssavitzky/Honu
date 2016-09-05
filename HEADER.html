@@ -1,24 +1,37 @@
 <h2><a href="../" >steve.savitzky.net</a>
-  / <a href="./" ><code>Config</code></a> /</h2>
+  / <a href="./" ><code>Honu</code></a> /</h2>
 <p> <a href="../">[..]</a>
     <a href="#files">[files]</a></p>
 <link rel="stylesheet" type="text/css" href="/style.css" />
 
-<p> Unlike most other directories on this website, where the
-    <code>HEADER.html</code> file is hidden from casual browsing by an
-    <code>index.html</code> file, <em>this</em> directory deliberately leaves
-    <code>HEADER.html</code> out where you can see it. (See <a
-    href="../MakeStuff">../MakeStuff</a> for details.)
+<blockquote>
+Where the wind takes us next year no turtle can tell<br>
+But we'll still be at home, come high water or hell,<br>
+Because home is wherever you carry your shell.<br>
+-- <cite><a href="http://steve.savitzky.net/Songs/windward/" >Windward</a></cite>, by
+   Stephen Savitzky, 2015
+</blockquote>
+<p> This project contains a set of configuration files, with Makefiles for
+    setup and installation, that allow you to set up a home directory exactly
+    the way I like it, with a single command.  Unlike its predecessor, which
+    was very specific to me, it's meant to be reasonably general -- it expects
+    to find its repository on github, leaves your .mailrc and .signature files
+    alone, and preserves most of your old configuration in case you didn't
+    really mean it. 
 </p>
-<p> This particular directory contains my personal configuration files and
-    configuration-related setup scripts -- with those, I can go from a minimal
-    Debian or Ubuntu installation to a system set up (almost) exactly the way
-    I like it in a matter of minutes.  (There are a few things that have to be
-    done manually, unfortunately.)
+<p> On the other hand, it still sets up my favorite aliases, gnome
+    configuration options, emacs options, and <code>xmonad.hs</code>.  Forking
+    is not only encouraged, it's practically mandatory if you want to stay
+    sane.
 </p>
-<p> If you're <em>not</em> me, you will undoubtedly need to do some
-    customizing.  Possibly a lot of customizing.  But this should be a good
-    jumping-off point, and it will become more general over time.
+<p> That said, it also has provisions for personal and machine-local
+    customizations.  I first started putting those in to accommodate laptop
+    and desktop systems with a wide range of screen sizes; it's gotten
+    somewhat more general since then.
+</p>
+<p> <b>Note:</b> this file is meant for incorporation into my website.  If
+    you're looking at it on github, you may already have noticed that it's
+    mostly a duplicate of <code>README.md</code>.
 </p>
 
 <h2>Annotated Contents</h2>
@@ -28,9 +41,9 @@
   <dt> <code><a href="bootstrap.sh">bootstrap.sh</a></code>
   <dd> This is the shell script that I use to configure a system.  Set up your
        ssh keys, and say:<br>
-      <code>wget -O - steve.savitzky.net/Config/bootstrap.sh | bash</code>
+      <code>wget -O - https://github.com/ssavitzky/Honu/bootstrap.sh | bash</code>
       <br>
-      or something of the sort.  You can also download it and source it, but
+      or something of the sort.  You can also clone the repo and source it, but
       that takes half the fun out of it.
   <dt> <code><a href="Makefile">Makefile</a></code>
   <dd> Once things get bootstrapped, the entire configuration process is run
@@ -43,19 +56,12 @@
        something in progress, and a filled circle (asterisk) is finished.  "~"
        indicates something I've decided not to do, and "?" indicates something
        I'm dithering about.  "&amp;" indicates something I did that I wasn't
-       planning to do.  Eventually finished items move to a "done" section or,
-       when they start getting moldy, a separate file under
-       <code>Archive</code>.
+       planning to do.  Eventually finished items move to a "done" section.
 </dl>
 
 
 <h3>Directories</h3>
 <dl>
-  <dt> <code><a href="Archive/" >Archive/</a></code>
-  <dd> Yeah; I know -- I could just delete stuff and let <code>git</code> keep
-       track of it for me.  This is mainly for stuff that I want to refer to
-       later, or keep around for sentimental value (like my old Usenet
-       <code>.sig</code> files).
   <dt> <code><a href="bin/" >bin/</a></code>
   <dd> Programs.  Mostly small shell scripts; I don't think there are any
        actual binary files in there at the moment.  Some are symlinks into
@@ -67,8 +73,7 @@
        with the stuff already there.
   <dt> <code><a href="dotfiles/" >dotfiles/</a></code>
   <dd> Configuration files that go into the home directory.  They are
-       symlinked rather than being copied; some may need customization if
-       you're not me, or are me using a different username.
+       symlinked rather than being copied.
   <dt> <code><a href="emacs/" >emacs/</a></code>
   <dd> Like it says on the tin:  configuration files for emacs.  This doesn't
        include <code>.emacs</code>, which you'll find in <code>dotfiles</code>.
