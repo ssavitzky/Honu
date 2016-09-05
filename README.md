@@ -20,12 +20,13 @@ On the other hand, it still sets up my favorite aliases, gnome configuration
 options, emacs options, and `xmonad.hs`. Forking is not only encouraged, it's
 practically mandatory if you want to stay sane.
 
-That said, it also has provisions for personal and machine-local
-customizations. I first started putting those in to accommodate laptop and
+That said, there are provisions for personal and machine-local
+customizations.  I first started putting those in to accommodate laptop and
 desktop systems with a wide range of screen sizes; it's gotten somewhat more
 general since then.  A sample customization package will soon become
 available, called (of course) Myrtle.  (I have my own, too; it's called
-Mathilda.) 
+Mathilda.  In case you were wondering, "Honu" is the Hawaiian word for the
+green sea-turtle, and Mathilda is our name for the narrator of "Windward".)
 
 Annotated Contents
 ------------------
