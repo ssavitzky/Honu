@@ -1,12 +1,14 @@
 #!/bin/sh
-# apt-get packages for text processing
+# apt-get packages required by MakeStuff
 
-# The texlive package is most of what you need for handling text and lyricsbvgggg
-# using the makefiles in Tools/make and Tools/music
+# The texlive package is most of what you need for handling text and lyrics
+# using the makefiles in MakeStuff/make and MakeStuff/music
 sudo apt-get install -y texlive \
-     latex2html auctex perl-tk dvidvi catdvi dvipng texlive-doc-en html2ps
+     latex2html auctex perl-tk dvidvi catdvi dvipng texlive-doc-en html2ps \
+     pandoc texlive-latex-recommended texlive-xetex texlive-luatex         \
+     pandoc-citeproc etoolbox wkhtmltopdf
 
-# These are what you need for the audio processing in Tools/music
+# These are what you need for the audio processing in MakeStuff/music
 sudo apt-get -y install ffmpeg pacpl sox libsox-fmt-all mpg321 lame lame-doc \
       normalize-audio ogmtools shntool cuetools flac
 
