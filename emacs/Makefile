@@ -1,4 +1,4 @@
-### depends.make for Config/emacs
+### depends.make for Honu/emacs
 #
 
 ### Prevent make push from trying to push ljupdate
@@ -13,8 +13,8 @@ install:: | ljupdate
 install:: | html-helper-mode
 install:: | $(HOME)/emacs
 
-$(HOME)/emacs: | $(HOME)/Config
-	cd $(HOME); ln -sf Config/emacs .
+$(HOME)/emacs: | $(HOME)/Honu
+	cd $(HOME); ln -sf Honu/emacs .
 
 # was originally  git://github.com/hober/ljupdate.git, but the fork is
 # more recent.

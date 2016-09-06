@@ -29,7 +29,7 @@
 	default = matching
 
 [include]
-	path = ~/Config/local/local_gitconfig
+	path = ~/Honu/local/local_gitconfig
 
 # Local Variables:
 #   fill-column:120

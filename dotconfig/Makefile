@@ -2,7 +2,7 @@
 #
 
 DST = $(HOME)/.config
-REL = ../Config/dotconfig
+REL = ../Honu/dotconfig
 
 #  Note that we're ignoring editor backup and .sh files.
 CFGFILES = $(filter-out %.sh, $(wildcard [a-z]*[^~]))

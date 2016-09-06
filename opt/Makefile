@@ -1,4 +1,4 @@
-### depends.make for Config/opt
+### Makefile for opt
 #
 
 ### Prevent make push from trying to push stuff from github

@@ -118,6 +118,19 @@ Work Log:
    107  git filter-branch --prune-empty
    110  git reflog expire --expire=now --all && git gc --prune=now --aggressive
 
+0905Mo
+  * Push to github.
+  o .emacs:  generate, and load Honu/emacs/emacs.el and Honu/local/emacs.el
+  o testing is needed:
+    Set up a testing environment by setting USER and HOME, and putting a dummy sudo
+    that simply records what it's supposed to do on $PATH.  Ought to have a dummy groups
+    command as well.
+  o Originals:  Should go into, e.g., local/orig  (ignore subdirectories of local)
+  o Myrtle/Mathilda - install into the same directory as Honu and MakeStuff.
+    symlink files and subdirs into Honu/local, or directly into $HOME if they don't
+    overlap.
+  o add scsitools to packages
+
 ========================================================================================>|
 Local Variables:
     fill-column:90

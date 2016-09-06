@@ -33,7 +33,6 @@ WindowGeometries {
 #	Note that if an include file doesn't exist it just gets ignored.
 #	We use this for the Debian menus (/etc/X11/ctwm/menudefs.hook)
 #
-include(/local/starport/Config/X11/twm/starport.ctwmrc)
 include(/etc/X11/ctwm/menudefs.hook)
 #
 ### End of include files.  Menu items added here go at the bottom.

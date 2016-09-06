@@ -1,7 +1,8 @@
-### depends.make for Config
+### Honu/Makefile
 #
 # Targets:
-#	install
+#	install		Install configuration files
+#	install-pkgs	Install packages -- calls sudo as needed
 #
 
 # Which subdirectories have an install target?
@@ -13,7 +14,7 @@ INSTALL_DIRS := $(shell for f in $(makeable); do grep -sq install:: $$f/Makefile
 
 .PHONY: install install-pkgs report-vars
 
-install:: | $(HOME)/Config
+install:: | $(HOME)/Honu
 
 install::
 	for d in $(INSTALL_DIRS); do (cd $$d; $(MAKE) install) done
@@ -21,8 +22,8 @@ install::
 install-pkgs::
 	cd setup; for f in *pkgs; do ./$$f; done
 
-# Link Config into home directory.
-$(HOME)/Config:
+# Link Honu into home directory.
+$(HOME)/Honu:
 	pwd=`pwd`; cd $(HOME); ln -s $$pwd .
 
 ### If we're using the Tools package, chain in its Makefile

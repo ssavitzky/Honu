@@ -4,7 +4,7 @@
 .PHONY: install
 
 DST = $(HOME)/bin
-REL = Config/$(notdir $(shell pwd))
+REL = Honu/$(notdir $(shell pwd))
 
 .PHONY: install report-vars
 

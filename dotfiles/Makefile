@@ -2,7 +2,7 @@
 #
 
 DST = $(HOME)
-REL = Config/dotfiles
+REL = Honu/dotfiles
 CFG = $(shell dirname `/bin/pwd`)
 
 DOTFILES = $(wildcard _*)
@@ -22,7 +22,7 @@ install::
 	fc-cache ~/.fonts/
 
 $(HOME)/$(REL):
-	echo "linking Config->$(CFG)"
+	echo "linking Honu->$(CFG)"
 	(cd $(HOME); ln -s $(CFG) .)
 
 # Remove broken symlinks in $(HOME)

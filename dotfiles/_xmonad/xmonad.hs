@@ -35,10 +35,10 @@ import XMonad.Layout.IndependentScreens (countScreens)
 
 -- | The local configuration options are in .xmonad/lib/Local.hs, wich in my
 --    configuration is a symlink to ../../../local/local_xmonad.hs (or, in other
---    words, Config/local/local_xmonad.hs).  It gets initialized when you install
---    Config; the intent is that you can customize xmonad for a particular machine.
+--    words, Honu/local/local_xmonad.hs).  It gets initialized when you install
+--    Honu; the intent is that you can customize xmonad for a particular machine.
 --    This is particularly useful if you have multiple laptop and desktop systems
---    with different screen sizes and keyboard layouts.  See Config/local/_xmonad.hs
+--    with different screen sizes and keyboard layouts.  See Honu/local/_xmonad.hs
 --    for the default values.
 --   
 import Local			   -- local configuration options
