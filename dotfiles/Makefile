@@ -5,14 +5,23 @@ DST = $(HOME)
 REL = Honu/dotfiles
 CFG = $(shell dirname `/bin/pwd`)
 
-DOTFILES = $(wildcard _*)
+SRCFILES := $(wildcard _*)
+DOTFILES := $(shell for f in $(SRCFILES); do echo $$f| sed -e 's/_/./'; done)
+DSTFILES := $(addprefix $(HOME)/, $(DOTFILES))
+# These are the originals we'll have to move out of the way:
+NONLINKS := $(shell for f in $(DSTFILES); do [ -L $$f ] || [ ! -e  $$f ] || echo $$f; done)
+
+# Here's where we move any original (non-dot) files we find.
+ORIGINALS = ../local/originals
 
 .PHONY: install cleanup report-vars
 
 ### Install dotfiles in $(HOME).
 #
 install::	| $(HOME)/$(REL)
-	@for f in $(DOTFILES); do \
+	@[ -z "$(NONLINKS)" ] || echo moving $(NONLINKS) to $(ORIGINALS)
+	@for f in $(NONLINKS); do mkdir $(ORIGINALS); mv $$f $(ORIGINALS); done
+	@for f in $(SRCFILES); do \
 		(cd $(DST) 						\
 		; ln -nsf $(REL)/$$f `echo $$f| sed -e 's/_/./'`	\
 		) done
@@ -34,12 +43,12 @@ cleanup::
 	    fi						\
 	done
 
-### If we're using the Tools package, chain in its Makefile
-CHAIN = $(firstword $(wildcard ../../MakeStuff/Makefile ../../../MakeStuff/Makefile \
-			       ../../Tools/Makefile     ../../../Tools/Makefile))
+### If we're using the MakeStuff package, chain in its Makefile
+CHAIN = $(firstword $(wildcard ../../MakeStuff/Makefile ../../../MakeStuff/Makefile)
 include $(CHAIN)
 
 report-vars::
 	@echo CFG= $(CFG)
-	@echo DOTFILES=$(DOTFILES)
+	@echo SRCFILES=$(SRCFILES)
+	@echo NONLINKS=$(NONLINKS)
 	@echo CHAIN=$(CHAIN)
