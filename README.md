@@ -3,9 +3,9 @@ Honu
 Because home is wherever:
 -------------------------
 
-> Where the wind takes us next year no turtle can tell\
-> But we'll still be at home, come high water or hell,\
-> Because home is wherever you carry your shell.\
+> Where the wind takes us next year no turtle can tell<br>
+> But we'll still be at home, come high water or hell,<br>
+> Because home is wherever you carry your shell.<br>
 > -- [Windward](http://steve.savitzky.net/Songs/windward/), by Stephen
 > Savitzky, 2015
 
@@ -17,16 +17,18 @@ repository on github, leaves your .mailrc and .signature files alone, and
 preserves most of your old configuration in case you didn't really mean it.
 
 On the other hand, it still sets up my favorite aliases, gnome configuration
-options, emacs options, and `xmonad.hs`. Forking is not only encouraged, it's
-practically mandatory if you want to stay sane.
+options, emacs options, and xmonad configuration. Forking is not only
+encouraged, it's practically mandatory if you want to stay sane.
 
-That said, there are provisions for personal and machine-local
-customizations.  I first started putting those in to accommodate laptop and
-desktop systems with a wide range of screen sizes; it's gotten somewhat more
-general since then.  A sample customization package will soon become
-available, called (of course) Myrtle.  (I have my own, too; it's called
-Mathilda.  In case you were wondering, "Honu" is the Hawaiian word for the
-green sea-turtle, and Mathilda is our name for the narrator of "Windward".)
+That said, there are provisions for personal and machine-local customizations:
+see the local directory.  I first started putting those in to accommodate
+laptopand desktop systems with a wide range of screen sizes; it's gotten
+somewhat more general since then.
+
+There is also a sample customization package that provides a wrapper around
+Honu, called (of course) Myrtle.  (I have my own, too; it's called Mathilda.
+In case you were wondering, "Honu" is the Hawaiian word for the green
+sea-turtle, and Mathilda is our name for the narrator of "Windward".)
 
 Annotated Contents
 ------------------
@@ -35,8 +37,8 @@ Annotated Contents
 
 `bootstrap.sh`
 
-This is the shell script that runs the configuration process.  Just say:\
-`wget -O - https://github.com/ssavitzky/Honu/bootstrap.sh | bash`\
+This is the shell script that runs the configuration process.  Just say:<br>
+`wget -O - https://github.com/ssavitzky/Honu/raw/master/bootstrap.sh|bash`<br>
 or something of the sort. You can also clone the repo and source it, but
 half the fun is watching the magic unfold.
 
