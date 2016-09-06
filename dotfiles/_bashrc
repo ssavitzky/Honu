@@ -1,13 +1,29 @@
-### Steve's .bashrc
+#!/bin/bash		### Honu's .bashrc
 
 PRINTER=lp
 VISUAL="emacs -nw"
 EDITOR="emacs -nw"
-BROWSER=google-chrome:iceweasel:firefox
+BROWSER=google-chrome:firefox:iceweasel
 export VISUAL EDITOR BROWSER
 
-(echo "$PATH"| grep -q "$HOME/bin")  || \
+(echo "$PATH" | grep -q "$HOME/bin")  || \
     PATH=$HOME/bin:/usr/local/bin:/usr/bin:/bin:/usr/bin/X11:$PATH:/opt/bin
+
+appendToPath () {
+    if [ -d $1 ]; then
+	(echo "$PATH" | grep -q $1)  || PATH=$PATH:$1
+    fi
+}
+prependToPath () {
+    if [ -d $1 ]; then
+	(echo "$PATH" | grep -q $1)  || PATH=$1:$PATH
+    fi
+}
+
+appendToPath /opt/bin
+prependToPath $HOME/bin
+prependToPath $HOME/Honu/local/local-bin
+
 if [ -d /opt/java/bin ]; then
     PATH=/opt/java/bin:$PATH
 elif [ -d /usr/local/java/bin ]; then
@@ -16,9 +32,9 @@ fi
 
 export PATH
 
-#unalias rm
-
 if [ "$PS1" ]; then
+  # We're in an interactive shell.  Start by changing the prompt:
+
   PS1='(\h:$USER\W \!) '
 
   case "$TERM" in
@@ -26,20 +42,10 @@ if [ "$PS1" ]; then
 	  PS1='\[\033]1;\h:\u\]\[\033]2;\h:$USER \w\](\h:\W \!) ';;
   esac
   
-  pwgrep () {
-      echo "you mean pw"
-      pw $1
-  }
-  pw () {
-      if [ -d $HOME/Secret ]; then 
-	  grep -i $1  $HOME/Secret/pwds
-      else
-	  target=nova
-	  if [ -d /home/engelbert ]; then target=engelbert@localhost; fi
-	  echo ssh $target
-	  ssh $target grep -i $1 Secret/pwds
-      fi
-  }
+  export ignoreeof=0
+
+  # At some point I will move the aliases and functions to .aliases,
+  # which would let them be used by zsh
 
   getmail () {
       fetchmail | grep -v skipping | grep -v 'No mail' \
@@ -67,18 +73,13 @@ if [ "$PS1" ]; then
   alias a="audacity --sync"
   alias p=pushd
   alias P=popd
-  export ignoreeof=0
-  alias jpia=pia_wrapper
   alias ll='ls -alF --color=auto'
   alias lr='ls -aRF --color=auto'
   alias l='ls -aCF --color=auto'
-  alias todo='emacs ~/Private/Journals/Dog/to.do'
 #  alias chrome="google-chrome --allow-outdated-plugins >& /dev/null"
   alias chrome="google-chrome >& /dev/null"
   alias gnus="emacs -f gnus -name gnus"
   alias pidgin="pidgin -f"
-  alias rwbak="ssh root@localhost mount -oremount,rw /media/bak"
-  alias robak="ssh root@localhost mount -oremount,ro /media/bak"
   alias bed="ssh root@localhost acpitool -s"
   alias todo="emacs -geometry 91x35 to.do&"
 
@@ -91,6 +92,9 @@ if [ "$PS1" ]; then
   [ -x /usr/bin/frm ] || [ -x /usr/local/bin/frm ] \
       || alias frm='echo x | mail| tail +2'
 fi
+
+# Chain in a local_bashrc, which might have been put there by Myrtle
+[ -f $HOME/Honu/local/local_bashrc ] && source $HOME/Honu/local/local_bashrc
 
 # Console xterm on my ctwm dashboard.
 [ x"$CONSOLE" != x ] && { unset CONSOLE ; $HOME/bin/idle& }
