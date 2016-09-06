@@ -1,5 +1,7 @@
-# .gitignore for local.
+# .gitignore for Honu/local.
 #
-# Ignore files with names starting with local_. 
+# Ignore files with names starting with lowercase letters.
+# In most cases these will be starting with local_, but the user (or Myrtle)
+# may copy in others. 
 
-local_*
+[a-z]*
