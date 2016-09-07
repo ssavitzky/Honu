@@ -26,21 +26,23 @@ install-pkgs::
 $(HOME)/Honu:
 	pwd=`pwd`; cd $(HOME); ln -s $$pwd .
 
-### If we're using the Tools package, chain in its Makefile
+### If we're using the MakeStuff package, chain in its Makefile
 #	This is optional -- it doesn't affect basic functionality -- but it
 #	brings in a lot of useful extras like "make push", recursive "make all",
 #	and so on.  Note that include does the right thing if the file list is
 #	empty, so we don't have to test for that.
 #
-#	Normally Makefile is a symlink, and local dependencies go into
-#	depends.make; I decided to try something different this time.
+#	Normally Makefile is a symlink to Makestuff/Makefile, and local
+#	dependencies go into depends.make.  We do it differently here because
+#	we might not have MakeStuff downloaded yet.
 #
 CHAIN = $(firstword $(wildcard ../MakeStuff/Makefile ../Tools/Makefile))
 include $(CHAIN)
 
 ### report-vars
-#	report-vars is also defined in the Tools package, so you can use it to
-#	see whether Tools/Makefile is properly chained in.
+#	report-vars is also defined in the MakeStuff package, so you can use it to
+#	see whether MakeStuff/Makefile is properly chained in.  It's also a very
+#	handy way to see whether your make variables are defined properly.
 report-vars::
 	@echo makeable= $(makeable)
 	@echo INSTALL_DIRS= $(INSTALL_DIRS)
