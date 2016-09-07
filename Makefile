@@ -34,9 +34,10 @@ $(HOME)/Honu:
 #
 #	Normally Makefile is a symlink to Makestuff/Makefile, and local
 #	dependencies go into depends.make.  We do it differently here because
-#	we might not have MakeStuff downloaded yet.
+#	we want Honu to be as stand-alone as possible, in case you want to
+#	simply clone it rather than bootstrap it.
 #
-CHAIN = $(firstword $(wildcard ../MakeStuff/Makefile ../Tools/Makefile))
+CHAIN = $(wildcard ../MakeStuff/Makefile)
 include $(CHAIN)
 
 ### report-vars

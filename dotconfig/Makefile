@@ -30,11 +30,10 @@ install:: $(DIRS)
 		) done
 
 
-### If we're using the Tools package, chain in its Makefile
-#	See ../Makefile for more information about Tools.
+### If we're using the MakeStuff package, chain in its Makefile
+#	See ../Makefile for more information.
 #
-CHAIN = $(firstword $(wildcard ../../MakeStuff/Makefile ../../../MakeStuff/Makefile \
-			       ../../Tools/Makefile     ../../../Tools/Makefile))
+CHAIN = $(wildcard ../../MakeStuff/Makefile)
 include $(CHAIN)
 
 report-vars::
