@@ -6,9 +6,6 @@ EDITOR="emacs -nw"
 BROWSER=google-chrome:firefox:iceweasel
 export VISUAL EDITOR BROWSER
 
-(echo "$PATH" | grep -q "$HOME/bin")  || \
-    PATH=$HOME/bin:/usr/local/bin:/usr/bin:/bin:/usr/bin/X11:$PATH:/opt/bin
-
 appendToPath () {
     if [ -d $1 ]; then
 	(echo "$PATH" | grep -q $1)  || PATH=$PATH:$1
@@ -22,7 +19,7 @@ prependToPath () {
 
 appendToPath /opt/bin
 prependToPath $HOME/bin
-prependToPath $HOME/Honu/local/local-bin
+for d in $HOME/Honu/local/[a-z]*_bin; do prependToPath $d; done
 
 if [ -d /opt/java/bin ]; then
     PATH=/opt/java/bin:$PATH
@@ -93,8 +90,8 @@ if [ "$PS1" ]; then
       || alias frm='echo x | mail| tail +2'
 fi
 
-# Chain in a local_bashrc, which might have been put there by Myrtle
-[ -f $HOME/Honu/local/local_bashrc ] && source $HOME/Honu/local/local_bashrc
+# Chain in local/[a-z]*_bashrc, which might have been put there by Myrtle et. al.
+for f in $HOME/Honu/local/[a-z]*_bashrc; do source $f; done
 
 # Console xterm on my ctwm dashboard.
 [ x"$CONSOLE" != x ] && { unset CONSOLE ; $HOME/bin/idle& }
