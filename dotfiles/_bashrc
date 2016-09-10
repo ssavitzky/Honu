@@ -19,7 +19,7 @@ prependToPath () {
 
 appendToPath /opt/bin
 prependToPath $HOME/bin
-for d in $HOME/Honu/local/[a-z]*_bin; do prependToPath $d; done
+for d in `ls $HOME/Honu/local/[a-z]*_bin 2>/dev/null`; do prependToPath $d; done
 
 if [ -d /opt/java/bin ]; then
     PATH=/opt/java/bin:$PATH
@@ -80,6 +80,9 @@ if [ "$PS1" ]; then
   alias bed="ssh root@localhost acpitool -s"
   alias todo="emacs -geometry 91x35 to.do&"
 
+  # Chain in local/[a-z]*_aliases, which might have been put there by Myrtle et. al.
+  for f in `ls $HOME/Honu/local/[a-z]*_aliases 2>/dev/null`; do source $f; done
+  
   # enable bash completion in interactive shells
   if [ -f /etc/bash_completion -a -z "$BASH_COMPLETION" ]; then
       . /etc/bash_completion
@@ -91,7 +94,7 @@ if [ "$PS1" ]; then
 fi
 
 # Chain in local/[a-z]*_bashrc, which might have been put there by Myrtle et. al.
-for f in $HOME/Honu/local/[a-z]*_bashrc; do source $f; done
+for f in `ls $HOME/Honu/local/[a-z]*_bashrc 2>/dev/null`; do source $f; done
 
 # Console xterm on my ctwm dashboard.
 [ x"$CONSOLE" != x ] && { unset CONSOLE ; $HOME/bin/idle& }
