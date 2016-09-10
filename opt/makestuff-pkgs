@@ -3,7 +3,7 @@
 
 # The texlive package is most of what you need for handling text and lyrics
 # using the makefiles in MakeStuff/make and MakeStuff/music
-sudo apt-get install -y texlive \
+sudo apt-get -y install texlive \
      latex2html auctex perl-tk dvidvi catdvi dvipng texlive-doc-en html2ps \
      pandoc texlive-latex-recommended texlive-xetex texlive-luatex         \
      pandoc-citeproc etoolbox wkhtmltopdf

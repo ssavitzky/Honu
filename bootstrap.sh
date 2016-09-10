@@ -53,7 +53,7 @@ if $INSTALL_PKGS; then		### Install packages.
     else
 	X_PKGS="emacs-nox"
     fi
-    sudo apt-get install $REQUIRED $ALMOST_ESSENTIAL $X_PKGS
+    sudo apt-get -y install $REQUIRED $ALMOST_ESSENTIAL $X_PKGS
 
 fi # INSTALL_PKGS
 
