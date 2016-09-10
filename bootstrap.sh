@@ -46,7 +46,7 @@ if $INSTALL_PKGS; then		### Install packages.
     REQUIRED="git curl wget make rsync openssh-client openssh-server"
 
     # Life is difficult without these, but it's possible.
-    ALMOST_ESSENTIAL="mailutils memtest86+ zile ntp"
+    ALMOST_ESSENTIAL="gdebi memtest86+ zile ntp"
 
     if $HAVE_X; then
 	X_PKGS="emacs git-doc git.el xdu xbase-clients gitk git-gui xterm xttitle"
