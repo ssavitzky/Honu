@@ -55,14 +55,16 @@ if [ "$PS1" ]; then
       cd `/bin/pwd`
   }
 
+  # . f - functions as source (the usual definition) if f is an ordinary file,
+  #       if f or ../f is a directory, cd -P to it and print useful info.
   .() {
      if [ "$1" = "" ]; then 
-	cd.; dirs; l
+	cd.; dirs; ls -aCF --color=auto
      elif [ -d $1 ]; then
-	cd. $1; dirs; l
+	cd. $1; dirs; ls -aCF --color=auto
      elif [ -d ../$1 ]; then
-	cd. ../$1; dirs; l
-     elif [ -f $1 ]; then
+	cd. ../$1; dirs; ls -aCF --color=auto
+     else
 	source $1
      fi
   }
