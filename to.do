@@ -131,6 +131,15 @@ Work Log:
     overlap.
   o add scsitools to packages
 
+0911Su
+  * no links to bottom-bars, bottom-mobars
+  o length on bottom-bars -- see ws for how to get this
+
+0912Mo
+  ^ At some point, we may want to move some of the settings most likely to be customized
+    out into Myrtle/Mathilda.  That includes whether to pull down MakeStuff -- Honu should
+    be completely stand-alone and not need much customization.
+    
 ========================================================================================>|
 Local Variables:
     fill-column:90
