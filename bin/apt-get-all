@@ -1,0 +1,5 @@
+#!/bin/sh
+#      Get and install all upgrades; clean up afterward.
+#
+
+sudo apt-get update && sudo apt-get -y dist-upgrade && sudo apt-get -y autoremove
