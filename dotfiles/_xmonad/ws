@@ -3,8 +3,10 @@
 
 USAGE="$0 [-hdk] workspace [text...]
     -h: print help text
+    -D: no default date/time
     -d: show date
     -k: kill label
+    -l: list workspaces
 "
 
 # Map workspace numbers and names into resistor color codes
@@ -32,15 +34,22 @@ key () {
 
 # Extract the first number on a line.
 first_number () {
-    sed -e 's/^[^0-9]*//' | sed -e 's/[^0-9].*//'
+    sed -e 's/^[^0-9]*//' | sed -e 's/[^0-9].*//' 
+}
+
+# List workspaces
+list () {
+    ps x | grep [W]S= | sed 's/^.*-strftime //' | sed 's/%[a-zA-Z][- :]//g' | sort
 }
 
 STRFTIME=%H:%M
 KILL=false
 case $1 in
     (-h) echo "$USAGE"; exit;;
+    (-D) STRFTIME=""; shift;;
     (-d) STRFTIME="%a %F %H:%M"; shift;;
     (-k) KILL=true; shift;;
+    (-l) list; exit;;
 esac
 
 N=$1; shift
@@ -57,16 +66,10 @@ if $KILL; then exit 0; fi
 XMLOCAL=$HOME/.xmonad/lib/Local.hs
 WIDTH=$(grep firstTopBarWidth $XMLOCAL | first_number)
 
-if [ -z "$*" ]; then
-    S=
-else
-    S=--
-fi
-
 # Switch to the indicated workspace; allow time to get there.
 xdotool key super+`key $N`
 sleep 1
 
 # Run the label program (xclock)
 exec xclock -digital -geometry +$WIDTH+0 $COLORS -padding 0 \
-            -strftime "$STRFTIME--WS=$N$S$*  "&
+            -strftime "WS=$N $STRFTIME $*  "&
