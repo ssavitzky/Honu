@@ -19,7 +19,7 @@ prependToPath () {
 
 appendToPath /opt/bin
 prependToPath $HOME/bin
-for d in `ls $HOME/Honu/local/[a-z]*_bin 2>/dev/null`; do prependToPath $d; done
+for d in `ls -d $HOME/Honu/local/[a-z]*_bin 2>/dev/null`; do prependToPath $d; done
 
 if [ -d /opt/java/bin ]; then
     PATH=/opt/java/bin:$PATH
