@@ -435,8 +435,8 @@ makes it buffer-local.")
 
 (setq html-helper-do-write-file-hooks nil)
 (setq html-helper-build-new-buffer t)
-(setq my-html-home-site "http://stephen.savitzky.net/")
-(setq my-email-domain "savitzky.net")
+;;(setq my-html-home-site "http://stephen.savitzky.net/")
+;;(setq my-email-domain "savitzky.net")
 (setq html-helper-htmldtd-version "<!DOCTYPE html>\n")
 (setq html-helper-address-string
       (if (boundp 'my-html-home-site)
@@ -459,7 +459,7 @@ makes it buffer-local.")
 	"</head><body>\n"
 	"<h1>" p "</h1>\n\n"
 	"<hr />\n"
-       	"<address>" html-helper-address-string "</address>"
+       	;; assume we'll include a footer "<address>" html-helper-address-string "</address>"
 	"\n</body></html>\n"))
 
 (defun html-helper-smarter-insert-item (&optional arg)
