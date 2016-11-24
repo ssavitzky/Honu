@@ -105,7 +105,6 @@
 (global-set-key "\C-Cb"   'tempo-template-html-bold)	; b: BOLD
 (global-set-key "\C-Cr"   'tempo-template-html-citation) ; r: reference
 (global-set-key "\C-CI"   'html-helper-smart-insert-item) ; I: list item
-;; html-helper-smarter-insert-item is currently broken
 
 ;; Text manipulation
 ;(global-set-key "\C-C\C-t" 'transpose-sentences)
@@ -128,7 +127,7 @@
 (setq mail-archive-file-name "~/Mail/mail-archive")
 (setq mail-self-blind t)
 (setq Info-enable-edit t)
-(setq fill-column 76)
+(setq fill-column 72)
 (setq find-file-visit-truename t)	;keeps emacs from clobbering symlinks
 
 (setq compilations-window-height 10)
@@ -435,8 +434,6 @@ makes it buffer-local.")
 
 (setq html-helper-do-write-file-hooks nil)
 (setq html-helper-build-new-buffer t)
-;;(setq my-html-home-site "http://stephen.savitzky.net/")
-;;(setq my-email-domain "savitzky.net")
 (setq html-helper-htmldtd-version "<!DOCTYPE html>\n")
 (setq html-helper-address-string
       (if (boundp 'my-html-home-site)
@@ -459,33 +456,39 @@ makes it buffer-local.")
 	"</head><body>\n"
 	"<h1>" p "</h1>\n\n"
 	"<hr />\n"
-       	;; assume we'll include a footer "<address>" html-helper-address-string "</address>"
+       	;; assume we'll include a footer, so we don't need
+	;; "<address>" html-helper-address-string "</address>"
 	"\n</body></html>\n"))
 
 (defun html-helper-smarter-insert-item (&optional arg)
-  "Insert a new item, either in a regular list or a dictionary."
+  "Insert a new item, either in a regular list or a dictionary.
+If outside a list, start a paragraph."
   ;; Work smarter by searching forward.  This is more likely to be
   ;; right, since it does the right thing following a sublist.
   (interactive "*P")
-  (let ((case-fold-search t)
-	(s "<li>\\|<dd>\\|<dt>\\|</ul>\\|</ol>\\|</menu>\\|</dir>\\|</dl>"))
-    (if
-        (save-excursion
-          (re-search-forward s nil t) 
-	  (re-search-backward s nil t)
-          (looking-at "<dt>\\|<dd>\\|</dl>"))
-        (tempo-template-html-definition-item arg)
-      (tempo-template-html-item arg))))
+  (letrec ((case-fold-search t)
+	   (in  "<li>\\|<dd>\\|<dt>\\|</ul>\\|</ol>\\|</menu>\\|</dir>\\|</dl>")
+	   (out "<ul>\\|<ol>\\|<menu>\\|<dir>\\|<dl>")
+	   (s (concat in "\\|" out)))
+    (if (save-excursion
+          (and (re-search-forward s nil t) 
+	       (re-search-backward s nil t)
+	       (not (looking-at out))))
+	(or (if (looking-at "<dt>\\|<dd>\\|</dl>")
+		(tempo-template-html-definition-item arg)
+	      (tempo-template-html-list-item arg))
+	    t)
+      (tempo-template-html-paragraph arg))))
 
 (defun html-helper-insert-link-item (&optional arg)
   "Insert a list item with a link into the buffer"
   (interactive "*P")
   (html-helper-smarter-insert-item arg)
-  (tempo-template-html-anchor arg)
-  )
+  (tempo-template-html-hyperlink arg) )
 
 (setq html-helper-use-expert-menu t)
-(setq html-helper-do-write-file-hooks nil)
+(setq html-helper-do-write-file-hooks nil) ; don't bother with the timestamp.
+(setq html-helper-item-continue-indent 5)  ; leave room for a space after the tag.
 
 (defun my-html-mode-hook ()
   "Hook for HTML editing"
@@ -500,15 +503,15 @@ makes it buffer-local.")
   (gin-mode-on)
   (setq fill-column 78)
 
-  (local-set-key [C-M-return]   'html-helper-smarter-insert-item)
-  (local-set-key [M-S-return]   'html-helper-insert-link-item)
-  (local-set-key "\C-Cb"   'tempo-template-html-bold) 		; b: B
+  (local-set-key "\e\C-m"  'html-helper-smarter-insert-item) ; apparently masks C-M-RET
+  (local-set-key "\C-Cb"   'tempo-template-html-blockquote)	; b: BLOCKQUOTE
   (local-set-key "\C-Cc"   'tempo-template-html-code) 		; c: CODE
   (local-set-key "\C-Cd"   'tempo-template-html-definition-list); d: DL
   (local-set-key "\C-Ce"   'tempo-template-html-emphasized)	; e: EM
   (local-set-key "\C-Ci"   'html-helper-smarter-insert-item)	; i: item
   (local-set-key "\C-Cl"   'tempo-template-html-hyperlink)	; l: link
   (local-set-key "\C-Co"   'tempo-template-html-ordered-list)	; o: OL
+  (local-set-key "\C-Cr"   'tempo-template-html-citation)       ; r: CITE
   (local-set-key "\C-Cs"   'tempo-template-html-strong)		; s: STRONG
   (local-set-key "\C-Cu"   'tempo-template-html-unordered-list)	; u: UL
   )
@@ -518,9 +521,10 @@ makes it buffer-local.")
 (load "html-helper-mode" t)
 
 ;; redefine templates and functions defined in html-helper-mode
-(tempo-define-template "html-paragraph" '("<p> " p "\n") nil "insert paragraph")
+(tempo-define-template "html-paragraph" '(& "<p> " p "\n") nil "insert paragraph")
 
-;; need html-helper-mode before we can define ljupdate
+;; need html-helper-mode before we can define ljupdate, because we prefer
+;; html-helper-mode to the usual html-mode.  We fake it.
 (setq ljupdir (concat my-home-emacs-dir "/ljupdate"))
 (if (file-exists-p ljupdir)
     (progn (setq load-path (cons ljupdir load-path))
@@ -534,6 +538,87 @@ makes it buffer-local.")
 )
 
 ;;; lj-compose to compose; ^C-s to post
+
+;;;
+;;; Perl-mode stuff
+;;;
+
+(add-hook 'perl-mode-hook 'my-perl-mode-hook)
+(defun my-perl-mode-hook ()
+  "C++ mode hook"
+  (interactive nil)
+  (setq fill-column 78)
+)
+
+;;;
+;;; C- and C++-mode stuff
+;;;
+ 
+(add-hook 'c++-mode-hook 'my-c++-mode-hook)
+(defun my-c++-mode-hook ()
+  "C++ mode hook"
+  (interactive nil)
+  ;; C++-mode doesn't really handle indentation right.
+  ;;    Use gin-mode to properly handle paragraph filling.
+  ;;    Set paragraph-start to handle paragraphs in block
+  ;;    comments, and set comment-start-skip to properly handle
+  ;;    indentation after comment when filling.
+  (gin-mode-on)
+  ;; (font-lock-mode 1)
+  ;;(setq paragraph-separate "^\\s *$\\|^\\s *//\\s *$")
+  (setq paragraph-separate "^\\s *$")
+  (setq paragraph-start
+	(concat "^\\s *$\\|^\\s *//\\s *$"
+		"\\|" page-delimiter))
+  (setq comment-start-skip "/\\*+\\s *\\|//\\s *")
+  (setq gin-left-hang-indent-re "^$")
+  (setq gin-retain-indent-re "\\s *//\\s *")
+  (setq fill-column 78)
+  (setq comment-column 8)
+  (setq indent-tabs-mode t)
+  (auto-fill-mode 1)
+  (setq c++-comment-only-line-offset 4)	; doesn't appear to work.
+    
+  (local-set-key "\C-Cc" 'c++-mode)	; C = back to C++ mode
+  (local-set-key "\C-Co" 'outline-mode) ; O = outline mode change
+  (local-set-key "\C-Cp" 'picture-mode) ; P = picture mode change
+  (local-set-key "\C-Ct" 'indented-text-mode) ; T = text mode change
+  (local-set-key "%" 'match-paren)	; % matches paren if on one
+  ;; (setq browse-enter-hook 'mouse-find-tag)
+  )
+
+(add-hook 'c-mode-hook 'my-c-mode-hook)
+(defun my-c-mode-hook ()
+  "C mode hook"
+  (gin-mode-on)
+  ;; (font-lock-mode 1)
+  ;; (setq gin-left-hang-indent-re "\\s */*\\*+\\s *")
+  ;; (setq gin-retain-indent-re "\\s */?\\*+\\s +")
+  (setq fill-column 78)
+  (setq comment-column 40)
+    
+  (local-set-key "\C-Cc" 'c-mode)		; C = back to C mode
+  (local-set-key "\C-Co" 'outline-mode)	; O = outline mode change
+  (local-set-key "\C-Cp" 'picture-mode)	; P = picture mode change
+  (local-set-key "\C-Ct" 'indented-text-mode) ; T = text mode change
+  (local-set-key "%" 'match-paren) ; % matches paren if on one
+  ;; (setq browse-enter-hook 'mouse-find-tag)
+  )
+
+(setq c-indent-level 4)
+(setq c-argdecl-indent 4)
+(setq c-label-offset -2)
+(setq c-continued-statement-offset 4)
+(setq c-tab-always-indent nil)
+(setq c-brace-offset -4)
+(setq comment-column 48)
+
+(defun beginning-of-C-defun ()
+  "Move point to the beginning of the C function in which point finds itself"
+  (interactive nil)
+  (beginning-of-defun)
+  (backward-paragraph)
+)
 
 ;;;
 ;;; Function Definitions (mostly not for specific modes)
@@ -697,86 +782,6 @@ Paragraphs are delimited only by empty lines."
 	       (function (lambda () (skip-chars-forward "\n\t\f")))
 	       (function (lambda () (re-search-forward "^$"))) )))
 
-;;;
-;;; Perl-mode stuff
-;;;
-
-(add-hook 'perl-mode-hook 'my-perl-mode-hook)
-(defun my-perl-mode-hook ()
-  "C++ mode hook"
-  (interactive nil)
-  (setq fill-column 78)
-)
-
-;;;
-;;; C- and C++-mode stuff
-;;;
- 
-(add-hook 'c++-mode-hook 'my-c++-mode-hook)
-(defun my-c++-mode-hook ()
-  "C++ mode hook"
-  (interactive nil)
-  ;; C++-mode doesn't really handle indentation right.
-  ;;    Use gin-mode to properly handle paragraph filling.
-  ;;    Set paragraph-start to handle paragraphs in block
-  ;;    comments, and set comment-start-skip to properly handle
-  ;;    indentation after comment when filling.
-  (gin-mode-on)
-  ;; (font-lock-mode 1)
-  ;;(setq paragraph-separate "^\\s *$\\|^\\s *//\\s *$")
-  (setq paragraph-separate "^\\s *$")
-  (setq paragraph-start
-	(concat "^\\s *$\\|^\\s *//\\s *$"
-		"\\|" page-delimiter))
-  (setq comment-start-skip "/\\*+\\s *\\|//\\s *")
-  (setq gin-left-hang-indent-re "^$")
-  (setq gin-retain-indent-re "\\s *//\\s *")
-  (setq fill-column 78)
-  (setq comment-column 8)
-  (setq indent-tabs-mode t)
-  (auto-fill-mode 1)
-  (setq c++-comment-only-line-offset 4)	; doesn't appear to work.
-    
-  (local-set-key "\C-Cc" 'c++-mode)	; C = back to C++ mode
-  (local-set-key "\C-Co" 'outline-mode) ; O = outline mode change
-  (local-set-key "\C-Cp" 'picture-mode) ; P = picture mode change
-  (local-set-key "\C-Ct" 'indented-text-mode) ; T = text mode change
-  (local-set-key "%" 'match-paren)	; % matches paren if on one
-  ;; (setq browse-enter-hook 'mouse-find-tag)
-  )
-
-(add-hook 'c-mode-hook 'my-c-mode-hook)
-(defun my-c-mode-hook ()
-  "C mode hook"
-  (gin-mode-on)
-  ;; (font-lock-mode 1)
-  ;; (setq gin-left-hang-indent-re "\\s */*\\*+\\s *")
-  ;; (setq gin-retain-indent-re "\\s */?\\*+\\s +")
-  (setq fill-column 78)
-  (setq comment-column 40)
-    
-  (local-set-key "\C-Cc" 'c-mode)		; C = back to C mode
-  (local-set-key "\C-Co" 'outline-mode)	; O = outline mode change
-  (local-set-key "\C-Cp" 'picture-mode)	; P = picture mode change
-  (local-set-key "\C-Ct" 'indented-text-mode) ; T = text mode change
-  (local-set-key "%" 'match-paren) ; % matches paren if on one
-  ;; (setq browse-enter-hook 'mouse-find-tag)
-  )
-
-(setq c-indent-level 4)
-(setq c-argdecl-indent 4)
-(setq c-label-offset -2)
-(setq c-continued-statement-offset 4)
-(setq c-tab-always-indent nil)
-(setq c-brace-offset -4)
-(setq comment-column 48)
-
-(defun beginning-of-C-defun ()
-  "Move point to the beginning of the C function in which point finds itself"
-  (interactive nil)
-  (beginning-of-defun)
-  (backward-paragraph)
-)
 
 (defun mouse-find-tag () (find-tag (find-tag-default)))
 
