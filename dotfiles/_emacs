@@ -492,6 +492,7 @@ makes it buffer-local.")
   (setq browse-hook 'w3-follow-url-at-point)
   (local-set-key "\C-Cv" 'w3-preview-this-buffer)
   (auto-fill-mode 1)
+  (electric-indent-local-mode 0) ; Don't re-indent current line on newline
   (setq gin-left-hang-indent-re
 	"\\s *\\([+o*?!@$\"([{]\\|[=-]+>*\\|<[^> ]+>\\)\\s +")
   (setq gin-retain-indent-re
