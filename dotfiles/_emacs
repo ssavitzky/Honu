@@ -24,10 +24,6 @@
 
 (load "tempo" t)			; required for html-helper-mode
 (load-from-subdir "html-helper-mode")
-(load "html-helper-mode" t)
-(setq html-helper-use-expert-menu t)
-(setq html-helper-do-write-file-hooks nil)
-
 
 (if (file-exists-p "~/.abbrev_defs") (quietly-read-abbrev-file nil))
 
@@ -38,20 +34,6 @@
        (add-hook 'dired-mode-hook 'ss-dired-hacks)
        
        ))
-
-(setq ljupdir (concat my-home-emacs-dir "/ljupdate"))
-(if (file-exists-p ljupdir)
-    (progn (setq load-path (cons ljupdir load-path))
-	   (if (fboundp 'html-helper-mode)
-	       ;; we use html-helper-mode as a base for lj-update, and
-	       ;; don't use html-mode anyway.
-	       (defalias 'html-mode 'html-helper-mode))
-	   (require 'ljupdate)
-	   ;(setq lj-default-profile (lj-defprofile 'livejournal "mdlbear"))
-	   )
-)
-
-;;; lj-compose to compose; ^C-s to post
 
 
 (or (fboundp 'gin-mode-on) (defun gin-mode-on () "no gin-mode: fake it"))
@@ -453,23 +435,26 @@ makes it buffer-local.")
 
 (setq html-helper-do-write-file-hooks nil)
 (setq html-helper-build-new-buffer t)
-      
+(setq my-html-home-site "http://stephen.savitzky.net/")
+(setq my-email-domain "savitzky.net")
+(setq html-helper-htmldtd-version "<!DOCTYPE html>\n")
 (setq html-helper-address-string
-      (if (fboundp 'my-html-home-site)
+      (if (boundp 'my-html-home-site)
 	  (concat "<a href=\"" my-html-home-site "\""
 		  "\n         >" (user-full-name) "</a> " 
 		  "\n         &lt;"
 		  (user-real-login-name)
-		  (if (fboundp 'my-email-domain)
-		      "&nbsp;&#64;&nbsp;" my-email-domain "&gt;"
-		      ""
-		      )
+		  (if (boundp 'my-email-domain)
+		      (concat "&nbsp;&#64;&nbsp;" my-email-domain "&gt;")
+		    ""
+		    )
 		  )
 	(user-full-name)))
 
-
 (setq html-helper-new-buffer-template
-      '("<html><head>\n"
+      '("<!DOCTYPE html>\n"
+	"<html><head>\n"
+	"<meta charset='UTF-8'>\n"
 	"<title>" p "</title>\n"
 	"</head><body>\n"
 	"<h1>" p "</h1>\n\n"
@@ -499,11 +484,8 @@ makes it buffer-local.")
   (tempo-template-html-anchor arg)
   )
 
-(defun html-helper-insert-RCS-id ()
-  "Insert a list item with a link into the buffer"
-  (interactive)
-  (insert "<b>$Id: .emacs,v 1.2 1998/02/21 16:41:34 steve Exp $</b><br>\n")
-  )
+(setq html-helper-use-expert-menu t)
+(setq html-helper-do-write-file-hooks nil)
 
 (defun my-html-mode-hook ()
   "Hook for HTML editing"
@@ -531,6 +513,26 @@ makes it buffer-local.")
   )
 (add-hook 'html-mode-hook 'my-html-mode-hook)
 (add-hook 'html-helper-mode-hook 'my-html-mode-hook)
+
+(load "html-helper-mode" t)
+
+;; redefine templates and functions defined in html-helper-mode
+(tempo-define-template "html-paragraph" '("<p> " p "\n") nil "insert paragraph")
+
+;; need html-helper-mode before we can define ljupdate
+(setq ljupdir (concat my-home-emacs-dir "/ljupdate"))
+(if (file-exists-p ljupdir)
+    (progn (setq load-path (cons ljupdir load-path))
+	   (if (fboundp 'html-helper-mode)
+	       ;; we use html-helper-mode as a base for lj-update, and
+	       ;; don't use html-mode anyway.
+	       (defalias 'html-mode 'html-helper-mode))
+	   (require 'ljupdate)
+	   ;(setq lj-default-profile (lj-defprofile 'livejournal "mdlbear"))
+	   )
+)
+
+;;; lj-compose to compose; ^C-s to post
 
 ;;;
 ;;; Function Definitions (mostly not for specific modes)
