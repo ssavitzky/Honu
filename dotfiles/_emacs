@@ -521,7 +521,7 @@ If outside a list, start a paragraph."
 (load "html-helper-mode" t)
 
 ;; redefine templates and functions defined in html-helper-mode
-(tempo-define-template "html-paragraph" '(& "<p> " p "\n") nil "insert paragraph")
+(tempo-define-template "html-paragraph" '(& "<p> " p) nil "insert paragraph")
 
 ;; need html-helper-mode before we can define ljupdate, because we prefer
 ;; html-helper-mode to the usual html-mode.  We fake it.
