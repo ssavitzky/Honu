@@ -44,7 +44,7 @@ cleanup::
 	done
 
 ### If we're using the MakeStuff package, chain in its Makefile
-CHAIN = $(wildcard ../../MakeStuff/Makefile ../../../MakeStuff/Makefile)
+CHAIN = $(wildcard ../../MakeStuff/Makefile)
 include $(CHAIN)
 
 report-vars::
