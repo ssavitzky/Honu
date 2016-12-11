@@ -22,7 +22,7 @@ install::
 ### If we're using the MakeStuff package, chain in its Makefile
 #	See ../Makefile for more information.
 #
-CHAIN = $(firstword $(wildcard ../../MakeStuff/Makefile ../../../MakeStuff/Makefile))
+CHAIN = $(wildcard ../../MakeStuff/Makefile)
 include $(CHAIN)
 
 report-vars::
