@@ -1,4 +1,4 @@
-= to.do: =
+= Honu: to.do: =
 	
   o bloggish directories should have a "make wc" target that subtracts the word count of
     the template file.  Or, better, use sed to filter out tags.
@@ -124,9 +124,9 @@ Work Log:
   o testing is needed:
     Set up a testing environment by setting USER and HOME, and putting a dummy sudo
     that simply records what it's supposed to do on $PATH.  Ought to have a dummy groups
-    command as well.
+    command as well. -> see MakeStuff for test framework.
   o Originals:  Should go into, e.g., local/orig  (ignore subdirectories of local)
-  o Myrtle/Mathilda - install into the same directory as Honu and MakeStuff.
+  * Myrtle/Mathilda - install into the same directory as Honu and MakeStuff.
     symlink files and subdirs into Honu/local, or directly into $HOME if they don't
     overlap.
   o add scsitools to packages

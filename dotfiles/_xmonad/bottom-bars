@@ -2,10 +2,26 @@
 # bottom-bars [-k | N...]
 #    Display a bottom bar on each of the listed screens, or kill them all.
 
+
+USAGE="$0 [-hwk] screen...
+    -h: print help text
+    -w: show weather
+    -k: kill bars
+"
+
 FONT="xft:Bitstream Vera Sans:size=12:antialias=true"
 DZEN_OPTS="-bg black -fg #646464 -ta r "
 
-if [ "$1" = "-k" ]; then
+WEATHER=:
+KILL=false
+case $1 in
+    (-h) echo "$USAGE"; exit;;
+    (-w) WEATHER=weather ;;
+    (-k) KILL=true; shift;;
+    (-l) list; exit;;
+esac
+
+if $KILL; then
     kill `ps x | grep [b]ottom | cut -d p -f 1`
     exit 0
 fi
@@ -24,16 +40,27 @@ up () {
 }
 
 weather () {
-    echo 'SEA Temp:'`ansiweather -a false -l Seattle,WA -u imperial | cut -d '>' -f 2- | \
+    echo '|| SEA Temp:'`ansiweather -a false -l Seattle,WA -u imperial | cut -d '>' -f 2- | \
          sed -e s/idity// -e s/sure// -e 's/ =>/:/g'`
 }
 
 status () {
-    echo 'screen' `monitor $1` on `hostname` '||' `up` '||' `weather` \
+    echo 'screen^fg(white)' `monitor $1` '^fg(#646464)on' `hostname` '||' `up` `$WEATHER` \
 	 '||^fg(white)' `date '+%a %b %d %I:%M%P'` ' '
 }
 
+# Extract the first number on a line.
+first_number () {
+    sed -e 's/^[^0-9]*//' | sed -e 's/[^0-9].*//' 
+}
+
+# Get the x position from the xmonad local parameters:
+XMLOCAL=$HOME/.xmonad/lib/Local.hs
+if [ -z $WIDTH ]; then
+    WIDTH=$(grep firstTopBarWidth $XMLOCAL | first_number)
+fi
+
 for s in $*; do 
-    while :; do status $s; sleep 60; done | dzen2 $DZEN_OPTS -fn '$FONT' -geometry -0-0 -xs $s &
+    while :; do status $s; sleep 60; done | dzen2 $DZEN_OPTS -fn '$FONT' -geometry -0-0 -w $WIDTH -xs $s &
 done 
 
