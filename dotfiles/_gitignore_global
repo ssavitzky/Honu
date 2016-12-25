@@ -1,6 +1,7 @@
 # Top-level .gitignore file
 
 *.[oa]
+*.elc
 *~
 *.bak
 *.BAK
@@ -10,7 +11,8 @@ tags
 TAGS 
 CVS
 ,*
-
+.make.state
+core
 #For reference, here's the list for rsync --cvs-exclude:
 # RCS  SCCS  CVS  CVS.adm   RCSLOG   cvslog.*   tags   TAGS
 # .make.state  .nse_depinfo *~ #* .#* ,* _$* *$ *.old *.bak
