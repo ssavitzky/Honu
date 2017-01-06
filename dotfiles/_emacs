@@ -844,6 +844,11 @@ Paragraphs are delimited only by empty lines."
     ;; the connection alive.
     t)
   )
+
+;;; When in a terminal, use xterm-mouse-mode
+(when (eq window-system nil)
+    (xterm-mouse-mode t))
+
 (display-time)
 
 ;;; Set the window manager's title.  This has the same format as mode-line-format
