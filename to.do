@@ -139,6 +139,10 @@ Work Log:
   ^ At some point, we may want to move some of the settings most likely to be customized
     out into Myrtle/Mathilda.  That includes whether to pull down MakeStuff -- Honu should
     be completely stand-alone and not need much customization.
+
+1226Mo
+  o use roxterm as the preferred terminal rather than gnome-terminal.
+    Can use roxterm --separate --name=wsN with wssetup
     
 ========================================================================================>|
 Local Variables:
