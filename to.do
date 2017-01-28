@@ -5,6 +5,12 @@
 
   o bootstrap should check ~/.ssh to see whether to use savitzky.net or github.
 
+  o Much of the configuration should be refactored to put more of the customization into
+    Myrtle/Mathilda; Honu should become more of a framework.  A similar structure might
+    work for MakeStuff.
+
+  o Some of the configuration is obsolete, and is unlikely ever to be used again.
+
 ========================================================================================>
 Work Log:
 ========
@@ -141,9 +147,17 @@ Work Log:
     be completely stand-alone and not need much customization.
 
 1226Mo
-  o use roxterm as the preferred terminal rather than gnome-terminal.
+  ~ use roxterm as the preferred terminal rather than gnome-terminal.
     Can use roxterm --separate --name=wsN with wssetup
-    
+
+2017:
+=====
+
+0128Sa
+  : roxterm doesn't work as well as I'd like; the profile is split up and some parts can't
+    have their defaults configured (in particular whether to show the tab bar when there's
+    only one tab present, which is the usual case the way I do it.  
+
 ========================================================================================>|
 Local Variables:
     fill-column:90
