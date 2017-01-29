@@ -61,11 +61,12 @@ if [ "$PS1" ]; then
 	source $1
      fi
   }
-  # .. f - cd. ../$1 
+  # .. f -> cd. ../$1 
   ..() {
       cd. ../$1; dirs; ls -aCF --color=auto
   }
 
+  alias ,=..
   alias a="audacity --sync"
   alias p=pushd
   alias P=popd
