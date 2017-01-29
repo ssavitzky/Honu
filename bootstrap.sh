@@ -43,17 +43,7 @@ fi
 if $INSTALL_PKGS; then		### Install packages.
 
     # Required packages: if we don't get these, all is lost.
-    REQUIRED="git curl wget make rsync openssh-client openssh-server"
-
-    # Life is difficult without these, but it's possible.
-    ALMOST_ESSENTIAL="gdebi memtest86+ zile ntp"
-
-    if $HAVE_X; then
-	X_PKGS="emacs git-doc git.el xdu xbase-clients gitk git-gui xterm xttitle"
-    else
-	X_PKGS="emacs-nox"
-    fi
-    sudo apt-get -y install $REQUIRED $ALMOST_ESSENTIAL $X_PKGS
+    sudo apt-get -y install git curl wget make openssh-client
 
 fi # INSTALL_PKGS
 

@@ -1,0 +1,25 @@
+#!/bin/sh
+# apt-get the packages we always need.
+
+# Define HAVE_X=true if you're installing from a terminal but want to
+# install the X apps anyway.
+#
+[ -z $DISPLAY ] || HAVE_X=true
+[ -z $HAVE_X  ] || HAVE_X=false
+
+# All we really need for bootstrapping are git, make, and openssh-client.
+# This gets us the rest of the really basic stuff.
+#
+sudo apt-get install \
+     git curl wget make rsync openssh-client openssh-server 	\
+     gdebi memtest86+ zile ntp lynx elinks 
+
+if $HAVE_X; then
+    sudo apt-get install \
+	 emacs git-doc git.el xdu xbase-clients gitk git-gui xterm xttitle
+else
+    sudo apt-get install emacs-nox
+fi
+
+
+
