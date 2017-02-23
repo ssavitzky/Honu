@@ -40,11 +40,25 @@ if [ -z $HAVE_X ]; then
     fi
 fi
 
+if $INSTALL_PKGS; then
+    # See whether we can (and want to) install packages
+    sudo : || $INSTALL_PKGS=false
+fi
+
 if $INSTALL_PKGS; then		### Install packages.
 
     # Required packages: if we don't get these, all is lost.
     sudo apt-get -y install git curl wget make openssh-client
 
+elif for f in git curl wget make ssh;  do which $f > /dev/null; done; then
+    # ok, we have all the required packages without having to install them.
+    # It's still possible that things won't work, but at least we can run
+    # the makefiles.
+    true
+else
+    echo "You don't have all the required packages, and can't install them."
+    echo "Giving up."
+    exit -1
 fi # INSTALL_PKGS
 
 export INSTALL_PKGS HAVE_X
@@ -71,4 +85,4 @@ fi
 (cd Honu; make install)
 
 echo You may need to set up both gnome and xfce power managers.
-echo Home is wherever you carry your shell.  Welcome home, $USER.
+echo Welcome home, $USER.  Home is wherever you carry your \$SHELL.
