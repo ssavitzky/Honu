@@ -5,21 +5,24 @@
 # install the X apps anyway.
 #
 [ -z $DISPLAY ] || HAVE_X=true
-[ -z $HAVE_X  ] || HAVE_X=false
-
-# All we really need for bootstrapping are git, make, and openssh-client.
-# This gets us the rest of the really basic stuff.
-#
-sudo apt-get install \
-     git curl wget make rsync openssh-client openssh-server 	\
-     gdebi memtest86+ zile ntp lynx elinks 
+[ -z $HAVE_X  ] && HAVE_X=false
 
 if $HAVE_X; then
     sudo apt-get install \
-	 emacs git-doc git.el xdu xbase-clients gitk git-gui xterm xttitle
+	 emacs xdu xbase-clients gitk git-gui xterm xttitle	\
+	 dconf-editor
 else
     sudo apt-get install emacs-nox
 fi
+
+# All we really need for bootstrapping are git, make, and openssh-client.
+# This gets us the rest of the really basic stuff.  This mostly duplicates
+# the packages in bootstrap.sh, except that because this is a Makefile it's
+# safe to assume that make is installed.
+#
+sudo apt-get install \
+     git git-doc git.el curl wget rsync openssh-client openssh-server	\
+     zile gdebi memtest86+ zile ntp lynx elinks
 
 
 
