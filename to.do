@@ -158,6 +158,9 @@ Work Log:
     have their defaults configured (in particular whether to show the tab bar when there's
     only one tab present, which is the usual case the way I do it.  
 
+0408Sa
+  o add alt-sends-escape to XTerm config
+  
 ========================================================================================>|
 Local Variables:
     fill-column:90
