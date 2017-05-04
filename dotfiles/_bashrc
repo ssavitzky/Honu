@@ -27,11 +27,11 @@ export PATH
 if [ "$PS1" ]; then
   # We're in an interactive shell.  Start by changing the prompt:
 
-  PS1='(\h:$USER\W \!) '
+  PS1='(\h $USER\W \!) '
 
   case "$TERM" in
       xterm*)
-	  PS1='\[\033]1;\h:\u\]\[\033]2;\h:$USER \w\](\h:\W \!) ';;
+	  PS1='\[\033]1;\h:\u\]\[\033]2;$USER@\h \w\](\h \W \!) ';;
   esac
   
   export ignoreeof=0
@@ -46,12 +46,11 @@ if [ "$PS1" ]; then
 
   # cd. cd's to the *real* current directory to make .. work properly
   cd.() {
-      if [ "$1" != "" ]; then cd "$1"; fi
-      cd `/bin/pwd`
+      if [ -z "$1" ]; then cd -P .; else cd -P "$1"; fi
   }
 
   # . f - functions as source (the usual definition) if f is an ordinary file,
-  #       if f or ../f is a directory, cd -P to it and print useful info.
+  #       if f is a directory, cd -P to it and print useful info.
   .() {
      if [ "$1" = "" ]; then 
 	cd.; dirs; ls -aCF --color=auto
