@@ -2,6 +2,8 @@
 #
 # Ignore files with names starting with lowercase letters.
 # In most cases these will be starting with local_, but the user (or Myrtle)
-# may copy in others. 
+# may copy in others.  Note that this also includes ./bin, which is used for
+# executables installed from ../opt.  Such install targets should also create
+# ./bin if it's missing.
 
 [a-z]*
