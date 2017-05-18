@@ -15,6 +15,7 @@ import XMonad.Hooks.Place	   -- control window placement
 import XMonad.Hooks.UrgencyHook    -- window alert bells 
 
 import XMonad.Layout.Circle
+import XMonad.Layout.FixedColumn
 import XMonad.Layout.Grid
 import XMonad.Layout.Named         -- custom layout names
 import XMonad.Layout.NoBorders     -- smart borders on solo clients
@@ -98,7 +99,7 @@ myLayoutHook = smartBorders $ avoidStruts $ showWName
                --   for the xterm that I use for things like kinit or keep-screen-on
                $ onWorkspace "-" (Grid ||| spiral ||| Circle)
 	       -- 2 is where I keep my to-do list and a terminal; Tall works best for that.
-	       $ onWorkspace "2" ( tall ||| wide ||| tabs )
+	       $ onWorkspace "2" ( todo ||| wide ||| tabs )
                -- Default layouts for all workspaces not otherwise mentioned
                $ ( tabs ||| tall ||| wide )
   where
@@ -109,6 +110,9 @@ myLayoutHook = smartBorders $ avoidStruts $ showWName
     wide    = named "Wide" $ Mirror $ Tall 1 (2/100) phi
     spiral  = named "Spiral" $ Sp.spiralWithDir Sp.East Sp.CW (6/7)
     float   = named "Float" simpleFloat
+    -- I like the emacs window for to.do to be fixed at 90 columns
+    -- This sets the geometry in characters, to 90x??, so Emacs adds the fringe
+    todo    = named "todo" $ FixedColumn 1 5 90 10
 
 -- | The manage hook, which specifies how we treat particular kinds of windows.
 --   In addition to className one can use resourceName or title
