@@ -1,3 +1,3 @@
 # ignore stuff pulled from github
 
-/dzen
+/[a-z]*
