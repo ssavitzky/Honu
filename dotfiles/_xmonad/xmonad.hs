@@ -178,7 +178,7 @@ mobarLogHook pipe = dynamicLogWithPP xmobarPP
 --   the latest version from source, but that should be simpler than xmobar.
 --   Note that we use dzenOnScreen for all screens other than the first.
 --   The first screen will normally have a trayer or gnome-panel on it.
-dzenCommandBase = unwords [ "dzen2 -x '0' -y '0' -h '20' -ta 'l' "
+dzenCommandBase = unwords [ "dzen2 -x '0' -y '0' -h '22' -ta 'l' "
                   	  , "-fg", quote fgColor
 			  , "-bg", quote bgColor
 			  , "-fn", quote font
