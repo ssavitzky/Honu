@@ -11,7 +11,10 @@ fi
 export PATH=$HOME/bin:$PATH
 
 LC_COLLATE=C
-export LC_COLLATE
+LC_CTYPE=en_US.UTF-8
+# LC_ALL overrides everything, so we mustn't set it.
+LC_ALL=
+export LC_COLLATE LC_CTYPE LC_ALL
 
 #[ -x /usr/bin/X11/ctwm ] && export XWINDOWMANAGER="ctwm -W -n -f $HOME/.ctwmrc.crc"
 export XWINDOWMANAGER=/usr/bin/X11/ctwm
