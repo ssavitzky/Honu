@@ -5,6 +5,17 @@
 *~
 *.bak
 *.BAK
+*.log
+*.dvi
+*.aux
+*.rej
+*.elc
+*.o
+*.obj
+*.a
+*.so
+*.old
+
 \#*
 .#*
 tags 
