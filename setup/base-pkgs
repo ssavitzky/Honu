@@ -21,8 +21,8 @@ fi
 # safe to assume that make is installed.
 #
 sudo apt-get install \
-     git git-doc git.el curl wget rsync openssh-client openssh-server	\
-     zile gdebi memtest86+ zile ntp lynx elinks
+     git git-doc git.el gitk git-extras curl make-doc wget rsync zile      \
+     openssh-client openssh-server gdebi memtest86+ ntp lynx elinks
 
 
 
