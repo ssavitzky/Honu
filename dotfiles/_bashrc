@@ -67,8 +67,11 @@ if [ "$PS1" ]; then
 
   alias ,=..
   alias a="audacity --sync"
+  alias h=history
+  alias j=jobs
   alias p=pushd
   alias P=popd
+  alias gf=grep-find
   alias ll='ls -alF --color=auto'
   alias lr='ls -aRF --color=auto'
   alias l='ls -aCF --color=auto'
@@ -77,7 +80,7 @@ if [ "$PS1" ]; then
   alias pidgin="pidgin -f"
   alias bed="ssh root@localhost acpitool -s"
   alias todo="emacs -geometry 91x35 to.do&"
-
+  
   # Chain in local/[a-z]*_aliases, which might have been put there by Myrtle et. al.
   for f in `ls $HOME/Honu/local/[a-z]*_aliases 2>/dev/null`; do source $f; done
   
