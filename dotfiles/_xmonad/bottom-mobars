@@ -29,6 +29,6 @@ status () {
 }
 
 for s in $*; do 
-    while :; do status $s; sleep 10; done | xmobar -x $s ~/.xmonad/xmobarrc-status &
+    while :; do status $s; sleep 10; done | xmobar -x $((s - 1)) ~/.xmonad/xmobarrc-status &
 done 
 
