@@ -75,6 +75,7 @@ if [ "$PS1" ]; then
   alias ll='ls -alF --color=auto'
   alias lr='ls -aRF --color=auto'
   alias l='ls -aCF --color=auto'
+  alias lp2s='lp -o sides=two-sided-long-edge'
   alias chrome="google-chrome >& /dev/null"
   alias gnus="emacs -f gnus -name gnus"
   alias pidgin="pidgin -f"
