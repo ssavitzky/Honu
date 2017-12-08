@@ -102,8 +102,8 @@ Config {
         --   (%F = y-m-d date, %a = day of week, %T = h:m:s time)
         , Run Date           "<fc=#eeeeee>%F %I:%M%P</fc>" "date" 10
 
-        -- Weather.  KBFI is Boeing Field
-        , Run Weather "KBFI" [ "--template"
+        -- Weather.  KBFI is Boeing Field; KPAE is Paine Field (Snohomish County Airport)
+        , Run Weather "KPAE" [ "--template"
 	      	      	     , "<fc=#4682B4><skyCondition></fc>, \
                                \<fc=#4682B4><tempF></fc>°F, \
                                \<fc=#4682B4><rh></fc>%, \
