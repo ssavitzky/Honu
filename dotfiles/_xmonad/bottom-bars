@@ -40,7 +40,7 @@ up () {
 }
 
 weather () {
-    echo '|| SEA Temp:'`ansiweather -a false -l Seattle,WA -u imperial | cut -d '>' -f 2- | \
+    echo '|| Temp:'`ansiweather -a false -l Freeland,US -u imperial | cut -d '>' -f 2- | \
          sed -e s/idity// -e s/sure// -e 's/ =>/:/g'`
 }
 
