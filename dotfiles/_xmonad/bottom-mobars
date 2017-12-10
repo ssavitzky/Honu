@@ -2,9 +2,26 @@
 # bottom-mobars [-k | N...]
 #    Display a bottom bar on each of the listed screens, or kill them all.
 
-if [ "$1" = "-k" ]; then
-    # If we don't exec, it will complain because it tries to kill its parent.
-    exec killall bottom-mobars
+CITY=Freeland
+CC=US
+
+USAGE="$0 [-hwk] screen...
+    -h: print help text
+    -w: show weather
+    -k: kill bars
+"
+
+WEATHER=:
+KILL=false
+case $1 in
+    (-h) echo "$USAGE"; exit;;
+    (-w) WEATHER=weather; shift ;;
+    (-k) KILL=true; shift;;
+esac
+
+if $KILL; then
+    kill `ps x | grep [b]ottom | cut -d p -f 1`
+    exit 0
 fi
 
 HOST=`hostname`
@@ -24,8 +41,14 @@ up () {
 	   ) 
 }
 
+weather () {
+    echo 'Freeland:'`ansiweather -a false -s true -l $CITY,$CC -u imperial\
+         | cut -d '>' -f 2- \
+         | sed -e s/Humidity// -e s/Pressure// -e s/Wind// -e 's/ => //g'`
+}
+
 status () {
-    echo   $HOST '<fc=#eeeeee>'`monitor $1`'</fc>,' `up`
+    echo   $HOST '<fc=#eeeeee>'`monitor $1`'</fc>,' `weather`
 }
 
 for s in $*; do 

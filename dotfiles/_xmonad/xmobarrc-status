@@ -14,9 +14,10 @@ Config {
    , borderColor =  "#646464"
 
    -- layout.  For some bizarre reason it won't accept a multi-line string in template
+                      -- weather isn't working
    , sepChar =  "%"   -- delineator between plugin names and straight text
    , alignSep = "}{"  -- separator between left-right alignment
-   , template = "%UnsafeStdinReader% }%KBFI%{%multicpu%-%memory%|%swap%-%dynnetwork%-%battery%-%date% "
+   , template = "%UnsafeStdinReader% }{%multicpu%-%memory%|%swap%-%dynnetwork%-%battery%-%uptime%-%date% "
 
    -- general behavior
    , lowerOnStart =     True    -- send to bottom of window stack on start
@@ -101,6 +102,8 @@ Config {
         -- time and date indicator 
         --   (%F = y-m-d date, %a = day of week, %T = h:m:s time)
         , Run Date           "<fc=#eeeeee>%F %I:%M%P</fc>" "date" 10
+
+        , Run Uptime [] 10
 
         -- Weather.  KBFI is Boeing Field; KPAE is Paine Field (Snohomish County Airport)
         , Run Weather "KPAE" [ "--template"
