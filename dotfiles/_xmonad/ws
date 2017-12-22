@@ -22,7 +22,8 @@ colors () {
         (7) echo "-fg black -bg violet";;
         (8) echo "-fg black -bg grey";;
         (9) echo "-fg black -bg white";;
-        (-) echo "-fg black -bg gold";;
+        (-) echo "-fg black -bg silver";;
+        (=) echo "-fg black -bg gold";;
         (*) echo "-bg grey -fg black";;
     esac
 }
