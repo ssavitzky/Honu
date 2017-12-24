@@ -36,6 +36,11 @@ if [ "$PS1" ]; then
   
   export ignoreeof=0
 
+  if [ ! -z $WS ]; then
+      # If we know what workspace this terminal is on, give it its own history file
+      HISTFILE=$HOME/.bash_history_$WS
+  fi
+
   # At some point I will move the aliases and functions to .aliases,
   # which would let them be used by zsh
 
