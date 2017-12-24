@@ -24,13 +24,17 @@ colors () {
         (9) echo "-fg black -bg white";;
         (-) echo "-fg black -bg silver";;
         (=) echo "-fg black -bg gold";;
-        (*) echo "-bg grey -fg black";;
+        (*) echo "-bg grey  -fg black";;
     esac
 }
 
 # Map workspace into key name: "-" is minus
 key () {
-    if [ $1 = "-" ]; then echo minus; else echo $1; fi
+    case $1 in
+	(-) echo "minus";;
+	(=) echo "equals";;
+	(*) echo "$1";;
+    esac
 }
 
 # Extract the first number on a line.
