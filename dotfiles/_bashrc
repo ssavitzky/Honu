@@ -65,12 +65,16 @@ if [ "$PS1" ]; then
 	source $1
      fi
   }
-  # .. f -> cd. ../$1 
-  ..() {
+
+  # , f -> cd. ../$1   Note that ".." is now just a cd (because of shopt -s autocd)
+  ,() {
       cd. ../$1; dirs; ls -aCF --color=auto
   }
 
-  alias ,=..
+  # rather than redefining .. we simply set autocd, which makes every directory name
+  # a cd command.
+  shopt -s autocd
+
   alias a="audacity --sync"
   alias h=history
   alias j=jobs
