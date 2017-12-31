@@ -133,6 +133,7 @@ myManageHook = composeAll $
     , className =? "panel"          --> doIgnore
     , className =? "dzen2"          --> doIgnore
     , className =? "xmobar"         --> doIgnore
+    , className =? "xvnc"	    --> doIgnore
       -- set title for special handling.  This is the -name argument for xtoolkit apps
     , title =? "xmonad-ignore"	    --> doIgnore  -- eg xclock -name xmonad-ignore
     , title =? "xmonad-float"	    --> doFloat

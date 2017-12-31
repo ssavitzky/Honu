@@ -13,7 +13,7 @@
 
 # The directory where jack puts the files by default.
 # This defaults to the current directory if unset:
-base_dir:/mm/audio
+base_dir:/home/steve/vv/mm/audio
 
 # The default ripper. You can choose from 'cdparanoia'(default), 'cdda2wav',
 # 'tosha' or 'dagrab' (The last two are not avaiable in Debian).
