@@ -181,6 +181,7 @@ mobarLogHook pipe = dynamicLogWithPP xmobarPP
 --   The first screen will normally have a trayer or gnome-panel on it.
 dzenCommandBase = unwords [ "dzen2 -x '0' -y '0' -h '22' -ta 'l' "
                           , "-e button3=exec:gsimplecal"
+                          , "-e button2=exec:xdotool\\ key\\ super+shift+space"
                   	  , "-fg", quote fgColor
 			  , "-bg", quote bgColor
 			  , "-fn", quote font
