@@ -4,10 +4,11 @@
 ### Prevent make push from trying to push stuff from github
 
 GITDIRS :=
-OPT := dzen eless charm
-INSTALL_TARGETS :=  $(addprefix install-, $(OPT))
-LOCAL_BIN = ../local/bin
+OPT := dzen eless charm ljupdate
 HERE = ../../opt
+INSTALL_TARGETS :=  $(addprefix install-, $(OPT))
+LOCAL_BIN 	 = ../local/bin
+LOCAL_EMACS 	 = ../local/emacs
 
 .PHONY: install fetch $(addprefix install-, $(OPT))
 
@@ -26,7 +27,10 @@ install::
 	@echo The install targets are only useful if you want to do a system-wide install.
 
 $(LOCAL_BIN):
-	mkdir $@
+	mkdir -p $@
+
+$(LOCAL_EMACS):
+	mkdir -p $@
 
 ### Cleanup
 #
@@ -65,6 +69,16 @@ charm:
 install-charm: | charm
 	@echo NOTE:  charm installs into /usr/local/bin by default
 	cd charm; python setup.py install
+
+# lj-update is a (currently broken) LJ posting mode for emacs.
+#	It was originally  git://github.com/hober/ljupdate.git, but the fork is
+#	more recent.
+ljupdate:
+	git clone git@github.com:blipvert/ljupdate.git
+	(cd ljupdate; yes | make fetch compile)
+
+install-ljupdate: | $(LOCAL_EMACS) ljupdate
+	cd $(LOCAL_EMACS); ln -sf $(HERE)/ljupdate .
 
 ### If we're using the MakeStuff package, chain in its Makefile
 #	See ../Makefile for more information.

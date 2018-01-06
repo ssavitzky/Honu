@@ -1,9 +1,13 @@
 ;;; Gnu Emacs Initialization File -- Steve Savitzky
 
 (setq my-home-emacs-dir (concat (getenv "HOME") "/Honu/emacs"))
+(setq my-local-emacs-dir (concat (getenv "HOME") "/Honu/local/emacs"))
 (if (file-exists-p my-home-emacs-dir)
     (setq load-path (cons my-home-emacs-dir load-path))
   (setq my-home-emacs-dir nil))
+
+(if (file-exists-p my-local-emacs-dir)
+    (setq load-path (cons my-local-emacs-dir load-path)))
 
 ;;; Load the things we always need.  
 ;;;	Use load rather than require to prevent errors if files don't exist.
@@ -526,7 +530,7 @@ If outside a list, start a paragraph."
 
 ;; need html-helper-mode before we can define ljupdate, because we prefer
 ;; html-helper-mode to the usual html-mode.  We fake it.
-(setq ljupdir (concat my-home-emacs-dir "/ljupdate"))
+(setq ljupdir (concat my-local-emacs-dir "/ljupdate"))
 (if (file-exists-p ljupdir)
     (progn (setq load-path (cons ljupdir load-path))
 	   (if (fboundp 'html-helper-mode)

@@ -16,12 +16,6 @@ install:: | $(HOME)/emacs
 $(HOME)/emacs: | $(HOME)/Honu
 	cd $(HOME); ln -sf Honu/emacs .
 
-# was originally  git://github.com/hober/ljupdate.git, but the fork is
-# more recent.
-ljupdate:
-	git clone git@github.com:blipvert/ljupdate.git
-	(cd ljupdate; yes | make fetch compile)
-
 # This used to be shipped with Ubuntu, but went missing in 2015 or so.
 html-helper-mode:
 	git clone  https://github.com/emacsattic/html-helper-mode
