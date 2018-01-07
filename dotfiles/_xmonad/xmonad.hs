@@ -161,7 +161,7 @@ xmobarEscape = concatMap doubleLts
 --   want meaningful names, use things like 1-foo
 xmobarClickWrap :: String -> String
 xmobarClickWrap ws = wrap start end (xmobarEscape ws)
-  where start = "<action=xdotool key super+" ++ [ head ws ] ++ ">"
+  where start = "<action=xdotool key super+" ++ wsKeyName ws ++ ">"
         end   = "</action>"
 mobarLogHook pipe = dynamicLogWithPP xmobarPP
     { ppOutput = hPutStrLn pipe
@@ -191,7 +191,7 @@ dzenCommand  =   unwords [dzenCommandBase, "-w", show firstTopBarWidth]
 dzenOnScreen n = unwords [dzenCommandBase, "-w", show otherTopBarWidth, "-xs", show n]
 
 dzenClickWrap ws = wrap start end (dzenEscape ws)
-  where start = "^ca(1,xdotool key super+" ++ [ head ws ] ++ ")"
+  where start = "^ca(1,xdotool key super+" ++ wsKeyName ws ++ ")"
         end   = "^ca()"
 
 dzenLogHook pipe = dynamicLogWithPP defaultPP
@@ -216,12 +216,12 @@ dzenLogHook pipe = dynamicLogWithPP defaultPP
 -- the first character of the name needs to be the name of the key.
 
 workspaceNames =    [ "1","2","3","4","5","6","7","8","9" ] -- the predefined workspaces
-                 ++ [ "0", "-" ]                            -- extra workspaces.
+                 ++ [ "0", "-", "=" ]                       -- extra workspaces.
 
--- assign keys to the extra workspaces (only "0" and "-" so far, and - isn't clickable in
--- dzen2 apparently because of key naming issues.)
+-- assign keys to the extra workspaces ("0", "-", and "=")
 -- has to be done this way in order to pick up the clickable-wrapped actual names.
-wsKeys wsNames = zip [ xK_0, xK_minus ] (drop 9 wsNames)
+wsKeys wsNames = zip [ xK_0, xK_minus, xK_equal ] (drop 9 wsNames)
+wsKeyName ws = case head ws of { '=' -> "equal"; '-' -> "minus"; x -> [x]; }
 
 -- key bindings to start programs.  Note that the lock binding is the traditional Ctl-Alt-l.
 myAdditionalKeys wsNames =
