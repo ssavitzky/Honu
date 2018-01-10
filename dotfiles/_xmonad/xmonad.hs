@@ -149,7 +149,7 @@ myManageHook = composeAll $
 -- | Select the status bar for the main screen.  dzen2 is easier to configure from the
 --   command line, but xmobar has its advantages, especially if you're on Ubuntu >=15.10.
 myLogCommand mobar = if mobar then "xmobar" else dzenCommand
-myLogHook mobar    = if mobar then mobarLogHook else dzenLogHook
+myLogHook mobar    = if mobar then xmobarLogHook else dzenLogHook
 
 -- xmobar log hook configuration
 
@@ -165,7 +165,7 @@ xmobarClickWrap :: String -> String
 xmobarClickWrap ws = wrap start end (xmobarEscape ws)
   where start = "<action=xdotool key super+" ++ wsKeyName ws ++ ">"
         end   = "</action>"
-mobarLogHook pipe = dynamicLogWithPP xmobarPP
+xmobarLogHook pipe = dynamicLogWithPP xmobarPP
     { ppOutput = hPutStrLn pipe
     , ppCurrent = xmobarColor "yellow" "" . wrap "[" "]"  . clickWrap
     , ppHidden  = xmobarColor hiColor ""                  . clickWrap
@@ -182,8 +182,8 @@ mobarLogHook pipe = dynamicLogWithPP xmobarPP
 --   Note that we use dzenOnScreen for all screens other than the first.
 --   The first screen will normally have a trayer or gnome-panel on it.
 dzenCommandBase = unwords [ "dzen2 -x '0' -y '0' -h '24' -ta 'l' "
-                          , "-e button3=exec:gsimplecal"
                           , "-e button2=exec:xdotool\\ key\\ super+shift+space"
+                          ++"\\;button3=exec:xdotool\\ key\\ super+ctrl+c"
                   	  , "-fg", quote fgColor
 			  , "-bg", quote bgColor
 			  , "-fn", quote font
@@ -228,6 +228,8 @@ wsKeyName ws = case head ws of { '=' -> "equal"; '-' -> "minus"; x -> [x]; }
 -- key bindings to start programs.  Note that the lock binding is the traditional Ctl-Alt-l.
 myAdditionalKeys wsNames =
   [ ((mod1Mask  .|. controlMask, xK_l)     , spawn "gnome-screensaver-command --lock" ) -- lock
+  , ((myModMask .|. controlMask, xK_c)     , spawn "gsimplecal" )                       -- calendar
+  , ((myModMask .|. shiftMask,   xK_c)     , spawn "xcalc" )                            -- calculator
   , ((myModMask .|. controlMask, xK_e)     , spawn "emacs" )                            -- editor
   ] ++ [ -- regular and shifted bindings for myExtraWorkspaces
     ((myModMask, key), (windows $ W.greedyView ws))
