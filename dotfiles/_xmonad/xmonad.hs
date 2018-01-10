@@ -98,8 +98,10 @@ myLayoutHook = smartBorders $ avoidStruts $ showWName
                -- - is a parking area, since xmonad doesn't use icons.  I also use it
                --   for the xterm that I use for things like kinit or keep-screen-on
                $ onWorkspace "-" (Grid ||| spiral ||| Circle)
-	       -- 2 is where I keep my to-do list and a terminal; Tall works best for that.
+	       -- 2 is where I keep my to-do list and a terminal; The todo layout is
+               --   like tall except that it forces the master window to 90 columns.
 	       $ onWorkspace "2" ( todo ||| wide ||| tabs )
+	       $ onWorkspace "3" ( todo ||| wide ||| tabs )
                -- Default layouts for all workspaces not otherwise mentioned
                $ ( tabs ||| tall ||| wide )
   where
@@ -179,7 +181,7 @@ mobarLogHook pipe = dynamicLogWithPP xmobarPP
 --   the latest version from source, but that should be simpler than xmobar.
 --   Note that we use dzenOnScreen for all screens other than the first.
 --   The first screen will normally have a trayer or gnome-panel on it.
-dzenCommandBase = unwords [ "dzen2 -x '0' -y '0' -h '22' -ta 'l' "
+dzenCommandBase = unwords [ "dzen2 -x '0' -y '0' -h '24' -ta 'l' "
                           , "-e button3=exec:gsimplecal"
                           , "-e button2=exec:xdotool\\ key\\ super+shift+space"
                   	  , "-fg", quote fgColor

@@ -5,6 +5,7 @@
 # Configuration options:
 
 # fbpanel is a plausible alternative to trayer, but it's not as good as it should be.
+# stalonetray would be worth investigating.
 systemTray=trayer
 
 if_defined () {
@@ -40,7 +41,7 @@ if [ trayer = "$systemTray" ]; then
     # is started by xmonad so that it can pipe its log into it.
     trayer --edge top --align right --SetDockType true\
 	   --SetPartialStrut true --expand true\
-	   --widthtype percent --width 10 --height 20\
+	   --widthtype request --width 10 --height 24\
 	   --transparent true --tint 0x000000 &
 else
     $systemTray &
