@@ -229,7 +229,7 @@ wsKeyName ws = case head ws of { '=' -> "equal"; '-' -> "minus"; x -> [x]; }
 myAdditionalKeys wsNames =
   [ ((mod1Mask  .|. controlMask, xK_l)     , spawn "gnome-screensaver-command --lock" ) -- lock
   , ((myModMask .|. controlMask, xK_c)     , spawn "gsimplecal" )                       -- calendar
-  , ((myModMask .|. shiftMask,   xK_c)     , spawn "xcalc" )                            -- calculator
+  , ((myModMask,                 xK_c)     , spawn "xcalc" )                            -- calculator
   , ((myModMask .|. controlMask, xK_e)     , spawn "emacs" )                            -- editor
   ] ++ [ -- regular and shifted bindings for myExtraWorkspaces
     ((myModMask, key), (windows $ W.greedyView ws))
