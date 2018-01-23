@@ -217,12 +217,15 @@ dzenLogHook pipe = dynamicLogWithPP defaultPP
 -- Because of the way this configuration makes workspaces clickable,
 -- the first character of the name needs to be the name of the key.
 
-workspaceNames =    [ "1","2","3","4","5","6","7","8","9" ] -- the predefined workspaces
-                 ++ [ "0", "-", "=" ]                       -- extra workspaces.
+workspaceNames =    [ "1","2","3","4","5","6","7","8","9" ] -- workspace names/keys
+                 ++ [ "0", "-", "=" ]                       -- extra workspace keys.
 
 -- assign keys to the extra workspaces ("0", "-", and "=")
 -- has to be done this way in order to pick up the clickable-wrapped actual names.
 wsKeys wsNames = zip [ xK_0, xK_minus, xK_equal ] (drop 9 wsNames)
+
+-- map a workspace name into a key name that makes sense to xdotool.
+wsKeyName::String -> String
 wsKeyName ws = case head ws of { '=' -> "equal"; '-' -> "minus"; x -> [x]; }
 
 -- key bindings to start programs.  Note that the lock binding is the traditional Ctl-Alt-l.
@@ -230,6 +233,7 @@ myAdditionalKeys wsNames =
   [ ((mod1Mask  .|. controlMask, xK_l)     , spawn "gnome-screensaver-command --lock" ) -- lock
   , ((myModMask .|. controlMask, xK_c)     , spawn "gsimplecal" )                       -- calendar
   , ((myModMask,                 xK_c)     , spawn "xcalc" )                            -- calculator
+  , ((myModMask,                 xK_slash) , spawn "show-keys" )                        -- show keys
   , ((myModMask .|. controlMask, xK_e)     , spawn "emacs" )                            -- editor
   ] ++ [ -- regular and shifted bindings for myExtraWorkspaces
     ((myModMask, key), (windows $ W.greedyView ws))

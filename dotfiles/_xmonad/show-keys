@@ -1,0 +1,34 @@
+#!/bin/sh
+#
+# Show xmonad key definitions.
+#   This only works if we either put all the key definitions in xmonad.hs, or
+#   get the default definitions out of XMonad/Config.hs, which can be ganked using
+#   wget https://raw.githubusercontent.com/xmonad/xmonad/master/src/XMonad/Config.hs
+#   We do the latter for now, not because it's right, but because it's easy.
+#   (ganked from the xmonad docs, cleaned up, tweaked, and parameterized.)
+#   
+
+WIDTH=900
+XPOS=-900
+YPOS=16
+LINES=30
+FONT=inconsolata
+
+fgCol=green
+bgCol=gray25
+titleCol=green
+commentCol=slateblue
+keyCol=green2
+XCol=orange3
+startLine=2
+( echo "   ^fg($titleCol) ----------- keys -----------^fg()";
+  cat ~/.xmonad/Config.hs ~/.xmonad/xmonad.hs		\
+    | egrep 'xK_|eys' | tail -n +$startLine \
+    | sed -e 's/\( *--\)\(.*eys*\)/\1^fg('$commentCol')\2^fg()/' \
+          -e 's/((\(.*xK_.*\)), *\(.*\))/^fg('$keyCol')\1^fg(), ^fg('$XCol')...^fg()/'
+
+# previous line used to be this, but it looks cleaner if we don't include the bindings
+#          -e 's/((\(.*xK_.*\)), *\(.*\))/^fg('$keyCol')\1^fg(), ^fg('$XCol')\2^fg()/'
+  echo '^togglecollapse()';
+  echo '^scrollhome()'
+) | dzen2 -fg $fgCol -bg $bgCol -x $XPOS -y $YPOS -l $LINES -ta r -w 900 -p -fn $FONT
