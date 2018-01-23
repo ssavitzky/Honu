@@ -1,38 +1,47 @@
 # Top-level .gitignore file
 
-*.[oa]
-*.elc
-*~
+*.[ao]
+*.aux
 *.bak
 *.BAK
-*.log
 *.dvi
-*.aux
-*.rej
 *.elc
-*.o
+*.exe
+*.log
 *.obj
-*.a
-*.so
 *.old
+*.orig
+*.rej
+*.so
+*.Z
 
+*.iso
+*.tar
+*.tgz
+
+*~
 \#*
 .#*
+,*
+
+.draft
+.make.state
+.svn
+
+core
+CVS
+cvslog.*
+RCS
+RCSLOG
+SCCS
 tags 
 TAGS 
-CVS
-,*
-.make.state
-core
+
 #For reference, here's the list for rsync --cvs-exclude:
 # RCS  SCCS  CVS  CVS.adm   RCSLOG   cvslog.*   tags   TAGS
 # .make.state  .nse_depinfo *~ #* .#* ,* _$* *$ *.old *.bak
 # *.BAK *.orig *.rej .del-* *.a *.olb *.o *.obj *.so  *.exe
 $ *.Z *.elc *.ln core .svn/
 
-# ignore .draft, which is a symlink to the entry under construction
-.draft
-
-# ignore Old, which is where we'll put all the stuff that *used* to be in
-# Private. 
-Old
+# ignore .draft, which is used by MakeStuff's blogging plugin
+# to point to an entry under construction.
