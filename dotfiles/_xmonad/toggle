@@ -1,0 +1,52 @@
+#!/bin/bash
+#  toggle (run or kill) a utility program
+#  e.g.  toggle xcalc
+
+USAGE="$0 [-hkr] command
+    -h     print help text
+    -k     kill command
+    -r     run command if it isn't running
+    -v     be verbose
+    command to run or kill
+"
+. $HOME/.xmonad/lib/ws-utils.sh
+
+STRFTIME=%H:%M
+KILL=false
+RUN=false
+VERB=false
+
+case $1 in
+    (-h) echo "$USAGE"; exit;;
+    (-k) KILL=true; shift;;
+    (-r)  RUN=true; shift;;
+    (-v) VERB=true; shift;;
+esac
+
+# see whether a command is running
+#     If the command is _not_ running, there will be 3 lines:
+#     toggle, /bin/bash toggle, grep
+isRunning () {
+    n=$(ps x | grep "$*" | grep -v grep | grep -v toggle | grep -v /bin/sh | wc -l)
+    $VERB && echo $n copies of "$*"
+    $VERB && ps x | grep "$*"
+    if [ 0 == $n ]; then false; else true; fi
+}
+
+# kill any running command with the same arguments
+#      Not called "kill" because that would recurse.
+stop () {
+    pid=$(ps x | grep "$*" | grep -v grep | grep -v toggle | grep -v /bin/sh | first_number )
+    $VERB && ps x | grep "$*" | grep -v grep | grep -v toggle 
+    $VERB && echo about to kill $pid
+    kill $pid
+}
+
+if isRunning $*; then
+    $VERB && echo $* is running
+    if $RUN; then :; else stop $*; fi
+else
+    $VERB && echo $* is not running
+    if $KILL; then :; else $* </dev/null &>/dev/null & fi
+fi
+
