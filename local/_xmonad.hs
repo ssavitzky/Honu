@@ -8,11 +8,10 @@ import XMonad
 --   These are the things you might want to tweak on different machines.
 
 -- | The Mod key.  mod3Mask would use right Alt; old keyboards don't have super.
--- Ubuntu's key bindings these days are in /usr/share/X11/xkb/symbols/pc; you
--- have to set Alt-R to Alt-Graphics in order to use right Alt as mod.  Or,...
--- myModMask = (mod1Mask .|. controlMask) -- defines mod as Ctrl-Alt combo.
--- Another option is to remap caps-lock:  setxkbmap -option caps:super
--- See man setxkbmap; man xkeyboard-config
+--   One plausible option is to use  myModMask = (mod1Mask .|. controlMask)
+--   which defines mod as the Ctrl-Alt combo.
+--   A better option is to remap caps-lock:  setxkbmap -option caps:super
+--   See man setxkbmap; man xkeyboard-config
 myModMask = mod4Mask            -- mod = Super
 
 -- | Whether to use xmobar for the top status bar on monitor 1.  Normally we
