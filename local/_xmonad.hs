@@ -7,11 +7,20 @@ import XMonad
 -- | Configuration options --
 --   These are the things you might want to tweak on different machines.
 
--- | The Mod key.  mod3Mask would use right Alt; old keyboards don't have super.
---   One plausible option is to use  myModMask = (mod1Mask .|. controlMask)
---   which defines mod as the Ctrl-Alt combo.
---   A better option is to remap caps-lock:  setxkbmap -option caps:super
---   See man setxkbmap; man xkeyboard-config
+-- | The Mod key.  see setxkbmap(1), xkeyboard-config(1), xmodmap(1).
+--   Typical values are:
+--      mod4Mask                   -- Super     (default for Honu)
+--      mod3Mask                   -- right Alt (may not be mapped)
+--      mod2Mask                   -- Num_Lock
+--      mod1Mask                   -- Alt (default for Xmonad out of box)
+--      (mod1Mask .|. controlMask) -- Ctrl+Alt
+--   Recently Ubuntu and perhaps others have been leaving mod3 unmapped, and
+--   mapping mod4 = Super_L (0x85),  Super_R (0x86),  Super_L (0xce),  Hyper_L (0xcf) 
+--   The simplest thing is to leave myModMask as mod4, and remap caps-lock as
+--   either super or hyper, which works whether or not you have a Super key.
+--   e.g. setxkbmap -option caps:hyper
+--   If you want Super, e.g. as an Apple key, it would be possible to use, e.g.
+--   myModMask = mod3Mask and assign hyper to mod3; you need xmodmap for that.
 myModMask = mod4Mask            -- mod = Super
 
 -- | Whether to use xmobar for the top status bar on monitor 1.  Normally we
