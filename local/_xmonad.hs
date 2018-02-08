@@ -11,6 +11,8 @@ import XMonad
 -- Ubuntu's key bindings these days are in /usr/share/X11/xkb/symbols/pc; you
 -- have to set Alt-R to Alt-Graphics in order to use right Alt as mod.  Or,...
 -- myModMask = (mod1Mask .|. controlMask) -- defines mod as Ctrl-Alt combo.
+-- Another option is to remap caps-lock:  setxkbmap -option caps:super
+-- See man setxkbmap; man xkeyboard-config
 myModMask = mod4Mask            -- mod = Super
 
 -- | Whether to use xmobar for the top status bar on monitor 1.  Normally we
