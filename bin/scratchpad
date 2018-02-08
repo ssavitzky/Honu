@@ -1,0 +1,8 @@
+#!/bin/sh
+#    implements a toggling scratchpad xterm.  Not quite as useful as
+#    the official xmonad one, since it gets killed to make it go away.
+#    However, it can be run under any window manager, which could be
+#    useful.  History is kept in .bash_history_scratchpad.
+
+export WS=scratchpad
+toggle xterm -name scratchpad -fn 8x16 -geometry 80x30+200+200

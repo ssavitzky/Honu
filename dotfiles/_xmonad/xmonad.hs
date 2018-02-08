@@ -139,6 +139,7 @@ myManageHook = composeAll $
       -- set title for special handling.  This is the -name argument for xtoolkit apps
     , title =? "xmonad-ignore"	    --> doIgnore  -- eg xclock -name xmonad-ignore
     , title =? "xmonad-float"	    --> doFloat
+    , title =? "scratchpad"	    --> doFloat
     ] ++
     -- shift anything with a title that contains "xmonad-ws=N" to workspace N
     [fmap (("xmonad-ws="++(show n)) `isInfixOf`) title --> doShift (show n) | n <- [0..9]]
@@ -235,7 +236,7 @@ myAdditionalKeys wsNames =
   , ((myModMask,                 xK_c     ), spawn "toggle xcalc" )                     -- calculator
   , ((myModMask,                 xK_slash ), spawn "show-keys" )                        -- show bindings
   , ((myModMask .|. controlMask, xK_e     ), spawn "emacs" )                            -- editor
-  , ((myModMask .|. controlMask, xK_t     ), spawn "toggle xterm -name xmonad-float -fn 8x16 -geometry 80x30+200+200" )    -- scratchpad
+  , ((myModMask .|. controlMask, xK_t     ), spawn "scratchpad" )                       -- scratchpad
   ] ++ [ -- regular and shifted bindings for myExtraWorkspaces
     ((myModMask, key), (windows $ W.greedyView ws))
     | (key, ws) <- wsKeys wsNames
