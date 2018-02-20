@@ -75,9 +75,3 @@ The lyrics under the chord are accumulated in a string."
 				 "\\s")
 				("s")))
 	(char)))
-
-(defun concat-list (strings)
-  (if (null strings)
-      ""
-    (concat (car strings) (concat-list (cdr strings)))))
-
