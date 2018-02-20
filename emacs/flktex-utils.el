@@ -5,16 +5,22 @@
 (setq max-lisp-eval-depth 6000)
 
 (defun inline-chords-at-point ()
-    "Convert the two lines at point from chords-over-lyrics to chords-inline"
+    "Convert the two lines at point from chords-over-lyrics to chords-inline.
+If executed on an empty line, it inserts two backslashes to mark the end of a verse."
     (interactive)
-    (insert (inline-chords (gobble-line) (gobble-line)))
+    (beginning-of-line)
+    (if (looking-at "^[:space:]*$")
+	(progn (gobble-line) (insert "\\\\"))
+      (insert (inline-chords (gobble-line) (gobble-line))))       
     (insert "\n"))
 
 (defun gobble-line ()
   "Remove the line at point, and return it as a list of 1-character strings."
-  (cond ((or (null (char-after))(char-equal ?\n (char-after))) (delete-char 1) nil)
-	((cons (string (char-after)) (progn (delete-char 1) (gobble-line))))
-	)) 
+  (let ((c (char-after)))
+    (if (or (null c) (char-equal ?\n c))
+	(progn (delete-char 1) nil)
+      (cons (string  c) (progn (delete-char 1) (gobble-line)))
+      )))
 
 (defun explodec (string)
   (cond ((equal string "") nil)
