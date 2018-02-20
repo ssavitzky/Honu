@@ -347,6 +347,8 @@ makes it buffer-local.")
 ;;;
 ;;; FlkTex stuff
 ;;;
+(load "flktex-utils" t)
+
 (defun flk-define-keys ()
   (interactive)
   (local-set-key "\C-Ca" 'flk-insert-a)
@@ -363,6 +365,7 @@ makes it buffer-local.")
   (local-set-key "\C-C-" 'flk-insert-flat)
   (local-set-key "\C-Co" 'flk-insert-dim)
   (local-set-key "\C-C+" 'flk-insert-aug)
+  (local-set-key "\C-C\C-C"  'inline-chords-at-point)
 )
 
 (defun flk-insert-a (arg)
