@@ -69,3 +69,37 @@ ws_name_for_desktop () {
 	(*) echo $((1 + $1));;
     esac
 }
+
+## Stuff used by bottom-bars, bottom-mobars, and other status reports:
+
+HOST=`hostname`
+
+monitor () {
+    case $1 in
+	(1) echo '1(w)';;
+	(2) echo '2(e)';;
+	(3) echo '3(r)';;
+	(*) echo $1 ;;
+    esac
+}
+
+up () {
+    echo u$( uptime | cut -d u -f 2- \
+	   | sed -e 's/ min/m/' -e 's/ users/u/' -e 's/ days*,/d/' -e 's/load average/ld/'
+	   ) 
+}
+
+CITY=Freeland,WA
+CC=US
+
+weather () {
+    echo $CITY:`ansiweather -a false -s true -l $CITY,$CC -u imperial\
+         | cut -d '>' -f 2- \
+         | sed -e s/Humidity// -e s/Pressure// -e s/Wind// -e 's/ => //g'`
+}
+
+FONT="xft:Bitstream Vera Sans:size=12:antialias=true"
+BOTTOM_DZEN_OPTS="-bg black -fg #646464 -ta l"
+
+ZPIDS=`ps x | grep "[d]zen2 $BOTTOM_DZEN_OPTS" | cut -d p -f 1`
+MPIDS=`ps x | grep "[x]mobarrc-status" | cut -d p -f 1`

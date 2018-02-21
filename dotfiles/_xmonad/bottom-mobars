@@ -2,8 +2,7 @@
 # bottom-mobars [-k | N...]
 #    Display a bottom bar on each of the listed screens, or kill them all.
 
-CITY=Freeland,WA
-CC=US
+. $HOME/.xmonad/lib/ws-utils.sh
 
 USAGE="$0 [-hwk] screen...
     -h: print help text
@@ -19,39 +18,20 @@ case $1 in
     (-k) KILL=true; shift;;
 esac
 
+# unconditionally kill existing bottom bars.
+[ -z "$ZPIDS" ] || kill $ZPIDS
+[ -z "$MPIDS" ] || kill $MPIDS
 if $KILL; then
-    kill `ps x | grep [b]ottom | cut -d p -f 1`
     exit 0
 fi
 
-HOST=`hostname`
-
-monitor () {
-    case $1 in
-	(1) echo '1(w)';;
-	(2) echo '2(e)';;
-	(3) echo '3(r)';;
-	(*) echo $1 ;;
-    esac
-}
-
-up () {
-    echo u$( uptime | cut -d u -f 2- \
-	   | sed -e 's/ min/m/' -e 's/ users/u/' -e 's/ days*,/d/' -e 's/load average/ld/'
-	   ) 
-}
-
-weather () {
-    echo $CITY:`ansiweather -a false -s true -l $CITY,$CC -u imperial\
-         | cut -d '>' -f 2- \
-         | sed -e s/Humidity// -e s/Pressure// -e s/Wind// -e 's/ => //g'`
-}
 
 status () {
     echo   $HOST '<fc=#eeeeee>'`monitor $1`'</fc>,' `weather`
 }
 
 for s in $*; do 
-    while :; do status $s; sleep 10; done | xmobar -x $((s - 1)) ~/.xmonad/xmobarrc-status &
+    while :; do status $s; sleep 10; done \
+          | xmobar -x $((s - 1)) ~/.xmonad/xmobarrc-status > /dev/null &
 done 
 

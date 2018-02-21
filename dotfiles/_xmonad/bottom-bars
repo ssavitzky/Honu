@@ -2,15 +2,13 @@
 # bottom-bars [-k | N...]
 #    Display a bottom bar on each of the listed screens, or kill them all.
 
+. $HOME/.xmonad/lib/ws-utils.sh
 
 USAGE="$0 [-hwk] screen...
     -h: print help text
     -w: show weather
     -k: kill bars
 "
-
-FONT="xft:Bitstream Vera Sans:size=12:antialias=true"
-DZEN_OPTS="-bg black -fg #646464 -ta r "
 
 WEATHER=:
 KILL=false
@@ -21,46 +19,26 @@ case $1 in
     (-l) list; exit;;
 esac
 
+# unconditionally kill existing bottom bars.
+[ -z "$ZPIDS" ] || kill $ZPIDS
+[ -z "$MPIDS" ] || kill $MPIDS
 if $KILL; then
-    kill `ps x | grep [b]ottom | cut -d p -f 1`
     exit 0
 fi
 
-monitor () {
-    case $1 in
-	(1) echo '1 (w)';;
-	(2) echo '2 (e)';;
-	(3) echo '3 (r)';;
-	(*) echo $1 ;;
-    esac
-}
-
-up () {
-     echo u`uptime | cut -d u -f 2- | sed -e 's/ days,/d/' -e 's/load average/ldavg/'` 
-}
-
-weather () {
-    echo '|| Temp:'`ansiweather -a false -l Freeland,US -u imperial | cut -d '>' -f 2- | \
-         sed -e s/idity// -e s/sure// -e 's/ =>/:/g'`
-}
-
 status () {
-    echo 'screen^fg(white)' `monitor $1` '^fg(#646464)on' `hostname` '||' `up` `$WEATHER` \
-	 '||^fg(white)' `date '+%a %b %d %I:%M%P'` ' '
+    echo 'screen^fg(white)' `monitor $1` '^fg(#646464)on' `hostname` `$WEATHER` '||' `up` \
+	 '||^fg(white)' `date '+%a %Y-%m-%d %I:%M%P'` ' '
 }
 
-# Extract the first number on a line.
-first_number () {
-    sed -e 's/^[^0-9]*//' | sed -e 's/[^0-9].*//' 
-}
-
-# Get the x position from the xmonad local parameters:
+# Get the width from the xmonad local parameters:
 XMLOCAL=$HOME/.xmonad/lib/Local.hs
 if [ -z $WIDTH ]; then
-    WIDTH=$(grep firstTopBarWidth $XMLOCAL | first_number)
+    WIDTH=$(grep otherTopBarWidth $XMLOCAL | first_number)
 fi
 
 for s in $*; do 
-    while :; do status $s; sleep 60; done | dzen2 $DZEN_OPTS -fn '$FONT' -geometry -0-0 -w $WIDTH -xs $s &
+    while :; do status $s; sleep 60; done \
+	  | dzen2 $BOTTOM_DZEN_OPTS -fn "$FONT" -geometry +0-0 -w $WIDTH -h 24 -xs $s &
 done 
 
