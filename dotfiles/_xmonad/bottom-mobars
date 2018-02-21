@@ -2,7 +2,7 @@
 # bottom-mobars [-k | N...]
 #    Display a bottom bar on each of the listed screens, or kill them all.
 
-CITY=Freeland
+CITY=Freeland,WA
 CC=US
 
 USAGE="$0 [-hwk] screen...
@@ -42,7 +42,7 @@ up () {
 }
 
 weather () {
-    echo 'Freeland:'`ansiweather -a false -s true -l $CITY,$CC -u imperial\
+    echo $CITY:`ansiweather -a false -s true -l $CITY,$CC -u imperial\
          | cut -d '>' -f 2- \
          | sed -e s/Humidity// -e s/Pressure// -e s/Wind// -e 's/ => //g'`
 }
