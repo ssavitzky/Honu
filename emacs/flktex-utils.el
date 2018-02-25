@@ -27,35 +27,37 @@ If executed on an empty line, it inserts two backslashes to mark the end of a ve
 (defun inline-chords (chords lyrics)
   "This function takes a line of chords and a line of lyrics, passed as lists of
 single-character strings, and converts them to a single line with chords inlined
-in brackets."
-  (cond ((null chords) lyrics)
+in brackets, returned as a list of strings."
+  (reverse (convert-chords chords lyrics nil)))
+
+(defun convert-chords (chords lyrics result)
+  "This function converts a line of chords and a line of lyrics into a list of strings
+in reverse order.  We do it this way to take advantage of tail recursion."
+  (cond ((null chords)
+	 (if (null lyrics)
+	     result
+	   (convert-chords nil (cdr lyrics) (cons (car lyrics) result))))
 	((equal " " (car chords))
 	 (if (null lyrics)
-	     (cons " " (inline-chords (cdr chords) nil))
-	   (cons (car lyrics) (inline-chords (cdr chords) (cdr lyrics)))))
-	((cons "[" (convert-chord chords lyrics "")))
+	     (convert-chords (cdr chords) nil (cons " " result))
+	   (convert-chords (cdr chords) (cdr lyrics) (cons (car lyrics) result))))
+	((convert-chord chords lyrics "" (cons "[" result)))
 	))
 
-(defun convert-chord (chords lyrics lyrics-under-chord)
+(defun convert-chord (chords lyrics lyrics-under-chord result)
   "Convert a chord at the front of lyrics, and follow it with the remaining lyrics.
 The lyrics under the chord are accumulated in a string."
-  (cond ((null chords) (cons "]" (if (equal "" lyrics-under-chord)
-				     lyrics
-				   (cons lyrics-under-chord lyrics))))
-	((equal " " (car chords))
-	 (cons "]" (if (equal "" lyrics-under-chord)
-		       (inline-chords chords lyrics)
-		     (cons lyrics-under-chord (inline-chords chords lyrics)))))
+  (cond ((or (null chords) (equal " " (car chords)))
+	 (convert-chords chords lyrics (cons (concat "]" lyrics-under-chord) result)))
 	((null lyrics)
-	 (cons (convert-chord-char (car chords) (cdr chords))
-	       (convert-chord (cdr chords) nil lyrics-under-chord)))
-	((cons (convert-chord-char (car chords) (cdr chords))
-	       (convert-chord (cdr chords)
-			      (cdr lyrics)
-			      (concat lyrics-under-chord (car lyrics)))))
+	 (convert-chord (cdr chords) nil
+			lyrics-under-chord
+			(cons (convert-chord-char (car chords) (cdr chords)) result)))
+	((convert-chord (cdr chords) (cdr lyrics)
+			(concat lyrics-under-chord (car lyrics))
+			(cons (convert-chord-char (car chords) (cdr chords)) result)))
 	))
 
-		 
 ;;; Convert a single character in a chord.
 ;;;    # -> \sharp
 ;;;    b -> \flat
