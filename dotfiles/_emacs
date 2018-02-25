@@ -347,7 +347,7 @@ makes it buffer-local.")
 ;;;
 ;;; FlkTex stuff
 ;;;
-(load "flktex-utils" t)
+(load "flktex-mode" t)
 
 (defun flk-define-keys ()
   (interactive)

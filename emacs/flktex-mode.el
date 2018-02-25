@@ -1,8 +1,10 @@
-;;; Convert lyrics from "chords above text" to chords inline in brackets.
+;;; flktex-mode -- major mode for editing song files in flktex format
 ;;;
 
-(provide 'flktex-utils)
+(provide 'flktex-mode)
 
+;;; Convert lyrics from "chords above text" to chords inline in brackets.
+;;;
 (defun inline-chords-at-point ()
     "Convert the two lines at point from chords-over-lyrics to chords-inline.
 If executed on an empty line, it inserts two backslashes to mark the end of a verse."
