@@ -2,7 +2,6 @@
 ;;;
 
 (provide 'flktex-utils)
-(setq max-lisp-eval-depth 6000)
 
 (defun inline-chords-at-point ()
     "Convert the two lines at point from chords-over-lyrics to chords-inline.
@@ -33,10 +32,11 @@ in brackets, returned as a list of strings."
 (defun convert-chords (chords lyrics result)
   "This function converts a line of chords and a line of lyrics into a list of strings
 in reverse order.  We do it this way to take advantage of tail recursion."
-  (cond ((null chords)
-	 (if (null lyrics)
-	     result
-	   (convert-chords nil (cdr lyrics) (cons (car lyrics) result))))
+  (cond ((and (null chords) (null lyrics))
+	 result)			; we're done
+	((null chords)
+	 ;; nothing left in chords; this just pushes the remaining lyrics onto result
+	 (convert-chords nil (cdr lyrics) (cons (car lyrics) result)))
 	((equal " " (car chords))
 	 (if (null lyrics)
 	     (convert-chords (cdr chords) nil (cons " " result))
@@ -48,6 +48,7 @@ in reverse order.  We do it this way to take advantage of tail recursion."
   "Convert a chord at the front of lyrics, and follow it with the remaining lyrics.
 The lyrics under the chord are accumulated in a string."
   (cond ((or (null chords) (equal " " (car chords)))
+	 ;; we're done with this chord.
 	 (convert-chords chords lyrics (cons (concat "]" lyrics-under-chord) result)))
 	((null lyrics)
 	 (convert-chord (cdr chords) nil
