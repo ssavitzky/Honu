@@ -16,6 +16,11 @@
 (load "uniquify" t)
 (load "thing" t)
 (load "crypt++" t)
+
+(require 'log-edit)			; This set of functions are required so that
+(require 'vc-dispatcher) 		; we can use vc-git-log-edit-mode to edit commit
+(require 'vc-git)			; messages when git invokes $EDITOR on them.
+ 
 (or (load "gin-mode" t) 
     (defun gin-mode-on () "no gin-mode: fake it"))
 
@@ -195,6 +200,8 @@
 
 	 ("\\.[CH]$" . c++-mode)
 	 ("\\.[ch]pp$" . c++-mode)
+
+	 ("COMMIT_EDITMSG" . vc-git-log-edit-mode)
 	 
 	 ("\\.newsrc" . fundamental-mode)
 
@@ -261,6 +268,12 @@ makes it buffer-local.")
   (define-key Buffer-menu-mode-map "\r" 'next-line)
   )
 (add-hook 'buffer-menu-mode-hook 'my-buffer-menu-mode-hook)
+
+(add-hook 'log-edit-mode-hook 'text-short-line-hook)
+
+(defun text-short-line-hook ()
+  (setq fill-column 72)
+  )
 
 (defun my-text-mode-hook ()
   "text mode hook using gin-mode, auto-fill-mode, and some local keydefs"
