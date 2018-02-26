@@ -18,7 +18,7 @@
 (load "crypt++" t)
 
 (require 'log-edit)			; This set of functions are required so that
-(require 'vc-dispatcher) 		; we can use vc-git-log-edit-mode to edit commit
+(require 'vc)	      			; we can use vc-git-log-edit-mode to edit commit
 (require 'vc-git)			; messages when git invokes $EDITOR on them.
  
 (or (load "gin-mode" t) 
