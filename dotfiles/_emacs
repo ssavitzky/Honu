@@ -181,10 +181,10 @@
 
 	 ("\\.m4$"  . indented-text-mode)
 	 ("\\.oc$"  . indented-text-mode)
-	 ("\\.flk$" . LaTeX-mode)
+	 ("\\.flk$" . flktex-mode)
 	 ("\\.txt$" . indented-text-mode)
 	 ("\\.not$" . indented-text-mode) ;notes
-	 ("\\.do$"  . indented-text-mode) ;as in to.do
+	 ("\\.do\\(ne\\)?$"  . to-do-mode)         ;as in to.do
 	 ("^read"   . indented-text-mode) ;as in read.me
 	 ("[8-9][0-9]+$" . indented-text-mode) ;as in status (date)
 	 
@@ -307,16 +307,12 @@ makes it buffer-local.")
 (setq html-helper-timestamp-start nil)
 (setq html-helper-timestamp-end nil)
 
-(defun my-tex-mode-hook ()
+(defun my-flktex-mode-hook ()
   (local-set-key "\C-C;" 'tex-comment-lines)
-  ;; strictly speaking we only need flk-define-keys if the file
-  ;;   extension is .flk -- there's probably a good way to do that, 
-  ;;   but I'm too lazy to figure it out right now.
-  (flk-define-keys)
   )
 
-;(add-hook 'tex-mode-hook 'my-tex-mode-hook)
-(add-hook 'latex-mode-hook 'my-tex-mode-hook)
+(add-hook 'flktex-mode-hook 'my-flktex-mode-hook)
+(add-hook 'flktex-mode-hook 'flk-define-shortcut-keys)
 
 (defun my-lisp-mode-hook ()
   ;; (font-lock-mode 1)
@@ -360,94 +356,8 @@ makes it buffer-local.")
 ;;;
 ;;; FlkTex stuff
 ;;;
-(load "flktex-mode" t)
-
-(defun flk-define-keys ()
-  (interactive)
-  (local-set-key "\C-Ca" 'flk-insert-a)
-  (local-set-key "\C-Cb" 'flk-insert-b)
-  (local-set-key "\C-Cc" 'flk-insert-c)
-  (local-set-key "\C-Cd" 'flk-insert-d)
-  (local-set-key "\C-Ce" 'flk-insert-e)
-  (local-set-key "\C-Cf" 'flk-insert-f)
-  (local-set-key "\C-Cg" 'flk-insert-g)
-  (local-set-key "\C-Cm" 'flk-insert-min)
-  (local-set-key "\C-CM" 'flk-insert-maj)
-  (local-set-key "\C-Cs" 'flk-insert-sus)
-  (local-set-key "\C-C#" 'flk-insert-sharp)
-  (local-set-key "\C-C-" 'flk-insert-flat)
-  (local-set-key "\C-Co" 'flk-insert-dim)
-  (local-set-key "\C-C+" 'flk-insert-aug)
-  (local-set-key "\C-C\C-C"  'inline-chords-at-point)
-)
-
-(defun flk-insert-a (arg)
-  (interactive "p")
-  (flk-insert-chord "A" arg)
-)
-(defun flk-insert-b (arg)
-  (interactive "p")
-  (flk-insert-chord "B" arg)
-)
-(defun flk-insert-c (arg)
-  (interactive "p")
-  (flk-insert-chord "C" arg)
-)
-(defun flk-insert-d (arg)
-  (interactive "p")
-  (flk-insert-chord "D" arg)
-)
-(defun flk-insert-e (arg)
-  (interactive "p")
-  (flk-insert-chord "E" arg)
-)
-(defun flk-insert-f (arg)
-  (interactive "p")
-  (flk-insert-chord "F" arg)
-)
-(defun flk-insert-g (arg)
-  (interactive "p")
-  (flk-insert-chord "G" arg)
-)
-
-;;; Insert a chord symbol in square brackets.
-;;; There's undoubtedly a way to get at the key that invoked us; 
-;;;   I need to spend some time with the emacs lisp manual to find it.
-(defun flk-insert-chord (chord &optional arg)
-  (insert (concat "[" chord "]"))
-  (backward-char 1)
-  ;(if (zerop arg) () (insert "\\min"))
-)
-
-;;; Insert a chord modifier
-(defun flk-insert-sharp ()
-  (interactive)
-  (insert "\\sharp")
-)
-(defun flk-insert-flat ()
-  (interactive)
-  (insert "\\flat")
-)
-(defun flk-insert-min ()
-  (interactive)
-  (insert "\\min")
-)
-(defun flk-insert-maj ()
-  (interactive)
-  (insert "\\maj")
-)
-(defun flk-insert-sus ()
-  (interactive)
-  (insert "\\sus")
-)
-(defun flk-insert-dim ()
-  (interactive)
-  (insert "\\dim")
-)
-(defun flk-insert-aug ()
-  (interactive)
-  (insert "\\aug")
-)
+(autoload 'flktex-mode "flktex-mode" "FlkTex mode" t)
+(autoload 'to-do-mode "to-do-mode" "To-Do file mode" t)
 
 ;;;
 ;;; HTML stuff
@@ -532,6 +442,7 @@ If outside a list, start a paragraph."
   (local-set-key "\C-Ci"   'html-helper-smarter-insert-item)	; i: item
   (local-set-key "\C-Cl"   'tempo-template-html-hyperlink)	; l: link
   (local-set-key "\C-Co"   'tempo-template-html-ordered-list)	; o: OL
+  (local-set-key "\C-Cq"   'tempo-template-html-quotation)	; q: Q
   (local-set-key "\C-Cr"   'tempo-template-html-citation)       ; r: CITE
   (local-set-key "\C-Cs"   'tempo-template-html-strong)		; s: STRONG
   (local-set-key "\C-Cu"   'tempo-template-html-unordered-list)	; u: UL
