@@ -74,7 +74,7 @@
 (global-set-key "\M-\C-l" 'goto-line)
 (global-set-key "\M-o"	  'overwrite-mode)
 (global-set-key "\M-p"    'print-region)
-(global-set-key "\M-P"    'my-print-buffer)
+; (global-set-key "\M-P"    'my-print-buffer) ; mp doesn't exist
 (global-set-key "\M-W"    'write-region)
 
 ;; manual, mail and news
@@ -309,6 +309,8 @@ makes it buffer-local.")
 
 (defun my-flktex-mode-hook ()
   (local-set-key "\C-C;" 'tex-comment-lines)
+  (auto-fill-mode 0)
+  ;; one might use this space to define other convenience keybindings.
   )
 
 (add-hook 'flktex-mode-hook 'my-flktex-mode-hook)
@@ -620,20 +622,16 @@ If outside a list, start a paragraph."
 	  t))
     nil))
 
-(defun match-paren (arg)
-  "Go to the matching parenthesis if on parenthesis otherwise insert %."
-  (interactive "p")
-  (cond 
-    ((looking-at "[([{]") (forward-sexp 1) (backward-char))
-    ((looking-at "[])}]") (forward-char) (backward-sexp 1))
-    (t (self-insert-command (or arg 1)))))
-
-(global-set-key "\C-X%" 'match-paren)
-
 (defun tex-comment-lines ()
   "Attach a comment to multiple lines"
   (interactive)
   (query-replace-regexp "^" "% ")
+  )
+
+(defun tex-break-lines ()
+  "Attach a line break (\\\\) to multiple lines"
+  (interactive)
+  (query-replace-regexp "$" "\\\\\\\\")
 )
 
 (defun eight-space-tabs ()
@@ -652,16 +650,6 @@ If outside a list, start a paragraph."
     (setq tab-width buf-tab-width)
     (tabify)
   )
-)
-
-(defun my-print-buffer ()
-  "use mp to pretty-print the buffer.  Of course it loses if mp doesn't exist."
-  (interactive nil)
-;  (shell-command-on-region
-;   (point-min)
-;   (point-max)
-;   (concat "mp -o -s " (buffer-name) " | lpr -Plw"))
-  (print-buffer)
 )
 
 (defun my-save-some-buffers ()
@@ -791,7 +779,7 @@ Paragraphs are delimited only by empty lines."
 ;;(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
 ;;(add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
 
-;;; FIXME:  for Honu, we need to make sure that the user has their own copy of
+;;; FIXME:  for Honu, we need to make sure that the user can have their own copy of
 ;;;         the customization variables.  Probably the only way to do that is to
 ;;;         generate the .emacs file instead of symlinking it, and load the rest
 ;;;         from ~/Honu/emacs.
