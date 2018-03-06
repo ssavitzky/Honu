@@ -141,8 +141,11 @@ If executed on an empty line, it inserts two backslashes to mark the end of a ve
 (defun flk-inline-chords (chords lyrics)
   "This function takes a line of chords and a line of lyrics, passed as lists of
 single-character strings, and converts them to a single line with chords inlined
-in brackets, returned as a list of strings."
-  (reverse (convert-chords chords lyrics nil)))
+in brackets, returned as a list of strings.
+  If the lyrics (second) line is empty, return both lines unchanged."
+  (if (null lyrics)
+      (reverse (cons "\n" (reverse chords)))
+    (reverse (convert-chords chords lyrics nil))))
 
 (defun flk-convert-chords (chords lyrics result)
   "This function converts a line of chords and a line of lyrics into a list of strings
