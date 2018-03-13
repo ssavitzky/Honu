@@ -310,6 +310,7 @@ makes it buffer-local.")
 (defun my-flktex-mode-hook ()
   (local-set-key "\C-C;" 'tex-comment-lines)
   (auto-fill-mode 0)
+  (electric-pair-mode nil)
   ;; one might use this space to define other convenience keybindings.
   )
 
