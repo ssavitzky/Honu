@@ -4,7 +4,7 @@
 ### Prevent make push from trying to push stuff from github
 
 GITDIRS :=
-OPT := dzen eless charm ljupdate
+OPT := dzen eless charm ljupdate mustache-cli
 HERE = ../../opt
 INSTALL_TARGETS :=  $(addprefix install-, $(OPT))
 LOCAL_BIN 	 = ../local/bin
@@ -72,13 +72,19 @@ install-charm: | charm
 
 # lj-update is a (currently broken) LJ posting mode for emacs.
 #	It was originally  git://github.com/hober/ljupdate.git, but the fork is
-#	more recent.
+#	more recent.  It doesn't work with sites (like DW) that redirect to https.
 ljupdate:
 	git clone git@github.com:blipvert/ljupdate.git
 	(cd ljupdate; yes | make fetch compile)
 
 install-ljupdate: | $(LOCAL_EMACS) ljupdate
 	cd $(LOCAL_EMACS); ln -sf $(HERE)/ljupdate .
+
+# mustache-cli is a command-line mustache templating engine written in go
+mustache-cli:
+	[ -d $@ ] || git clonegit@github.com:quantumew/mustache-cli.git
+	cd $@; $(MAKE)
+	cd $(LOCAL_BIN); ln -s $(HERE)/$@/mustache .
 
 ### If we're using the MakeStuff package, chain in its Makefile
 #	See ../Makefile for more information.
