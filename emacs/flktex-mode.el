@@ -44,7 +44,7 @@ massively convenient, so most users will put this in their hook."
   (local-set-key "\C-C-" 'flk-insert-flat)
   (local-set-key "\C-Co" 'flk-insert-dim)
   (local-set-key "\C-C+" 'flk-insert-aug)
-  (local-set-key "\C-C\C-C"  'inline-chords-at-point)
+  (local-set-key "\C-C\C-C"  'flk-inline-chords-at-point)
 )
 
 (defun flk-insert-a (arg)
@@ -145,7 +145,7 @@ in brackets, returned as a list of strings.
   If the lyrics (second) line is empty, return both lines unchanged."
   (if (null lyrics)
       (reverse (cons "\n" (reverse chords)))
-    (reverse (convert-chords chords lyrics nil))))
+    (reverse (flk-convert-chords chords lyrics nil))))
 
 (defun flk-convert-chords (chords lyrics result)
   "This function converts a line of chords and a line of lyrics into a list of strings
@@ -158,7 +158,7 @@ in reverse order.  We do it this way to take advantage of tail recursion."
 	((equal " " (car chords))
 	 (if (null lyrics)
 	     (flk-convert-chords (cdr chords) nil (cons " " result))
-	   flk-(convert-chords (cdr chords) (cdr lyrics) (cons (car lyrics) result))))
+	   (flk-convert-chords (cdr chords) (cdr lyrics) (cons (car lyrics) result))))
 	((flk-convert-chord chords lyrics "" (cons "[" result)))
 	))
 
@@ -167,7 +167,7 @@ in reverse order.  We do it this way to take advantage of tail recursion."
 The lyrics under the chord are accumulated in a string."
   (cond ((or (null chords) (equal " " (car chords)))
 	 ;; we're done with this chord.
-	 flk-(convert-chords chords lyrics (cons (concat "]" lyrics-under-chord) result)))
+	 (flk-convert-chords chords lyrics (cons (concat "]" lyrics-under-chord) result)))
 	((null lyrics)
 	 (flk-convert-chord (cdr chords) nil
 			lyrics-under-chord
@@ -196,3 +196,8 @@ The lyrics under the chord are accumulated in a string."
 				 "\\s")
 				("s")))
 	(char)))
+
+; for debugging -- really ought to make a test suite
+;(setq ch '("a" " " "b" " " "c"))
+;(setq ly '("x" "y" " " "z"))
+;(flk-inline-chords ch ly)
