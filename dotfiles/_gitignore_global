@@ -1,5 +1,26 @@
 # Top-level .gitignore file
 
+# Ignore .draft, which is used by MakeStuff's blogging plugin
+# to point to an entry under construction.
+
+.draft
+
+# Ignore large files.  If you need to version-control them, try git-annex.
+# If you just want to deploy them, use rsync.
+
+*.iso
+*.tar
+*.tgz
+*.wav
+
+# Ignore editor temporary files and version files, intermediate files, build
+# products, RCS and SCCS history files, etc.
+
+*~
+\#*
+.#*
+,*
+
 *.[ao]
 *.aux
 *.bak
@@ -15,16 +36,6 @@
 *.so
 *.Z
 
-*.iso
-*.tar
-*.tgz
-
-*~
-\#*
-.#*
-,*
-
-.draft
 .make.state
 .svn
 
@@ -43,5 +54,3 @@ TAGS
 # *.BAK *.orig *.rej .del-* *.a *.olb *.o *.obj *.so  *.exe
 $ *.Z *.elc *.ln core .svn/
 
-# ignore .draft, which is used by MakeStuff's blogging plugin
-# to point to an entry under construction.
