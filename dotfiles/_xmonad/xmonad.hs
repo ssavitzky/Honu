@@ -182,7 +182,7 @@ xmobarLogHook pipe = dynamicLogWithPP xmobarPP
 --   the latest version from source, but that should be simpler than xmobar.
 --   Note that we use dzenOnScreen for all screens other than the first.
 --   The first screen will normally have a trayer or gnome-panel on it.
-dzenCommandBase = unwords [ "dzen2 -x '0' -y '0' -h '24' -ta 'l' "
+dzenCommandBase = unwords [ "dzen2 -dock -x '0' -y '0' -h '24' -ta 'l' "
                           , "-e"
                                ++"   button1=exec:toggle\\ xcalc"
                                ++"\\;button2=exec:xdotool\\ key\\ super+shift+space"

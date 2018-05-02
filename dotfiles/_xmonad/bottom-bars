@@ -39,6 +39,6 @@ fi
 
 for s in $*; do 
     while :; do status $s; sleep 60; done \
-	  | dzen2 $BOTTOM_DZEN_OPTS -fn "$FONT" -geometry +0-0 -w $WIDTH -h 24 -xs $s &
+	  | dzen2 $BOTTOM_DZEN_OPTS -fn "$FONT" -dock -geometry +0-0 -w $WIDTH -h 24 -xs $s &
 done 
 
