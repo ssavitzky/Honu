@@ -7,6 +7,8 @@ import System.IO                   -- hPutStrLn scope
 import XMonad.Actions.CycleWS 
 import XMonad.Actions.UpdatePointer
 
+import XMonad.Config.Desktop
+
 import XMonad.Hooks.DynamicLog     -- statusbar
 import XMonad.Hooks.EwmhDesktops   -- extended window manager hints
 import XMonad.Hooks.ManageDocks    -- dock/tray mgmt
@@ -64,11 +66,14 @@ main = do
   nScreens <- countScreens 
   dzens    <- mapM (spawnPipe .   dzenOnScreen) [2 .. nScreens] 
  
-  xmonad $ ewmh $ defaultConfig
+  xmonad $ ewmh $ desktopConfig -- defaultConfig
     { modMask = myModMask
     , terminal =  if haveGoodTerminal then goodTerminal else "xterm"
     , layoutHook = myLayoutHook
-    , manageHook = manageDocks <+> myManageHook <+> manageHook defaultConfig
+    , manageHook = manageHook desktopConfig
+                   <+> myManageHooks
+                   <+> manageDocks
+      -- manageDocks <+> myManageHook <+> manageHook defaultConfig
     , workspaces = workspaceNames
     , logHook =  updatePointer (0.5, 0.5) (0, 0)     -- center cursor on newly focused window
                  -- updatePointer (Relative 0.5 0.5) -- unfortunately the API has changed!
@@ -116,9 +121,9 @@ myLayoutHook = smartBorders $ avoidStruts $ showWName
     -- This sets the geometry in characters, to 90x??, so Emacs adds the fringe
     todo    = named "todo" $ FixedColumn 1 5 90 10
 
--- | The manage hook, which specifies how we treat particular kinds of windows.
+-- | The manage hooks that which specifies how we treat particular kinds of windows.
 --   In addition to className one can use resourceName or title
-myManageHook = composeAll $
+myManageHooks = composeAll $
     [ -- doFloat for programs that put up many small windows or want a fixed size
       className =? "Dia"            --> doFloat
     , className =? "Gimp"           --> doFloat
