@@ -193,7 +193,7 @@
 	 ("\\.flk$" . flktex-mode)
 	 ("\\.txt$" . indented-text-mode)
 	 ("\\.not$" . indented-text-mode) ;notes
-	 ("\\.do\\(ne\\)?$"  . to-do-mode)         ;as in to.do
+	 ("\\.do\\(ne\\)?$"  . to-do-mode)         ;as in to.do or 2018/05.done
 	 ("^read"   . indented-text-mode) ;as in read.me
 	 ("[8-9][0-9]+$" . indented-text-mode) ;as in status (date)
 	 
@@ -301,6 +301,11 @@ makes it buffer-local.")
   ;; (setq browse-enter-hook 'browse-file-at-point)
   )
 (add-hook 'text-mode-hook 'my-text-mode-hook)
+
+(defun my-to-do-mode-hook ()
+  (setq fill-column 90)
+  )
+(add-hook 'to-do-mode-hook 'my-to-do-mode-hook)
 
 (defun my-message-mode-hook ()
   "text mode hook using gin-mode, auto-fill-mode, and some local keydefs"
