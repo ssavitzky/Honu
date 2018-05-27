@@ -15,13 +15,18 @@
 ;; electric "[" (electric-pair-mode)
 ;; C-h S (info-lookup-symbol) could be useful for looking up chords
 ;; see "autotyping" in the emacs manual.
-
+;; see /usr/share/emacs/24.5/lisp/textmodes/tex-mode.el.gz 
 (define-derived-mode flktex-mode text-mode "FlkTex"
   "Major mode for editing song lyrics marked up in LaTeX, with chords
 in brackets.
 \\{flktex-mode-map}
 Turning on FlkTex mode runs the normal hook `flktex-mode-hook'."
 
+  (setq-local comment-start "%")
+  (setq-local comment-add 1)
+  (setq-local comment-start-skip ;; not clear what this is doing
+	      "\\(\\(^\\|[^\\\n]\\)\\(\\\\\\\\\\)*\\)\\(%+ *\\)")
+  (setq-local parse-sexp-ignore-comments t)
   )
 
 
