@@ -13,4 +13,5 @@
 \\{to-do-mode-map}
 Turning on To-Do mode runs the normal hook `to-do-mode-hook'."
 
+  (setq-local indent-tabs-mode nil)
   )
