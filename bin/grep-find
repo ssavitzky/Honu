@@ -4,7 +4,7 @@
 #    That allows multiple options to be specified on the command line.
 #
 
-if [ -z $1 ]; then
+if [ -z "$@" ]; then
    echo "Usage: grep-find grep-option... pattern"
    exit 1
 fi
