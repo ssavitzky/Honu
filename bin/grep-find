@@ -1,10 +1,10 @@
-#!/bin/sh
+#!/bin/bash
 #    Roughly equivalent to the Emacs grep-find command
 #    The only real difference is leaving off the -e argument to grep.
 #    That allows multiple options to be specified on the command line.
 #
 
-if [ -z "$@" ]; then
+if [[ "" = "'$@'" ]]; then
    echo "Usage: grep-find grep-option... pattern"
    exit 1
 fi
