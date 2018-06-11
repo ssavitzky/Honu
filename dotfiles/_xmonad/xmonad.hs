@@ -187,7 +187,7 @@ xmobarLogHook pipe = dynamicLogWithPP xmobarPP
 --   the latest version from source, but that should be simpler than xmobar.
 --   Note that we use dzenOnScreen for all screens other than the first.
 --   The first screen will normally have a trayer or gnome-panel on it.
-dzenCommandBase = unwords [ "dzen2 -dock -x '0' -y '0' -h '24' -ta 'l' "
+dzenCommandBase = unwords [ "dzen2 -dock -x '0' -y '0' -ta 'l' "
                           , "-e"
                                ++"   button1=exec:toggle\\ xcalc"
                                ++"\\;button2=exec:xdotool\\ key\\ super+shift+space"
@@ -197,8 +197,15 @@ dzenCommandBase = unwords [ "dzen2 -dock -x '0' -y '0' -h '24' -ta 'l' "
 			  , "-fn", quote font
 		          ]
 			  where quote s = wrap "'" "'" s
-dzenCommand  =   unwords [dzenCommandBase, "-w", show firstTopBarWidth]
-dzenOnScreen n = unwords [dzenCommandBase, "-w", show otherTopBarWidth, "-xs", show n]
+dzenCommand  =   unwords [dzenCommandBase
+                         , "-w", show firstTopBarWidth
+                         , "-h", show 24
+                         ]
+dzenOnScreen n = unwords [dzenCommandBase
+                         , "-w", show otherTopBarWidth
+                         , "-h", show otherTopBarHeight -- because ws labels get scaled
+                         , "-xs", show n
+                         ]
 
 dzenClickWrap ws = wrap start end (dzenEscape ws)
   where start = "^ca(1,xdotool key super+" ++ wsKeyName ws ++ ")"
