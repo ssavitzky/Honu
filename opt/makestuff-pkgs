@@ -4,9 +4,17 @@
 # The texlive package is most of what you need for handling text and lyrics
 # using the makefiles in MakeStuff/make and MakeStuff/music
 sudo apt-get -y install texlive \
-     latex2html auctex perl-tk dvidvi catdvi dvipng texlive-doc-en html2ps \
+     latex2html auctex perl-tk dvidvi catdvi dvipng  html2ps \
      pandoc texlive-latex-recommended texlive-xetex texlive-luatex         \
-     pandoc-citeproc etoolbox wkhtmltopdf
+     pandoc-citeproc wkhtmltopdf
+
+# FIXME etoolbox and texlive-doc-en are not needed in Bionic -- check version
+
+# tl-paper: paper size defaults to a4.
+#           Reset to letter if $LANG=en_US
+if [ $LANG = en_US.UTF-8 ]; then
+    sudo tl-paper set all letter
+fi
 
 # These are what you need for the audio processing in MakeStuff/music
 sudo apt-get -y install ffmpeg pacpl sox libsox-fmt-all mpg321 lame lame-doc \
