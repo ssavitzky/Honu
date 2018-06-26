@@ -8,4 +8,4 @@ if [[ "" = "'$@'" ]]; then
    echo "Usage: grep-find grep-option... pattern"
    exit 1
 fi
-find . -type f -exec grep --color=always -nH "$@" {} +
+find . -type f -exec grep -nH "$@" {} +
