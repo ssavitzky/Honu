@@ -44,6 +44,12 @@ goodTerminal = "/usr/bin/gnome-terminal"
 firstTopBarWidth = 950
 otherTopBarWidth = 950
 
+-- | also set the height of the top bar on external monitors.  We do this because we use
+--   an xclock as a color-coded workspace label (see ws and wssetup).  xmonad scales
+--   window geometries according to the screen size, and the xclock ends up being about
+--   27 pixels high
+otherTopBarHeight = 28
+
 -- | font and colors.  These are defined in .mobarrc, but we use them with dzen2
 --   "xft:Bitstream Vera Sans Mono:size=10:bold:antialias=true" -- original.
 font    =      "xft:Inconsolata:style=medium:size=12"
