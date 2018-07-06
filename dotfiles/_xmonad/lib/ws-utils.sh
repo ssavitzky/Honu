@@ -9,7 +9,7 @@ colors () {
         (3) echo "-fg black -bg orange";;
         (4) echo "-fg black -bg yellow";;
         (5) echo "-fg black -bg green";;
-        (6) echo "-fg black -bg blue";;
+        (6) echo "-fg black -bg #9999ff";;
         (7) echo "-fg black -bg violet";;
         (8) echo "-fg black -bg grey";;
         (9) echo "-fg black -bg white";;
@@ -27,7 +27,7 @@ dzen_colors () {
         (3) echo "^fg(black)^bg(orange)";;
         (4) echo "^fg(black)^bg(yellow)";;
         (5) echo "^fg(black)^bg(green)";;
-        (6) echo "^fg(black)^bg(blue)";;
+        (6) echo "^fg(black)^bg(#9999ff)";;
         (7) echo "^fg(black)^bg(violet)";;
         (8) echo "^fg(black)^bg(grey)";;
         (9) echo "^fg(black)^bg(white)";;
@@ -103,3 +103,60 @@ BOTTOM_DZEN_OPTS="-bg black -fg #646464 -ta l"
 
 ZPIDS=`ps x | grep "[d]zen2 $BOTTOM_DZEN_OPTS" | cut -d p -f 1`
 MPIDS=`ps x | grep "[x]mobarrc-status" | cut -d p -f 1`
+
+### Stuff used by wssetup, which needs to know what's running.
+
+# run a command if it isn't running already
+maybeRun () {
+    if ps x | grep -q "[ ]$*" ; then :; else $* & sleep 2; fi
+}
+
+# see whether a command is running
+isRunning () {
+    if ps x | grep -q "[ ]$*" ; then :; else false; fi
+}
+
+# start a terminal if it isn't already running.
+#   $1 is the window name, typically wsN-terminal; we search for it in ps
+#   so it has to be unique.  Doing it this way allows for wrappers, e.g.
+#   uxterm which is a wrapper for xterm with some arguments. 
+maybeTerm () {
+    if ps x | grep -q "[ =]$1"; then :;
+    else $goodTerm ${termName}$1 & sleep 4;
+    fi
+}
+
+# Find a good terminal program to use.  Used in wssetup
+#   To enable this, set WANT_GOODTERM=true
+#
+if [ ! -z $WANT_GOODTERM ]; then
+  # Get preferred terminal from local_xmonad.hs
+  XMLOCAL=$HOME/.xmonad/lib/Local.hs
+  if [ -z "$goodTerm" ]; then
+      goodTerm=$(grep goodTerminal $XMLOCAL | sed -e s/^.*=// | sed -e 's/"//g')
+  fi
+
+  # unfortunately there's no simple way of associating a workspace name
+  #   with a terminal.  -name ws2-terminal works for xterm, but
+  #   roxterm wants --separate --name=ws2-terminal, and 
+  #   gnome-terminal wants --disable-factory --name=...
+
+  haveXterm=false
+  if echo "$goodTerm" | grep -q xterm; then
+      haveXterm=true
+      termName='-name '
+  fi
+
+  if echo $goodTerm | grep -q roxterm; then
+      termName='--name='
+      if echo "$goodterm" | grep -q separate; then : else goodTerm="roxterm --separate"; fi
+      haveXterm=true
+  fi
+
+  if echo $goodTerm | grep -q gnome-terminal; then
+      termName='--name='
+      if echo "$goodterm" | grep -q disable; then :;
+      else goodTerm="/usr/bin/gnome-terminal --disable-factory"; fi
+      haveXterm=true
+  fi
+fi  # WANT_GOODTERM
