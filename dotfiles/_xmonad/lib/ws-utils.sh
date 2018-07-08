@@ -142,18 +142,15 @@ if [ ! -z $WANT_GOODTERM ]; then
   #   gnome-terminal wants --disable-factory --name=...
 
   haveXterm=false
-  if echo "$goodTerm" | grep -q xterm; then
-      haveXterm=true
-      termName='-name '
-  fi
 
   if echo $goodTerm | grep -q roxterm; then
       termName='--name='
       if echo "$goodterm" | grep -q separate; then : else goodTerm="roxterm --separate"; fi
       haveXterm=true
-  fi
-
-  if echo $goodTerm | grep -q gnome-terminal; then
+  elif echo "$goodTerm" | grep -q xterm; then
+      haveXterm=true
+      termName='-name '
+  elif echo $goodTerm | grep -q gnome-terminal; then
       termName='--name='
       if echo "$goodterm" | grep -q disable; then :;
       else goodTerm="/usr/bin/gnome-terminal --disable-factory"; fi
