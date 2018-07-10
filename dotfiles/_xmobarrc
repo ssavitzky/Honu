@@ -16,7 +16,7 @@ Config {
    -- layout
    , sepChar =  "%"   -- delineator between plugin names and straight text
    , alignSep = "}{"  -- separator between left-right alignment
-   , template = "%UnsafeStdinReader% }{ %multicpu%--%memory%|%swap%--%dynnetwork%--%battery%--%date% "
+   , template = "%UnsafeStdinReader% }{ %multicpu%|%memory%,%swap%|%dynnetwork%|%battery%|%date% "
 
    -- general behavior
    , lowerOnStart =     True    -- send to bottom of window stack on start
@@ -44,7 +44,7 @@ Config {
 
         [ Run UnsafeStdinReader       -- accept input from stdin (i.e. from xmonad)
         -- network activity monitor (dynamic interface resolution)
-        , Run DynNetwork     [ "--template" , "<dev> <tx>k|<rx>k"
+        , Run DynNetwork     [ "--template" , "<dev> <tx>k,<rx>k"
                              , "--Low"      , "1000"       -- units: kB/s
                              , "--High"     , "5000"       -- units: kB/s
                              , "--low"      , "darkgreen"
@@ -53,7 +53,7 @@ Config {
                              ] 10
 
         -- cpu activity monitor
-        , Run MultiCpu       [ "--template" , "Cpu <total0>%|<total1>%"
+        , Run MultiCpu       [ "--template" , "Cpu <total0>%,<total1>%"
                              , "--Low"      , "50"         -- units: %
                              , "--High"     , "85"         -- units: %
                              , "--low"      , "darkgreen"
