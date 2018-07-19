@@ -138,6 +138,7 @@ myManageHooks = composeAll $
       -- ignore panels, bars, and the like even if they don't set the appropriate WM hint
     , className =? "stalonetray"    --> doIgnore
     , className =? "panel"          --> doIgnore
+    , className =? "lxpanel"        --> doIgnore
     , className =? "dzen2"          --> doIgnore
     , className =? "xmobar"         --> doIgnore
     , className =? "xvnc"	    --> doIgnore
