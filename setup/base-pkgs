@@ -8,11 +8,11 @@
 [ -z $HAVE_X  ] && HAVE_X=false
 
 if $HAVE_X; then
-    sudo apt-get install \
+    sudo apt-get -y install \
 	 emacs xdu xbase-clients gitk git-gui xterm xttitle	\
-	 dconf-editor
+	 dconf-editor x11-xfs-utils
 else
-    sudo apt-get install emacs-nox
+    sudo apt-get -y install emacs-nox
 fi
 
 # All we really need for bootstrapping are git, make, and openssh-client.
@@ -20,7 +20,7 @@ fi
 # the packages in bootstrap.sh, except that because this is a Makefile it's
 # safe to assume that make is installed.
 #
-sudo apt-get install \
+sudo apt-get -y install \
      git git-doc git.el gitk git-extras curl make-doc wget rsync zile      \
      openssh-client openssh-server gdebi memtest86+ ntp lynx elinks
 
