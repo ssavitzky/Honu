@@ -201,6 +201,7 @@ dzenCommandBase = unwords [ "dzen2 -dock -x '0' -y '0' -ta 'l' "
 dzenCommand  =   unwords [dzenCommandBase
                          , "-w", show firstTopBarWidth
                          , "-h", show 24
+			 , "-xs", "1"
                          ]
 dzenOnScreen n = unwords [dzenCommandBase
                          , "-w", show otherTopBarWidth
