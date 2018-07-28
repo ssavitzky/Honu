@@ -3,3 +3,4 @@
 *.o
 # This is what xmonad.hs compiles into.
 xmonad-*-linux
+xmonad.state
