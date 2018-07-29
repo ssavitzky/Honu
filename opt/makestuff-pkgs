@@ -7,7 +7,8 @@ sudo apt-get -y install \
      texlive latex2html auctex perl-tk dvidvi catdvi dvipng  html2ps  \
      pandoc texlive-latex-recommended texlive-xetex texlive-luatex    \
      pandoc-citeproc wkhtmltopdf imagemagick-doc texlive-pstricks     \
-     texlive-fonts-recommended-doc texlive-latex-base-doc
+     texlive-fonts-recommended-doc texlive-latex-base-doc xfig        \
+     gimp gsfonts-x11 spell xfig-doc
 
 # FIXME etoolbox and texlive-doc-en are not needed in Bionic -- check version
 
