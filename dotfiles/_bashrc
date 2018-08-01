@@ -4,6 +4,8 @@ PRINTER=lp
 VISUAL="emacs -nw"
 EDITOR="emacs -nw"
 BROWSER=google-chrome:firefox:iceweasel
+GEM_HOME=$HOME/.gems
+
 export VISUAL EDITOR BROWSER
 
 appendToPath () {
@@ -21,6 +23,9 @@ appendToPath /opt/bin
 prependToPath $HOME/bin
 for d in `ls -d $HOME/Honu/local/{bin,[a-z]*_bin} 2>/dev/null`; do prependToPath $d; done
 for d in /opt/java/bin /usr/local/java/bin; do prependToPath $d; done
+
+# probably need to use ruby/*/bin in the general case
+prependToPath /home/steve/.gem/ruby/2.5.0/bin
 
 export PATH
 
@@ -49,26 +54,33 @@ if [ "$PS1" ]; then
 	  >> /home/steve/logs/fetchmail.log
   }
 
+  # , f -> cd. ../$1   Note that ".." is now just a cd (because of shopt -s autocd)
+  ,() {
+      cd. ../$1; dirs; ls -aCF --color=auto
+  }
+  
+  # Bash functions with conditionals confuse bash completion, so unset them.
+  #  Otherwise filename completion will cause errors.  They look like:
+  #  .: syntax error: operand expected (error token is ".")
+  unset -f .
+  unset -f cd.
+  source /etc/bash_completion
+
   # cd. cd's to the *real* current directory to make .. work properly
   cd.() {
-      if [ -z "$1" ]; then cd -P .; else cd -P "$1"; fi
+      if [[ -z "$1" ]]; then cd -P .; else cd -P "$1"; fi
   }
 
   # . f - functions as source (the usual definition) if f is an ordinary file,
   #       if f is a directory, cd -P to it and print useful info.
   .() {
      if [ "$1" = "" ]; then 
-	cd.; dirs; ls -aCF --color=auto
-     elif [ -d $1 ]; then
-	cd. $1; dirs; ls -aCF --color=auto
+	cd -P .; dirs; ls -aCF --color=auto
+     elif [ -d "$1" ]; then
+	cd -P "$1"; dirs; ls -aCF --color=auto
      else
 	source $1
      fi
-  }
-
-  # , f -> cd. ../$1   Note that ".." is now just a cd (because of shopt -s autocd)
-  ,() {
-      cd. ../$1; dirs; ls -aCF --color=auto
   }
 
   # rather than redefining .. we simply set autocd, which makes every directory name
@@ -94,11 +106,6 @@ if [ "$PS1" ]; then
   # Chain in local/[a-z]*_aliases, which might have been put there by Myrtle et. al.
   for f in `ls $HOME/Honu/local/[a-z]*_aliases 2>/dev/null`; do source $f; done
   
-  # enable bash completion in interactive shells
-  if [ -f /etc/bash_completion -a -z "$BASH_COMPLETION" ]; then
-      . /etc/bash_completion
-  fi
-
   # make an alias for frm in case it's missing.  No use in scripts, of course.
   [ -x /usr/bin/frm ] || [ -x /usr/local/bin/frm ] \
       || alias frm='echo x | mail| tail +2'
