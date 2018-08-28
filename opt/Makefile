@@ -4,13 +4,17 @@
 ### Prevent make push from trying to push stuff from github
 
 GITDIRS :=
-OPT := dzen eless charm ljupdate mustache-cli
+OPT := dzen eless charm ljupdate mustache-cli gojekyll liquid
 HERE = ../../opt
 INSTALL_TARGETS :=  $(addprefix install-, $(OPT))
 LOCAL_BIN 	 = ../local/bin
 LOCAL_EMACS 	 = ../local/emacs
 
 .PHONY: install fetch $(addprefix install-, $(OPT))
+
+all::
+	echo make one or more of the following:
+	echo $(OPT)
 
 ### Fetch code from github
 fetch:: | $(OPT)
@@ -82,9 +86,28 @@ install-ljupdate: | $(LOCAL_EMACS) ljupdate
 
 # mustache-cli is a command-line mustache templating engine written in go
 mustache-cli:
-	[ -d $@ ] || git clonegit@github.com:quantumew/mustache-cli.git
+	[ -d $@ ] || git clone git@github.com:quantumew/mustache-cli.git
 	cd $@; $(MAKE)
 	cd $(LOCAL_BIN); ln -s $(HERE)/$@/mustache .
+
+liquid:
+	if [ ! -d $(HOME)/go/src/github.com/osteele/$@ ]; then	\
+	   go get github.com/osteele/$@;			\
+        else							\
+	   go get -u github.com/osteele/$@;			\
+	fi
+	go install github.com/osteele/liquid/cmd/liquid
+	cd $(LOCAL_BIN); ln -rsf $(HOME)/go/bin/$@ .
+
+gojekyll:
+	if [ ! -d $(HOME)/go/src/github.com/osteele/$@ ]; then	\
+	   go get github.com/osteele/gojekyll;			\
+        else							\
+	   for f in gojekyll liquid tuesday; do			\
+		go get -u github.com/osteele/$$f; done;		\
+	   go install github.com/osteele/gojekyll;		\
+	fi
+	cd $(LOCAL_BIN); ln -rsf $(HOME)/go/bin/$@ .
 
 ### If we're using the MakeStuff package, chain in its Makefile
 #	See ../Makefile for more information.
