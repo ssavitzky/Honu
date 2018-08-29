@@ -195,6 +195,7 @@
 	 ("\\.inc$"  . html-helper-mode)	; include files
 	 ("\\.ht.?$"  . html-helper-mode)	; .ht, .htt, etc.
 
+	 ("\\.js$" . rjsx-mode)		; javascript with jsx
 	 ("\\.md$" . markdown-mode)	; markdown (GitHub, etc.)
 
 	 ("\\.m4$"  . indented-text-mode)
@@ -847,7 +848,9 @@ Preformatted: yes
     ("%e" mode-line-front-space mode-line-mule-info mode-line-client mode-line-modified mode-line-remote mode-line-frame-identification mode-line-buffer-identification "   " mode-line-position
      (vc-mode vc-mode)
      "  " mode-line-modes mode-line-misc-info system-name mode-line-end-spaces)))
- '(package-selected-packages (quote (markdown-mode jekyll-modes web-mode elm-mode)))
+ '(package-selected-packages
+   (quote
+    (rjsx-mode markdown-mode jekyll-modes web-mode elm-mode)))
  '(scroll-bar-mode (quote right))
  '(select-enable-clipboard t)
  '(show-paren-mode t nil (paren))
