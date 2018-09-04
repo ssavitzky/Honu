@@ -1,5 +1,15 @@
 ;;; Gnu Emacs Initialization File -- Steve Savitzky
 
+;; load emacs 24's package system. Add MELPA repository.
+
+(when (>= emacs-major-version 24)
+  (require 'package)
+  (add-to-list
+   'package-archives
+   ;; '("melpa" . "http://stable.melpa.org/packages/") ; many packages won't show if using stable
+   '("melpa" . "http://melpa.milkbox.net/packages/")
+   t)
+  )
 
 ;; Added by Package.el.  This must come before configurations of
 ;; installed packages.  Don't delete this line.  If you don't want it,
@@ -27,15 +37,6 @@
 (require 'log-edit)			; This set of functions are required so that
 (require 'vc)	      			; we can use vc-git-log-edit-mode to edit commit
 (require 'vc-git)			; messages when git invokes $EDITOR on them.
-
-;; load emacs 24's package system. Add MELPA repository.
-(when (>= emacs-major-version 24)
-  (require 'package)
-  (add-to-list
-   'package-archives
-   ;; '("melpa" . "http://stable.melpa.org/packages/") ; many packages won't show if using stable
-   '("melpa" . "http://melpa.milkbox.net/packages/")
-   t))
 
 (or (load "gin-mode" t) 
     (defun gin-mode-on () "no gin-mode: fake it"))
