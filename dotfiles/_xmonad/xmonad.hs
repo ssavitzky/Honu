@@ -209,8 +209,10 @@ dzenOnScreen n = unwords [dzenCommandBase
                          , "-xs", show n
                          ]
 
+-- all the work of switching workspaces, including mapping ws names to keys and 
+--   identifying the mod key, is done by ~/.xmonad/ws.
 dzenClickWrap ws = wrap start end (dzenEscape ws)
-  where start = "^ca(1,xdotool key super+" ++ wsKeyName ws ++ ")"
+  where start = "^ca(1,sh -c '~/.xmonad/ws -L " ++ ws ++ "')"
         end   = "^ca()"
 
 dzenLogHook pipe = dynamicLogWithPP defaultPP

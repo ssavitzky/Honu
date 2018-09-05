@@ -1,12 +1,24 @@
 #!/bin/bash
 #  Select and label a workspace
 
+XMLOCAL=$HOME/.xmonad/lib/Local.hs
+
+# FIXME: this is very fragile
+if grep -q '= mod5Mask' $XMLOCAL; then
+    MOD=ISO_Level3_Shift
+else
+    # if we start using other keys for mod we'll have to add cases
+    MOD=super
+fi
+
 USAGE="$0 [-hdk] workspace [text...]
     -h: print help text
     -D: no default date/time
     -d: show date
     -k: kill label
     -l: list workspaces
+    -L: no label, just switch
+    mod = $MOD
 "
 . $HOME/.xmonad/lib/ws-utils.sh
 
@@ -15,19 +27,22 @@ list () {
     ps x | grep [W]S= | sed 's/^.*-strftime //' | sed 's/%[a-zA-Z][- :]//g' | sort
 }
 
-STRFTIME=%H:%M
-KILL=false
+KILL=false			# -k option: kill previous label and exit
+LABEL=true			# Are we going to show a label?
+STRFTIME=%H:%M 			# date-time format
 case $1 in
     (-h) echo "$USAGE"; exit;;
     (-D) STRFTIME=""; shift;;
     (-d) STRFTIME="%a %F %H:%M"; shift;;
     (-k) KILL=true; shift;;
     (-l) list; exit;;
+    (-L) LABEL=false; shift;;
+    (*)  echo "$USAGE"; exit;;
 esac
 
 N=$1; shift
+if $LABEL; then
 COLORS="$(colors $N)"
-
 # kill any pre-existing bar with the same color code.
 for pid in $(ps x | egrep -e "[x]clock.*$COLORS" | first_number); do
     kill $pid;
@@ -36,13 +51,14 @@ done
 if $KILL; then exit 0; fi
 
 # Get the x position from the xmonad local parameters:
-XMLOCAL=$HOME/.xmonad/lib/Local.hs
 WIDTH=$(grep firstTopBarWidth $XMLOCAL | first_number)
-
+fi
 # Switch to the indicated workspace; allow time to get there.
-xdotool key super+`key $N`
-sleep 1
+xdotool key $MOD+`key $N`
 
+if $LABEL; then
+sleep 1
 # Run the label program (xclock)
 exec xclock -digital -geometry +$WIDTH+0 $COLORS -padding 0 \
             -strftime "WS=$N $STRFTIME $*  "&
+fi
