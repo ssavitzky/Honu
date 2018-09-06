@@ -20,6 +20,8 @@ USAGE="$0 [-hdk] workspace [text...]
     -L: no label, just switch
     mod = $MOD
 "
+[ -z "$1" ] && (echo "$USAGE"; exit)
+
 . $HOME/.xmonad/lib/ws-utils.sh
 
 # List labled workspaces
@@ -37,7 +39,6 @@ case $1 in
     (-k) KILL=true; shift;;
     (-l) list; exit;;
     (-L) LABEL=false; shift;;
-    (*)  echo "$USAGE"; exit;;
 esac
 
 N=$1; shift
