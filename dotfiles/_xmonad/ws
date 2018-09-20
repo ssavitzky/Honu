@@ -61,5 +61,5 @@ if $LABEL; then
 sleep 1
 # Run the label program (xclock)
 exec xclock -digital -geometry +$WIDTH+0 $COLORS -padding 0 \
-            -strftime "WS=$N $STRFTIME $*  "&
+            -strftime "WS=$N $STRFTIME $* " -name xmonad-ws=$N-label &
 fi
