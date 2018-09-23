@@ -3,7 +3,7 @@
 PRINTER=lp
 VISUAL="emacs -nw"
 EDITOR="emacs -nw"
-BROWSER=google-chrome:firefox:iceweasel
+BROWSER=firefox:iceweasel:chromium:google-chrome
 GEM_HOME=$HOME/.gems
 
 export VISUAL EDITOR BROWSER
@@ -24,9 +24,6 @@ prependToPath $HOME/bin
 for d in `ls -d $HOME/Honu/local/{bin,[a-z]*_bin} 2>/dev/null`; do prependToPath $d; done
 for d in /opt/java/bin /usr/local/java/bin; do prependToPath $d; done
 
-# probably need to use ruby/*/bin in the general case
-prependToPath /home/steve/.gem/ruby/2.5.0/bin
-
 export PATH
 
 if [ "$PS1" ]; then
@@ -41,7 +38,7 @@ if [ "$PS1" ]; then
   
   export ignoreeof=0
 
-  if [ ! -z $WS ]; then
+  if [[ $WS ]]; then
       # If we know what workspace this terminal is on, give it its own history file
       HISTFILE=$HOME/.bash_history_$WS
   fi
@@ -53,7 +50,7 @@ if [ "$PS1" ]; then
       fetchmail | grep -v skipping | grep -v 'No mail' \
 	  >> /home/steve/logs/fetchmail.log
   }
-
+  
   # , f -> cd. ../$1   Note that ".." is now just a cd (because of shopt -s autocd)
   ,() {
       cd. ../$1; dirs; ls -aCF --color=auto
@@ -74,9 +71,9 @@ if [ "$PS1" ]; then
   # . f - functions as source (the usual definition) if f is an ordinary file,
   #       if f is a directory, cd -P to it and print useful info.
   .() {
-     if [ "$1" = "" ]; then 
+     if [[ -z "$1" ]]; then 
 	cd -P .; dirs; ls -aCF --color=auto
-     elif [ -d "$1" ]; then
+     elif [[ -d "$1" ]]; then
 	cd -P "$1"; dirs; ls -aCF --color=auto
      else
 	source $1
@@ -100,7 +97,6 @@ if [ "$PS1" ]; then
   alias chrome="google-chrome >& /dev/null"
   alias gnus="emacs -f gnus -name gnus"
   alias pidgin="pidgin -f"
-  alias bed="ssh root@localhost acpitool -s"
   alias todo="emacs -geometry 91x35 to.do&"
   
   # Chain in local/[a-z]*_aliases, which might have been put there by Myrtle et. al.
@@ -113,6 +109,10 @@ fi
 
 # Chain in local/[a-z]*_bashrc, which might have been put there by Myrtle et. al.
 for f in `ls $HOME/Honu/local/[a-z]*_bashrc 2>/dev/null`; do source $f; done
+
+### Here we have the local package repos for an assortment of scripting languages.
+#
+#   Currently we have nvm, golang, and ruby gems
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -132,9 +132,12 @@ fi
 # prependToPath does that.
 prependToPath $HOME/go/bin
 
-# Install Ruby Gems to ~/gems
+# Install Ruby Gems to ~/gems (not clear this actualy works)
 export GEM_HOME=$HOME/gems
-export PATH=$HOME/gems/bin:$PATH
+prependToPath $GEM_HOME/bin
+
+# probably need to use ruby/*/bin in the general case
+prependToPath /home/steve/.gem/ruby/2.5.0/bin
 
 # Console xterm on my ctwm dashboard.
 [ x"$CONSOLE" != x ] && { unset CONSOLE ; $HOME/bin/idle& }
