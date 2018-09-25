@@ -55,6 +55,10 @@ if [ "$PS1" ]; then
   ,() {
       cd. ../$1; dirs; ls -aCF --color=auto
   }
+
+  cd..() {
+      cd. $*; dirs; ls -aCF --color=auto
+  }
   
   # Bash functions with conditionals confuse bash completion, so unset them.
   #  Otherwise filename completion will cause errors.  They look like:
