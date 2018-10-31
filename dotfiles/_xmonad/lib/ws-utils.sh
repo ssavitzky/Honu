@@ -41,7 +41,7 @@ dzen_colors () {
 key () {
     case $1 in
 	(-) echo "minus";;
-	(=) echo "equals";;
+	(=) echo "equal";;
 	(*) echo "$1";;
     esac
 }
