@@ -44,7 +44,7 @@ clean::
 # dzen2 is one of the status bars we use with xmonad; it's the simplest to compile.
 #       The version shipped with Ubuntu 16.04 and later is recent enough to use with
 #	our xmonad configuration.
-dzen:
+dzen:	| $(LOCAL_BIN)
 	[ -d $@ ] || git clone git@github.com:robm/dzen
 	cd $@; git am ../Patches/dzen*.patch
 	cd $@; $(MAKE)
@@ -58,7 +58,7 @@ install-dzen:: | dzen
 # Note that eless doesn't have a makefile.
 #	It has a build.el, but it's not actually required because all of its
 #	build products are in the repository.
-eless:
+eless:	| $(LOCAL_BIN)
 	[ -d $@ ] || git clone git@github.com:kaushalmodi/eless.git
 	cd $(LOCAL_BIN); ln -s $(HERE)/$@/$@ .
 
@@ -66,7 +66,7 @@ install-eless: $(LOCAL_BIN)/eless
 	install eless/eless /usr/local/bin
 
 # charm is a command-line/terminal LJ client.
-charm:
+charm:	| $(LOCAL_BIN)
 	[ -d $@ ] || git clone git@github.com:ssavitzky/charm.git
 	cd $(LOCAL_BIN); ln -s $(HERE)/$@/$@ .
 
@@ -85,12 +85,12 @@ install-ljupdate: | $(LOCAL_EMACS) ljupdate
 	cd $(LOCAL_EMACS); ln -sf $(HERE)/ljupdate .
 
 # mustache-cli is a command-line mustache templating engine written in go
-mustache-cli:
+mustache-cli:	| $(LOCAL_BIN)
 	[ -d $@ ] || git clone git@github.com:quantumew/mustache-cli.git
 	cd $@; $(MAKE)
 	cd $(LOCAL_BIN); ln -s $(HERE)/$@/mustache .
 
-liquid:
+liquid:	| $(LOCAL_BIN)
 	if [ ! -d $(HOME)/go/src/github.com/osteele/$@ ]; then	\
 	   go get github.com/osteele/$@;			\
         else							\
@@ -99,7 +99,7 @@ liquid:
 	go install github.com/osteele/liquid/cmd/liquid
 	cd $(LOCAL_BIN); ln -rsf $(HOME)/go/bin/$@ .
 
-gojekyll:
+gojekyll:	| $(LOCAL_BIN)
 	if [ ! -d $(HOME)/go/src/github.com/osteele/$@ ]; then	\
 	   go get github.com/osteele/gojekyll;			\
         else							\
