@@ -1,16 +1,15 @@
 ### Makefile for opt
 #
 
-### Prevent make push from trying to push stuff from github
-
+### clearing GITDIRS keeps make push from trying to push stuff from github
 GITDIRS :=
+
 OPT := dzen eless charm ljupdate mustache-cli gojekyll liquid
 HERE = ../../opt
-INSTALL_TARGETS :=  $(addprefix install-, $(OPT))
 LOCAL_BIN 	 = ../local/bin
 LOCAL_EMACS 	 = ../local/emacs
 
-.PHONY: install fetch $(addprefix install-, $(OPT))
+.PHONY: install fetch 
 
 all::
 	echo make one or more of the following:
@@ -23,17 +22,12 @@ fetch:: | $(OPT)
 #
 install::
 	@echo The opt directory contains optional software, mostly from github.
-	@echo The various fetch targets apply local patches, in ./Patches, if necessary,
+	@echo The various targets apply local patches, in ./Patches, if necessary,
 	@echo the executables are built locally, and symlinked into Honu/bin.
-	@echo Targets: fetch "(all)", clean, and the individual fetch and install targets:
+	@echo Targets: fetch "(all)", clean, and the individual targets:
 	@echo "        " $(OPT)
-	@echo "        " $(INSTALL_TARGETS)
-	@echo The install targets are only useful if you want to do a system-wide install.
 
-$(LOCAL_BIN):
-	mkdir -p $@
-
-$(LOCAL_EMACS):
+$(LOCAL_BIN) $(LOCAL_EMACS):
 	mkdir -p $@
 
 ### Cleanup
@@ -50,11 +44,6 @@ dzen:	| $(LOCAL_BIN)
 	cd $@; $(MAKE)
 	cd $(LOCAL_BIN); ln -s $(HERE)/$@/$@ .
 
-install-dzen:: | dzen
-	@echo NOTE:  dzen installs into /usr/local/bin by default
-	@echo It is not needed on Ubuntu 16.04 or later.
-	cd dzen; make install
-
 # Note that eless doesn't have a makefile.
 #	It has a build.el, but it's not actually required because all of its
 #	build products are in the repository.
@@ -62,50 +51,45 @@ eless:	| $(LOCAL_BIN)
 	[ -d $@ ] || git clone git@github.com:kaushalmodi/eless.git
 	cd $(LOCAL_BIN); ln -s $(HERE)/$@/$@ .
 
-install-eless: $(LOCAL_BIN)/eless
-	install eless/eless /usr/local/bin
-
 # charm is a command-line/terminal LJ client.
 charm:	| $(LOCAL_BIN)
 	[ -d $@ ] || git clone git@github.com:ssavitzky/charm.git
 	cd $(LOCAL_BIN); ln -s $(HERE)/$@/$@ .
 
-install-charm: | charm
-	@echo NOTE:  charm installs into /usr/local/bin by default
-	cd charm; python setup.py install
-
 # lj-update is a (currently broken) LJ posting mode for emacs.
 #	It was originally  git://github.com/hober/ljupdate.git, but the fork is
 #	more recent.  It doesn't work with sites (like DW) that redirect to https.
-ljupdate:
+ljupdate: | $(LOCAL_EMACS)
 	git clone git@github.com:blipvert/ljupdate.git
 	(cd ljupdate; yes | make fetch compile)
-
-install-ljupdate: | $(LOCAL_EMACS) ljupdate
 	cd $(LOCAL_EMACS); ln -sf $(HERE)/ljupdate .
 
-# mustache-cli is a command-line mustache templating engine written in go
+# mustache-cli is a command-line mustache templating engine written in golang
 mustache-cli:	| $(LOCAL_BIN)
 	[ -d $@ ] || git clone git@github.com:quantumew/mustache-cli.git
 	cd $@; $(MAKE)
 	cd $(LOCAL_BIN); ln -s $(HERE)/$@/mustache .
 
-liquid:	| $(LOCAL_BIN)
-	if [ ! -d $(HOME)/go/src/github.com/osteele/$@ ]; then	\
-	   go get github.com/osteele/$@;			\
-        else							\
-	   go get -u github.com/osteele/$@;			\
+# liquid is a templating engine for liquid templates, written in golang
+liquid: REPO = github.com/osteele
+liquid: | $(LOCAL_BIN)
+	if [ ! -d $(HOME)/go/src/$$REPO/$@ ]; then	\
+	   go get $(REPO)/$@;				\
+        else						\
+	   go get -u $(REPO)/$@;			\
 	fi
-	go install github.com/osteele/liquid/cmd/liquid
+	go install $(REPO)/liquid/cmd/liquid
 	cd $(LOCAL_BIN); ln -rsf $(HOME)/go/bin/$@ .
 
+# gojekyll is a partial clone of the Jekyll static site builder, in golang
+gojekyll:  REPO = github.com/osteele
 gojekyll:	| $(LOCAL_BIN)
-	if [ ! -d $(HOME)/go/src/github.com/osteele/$@ ]; then	\
-	   go get github.com/osteele/gojekyll;			\
-        else							\
-	   for f in gojekyll liquid tuesday; do			\
-		go get -u github.com/osteele/$$f; done;		\
-	   go install github.com/osteele/gojekyll;		\
+	if [ ! -d $(HOME)/go/src/$(REPO)/$@ ]; then	\
+	   go get $(REPO)/gojekyll;			\
+        else						\
+	   for f in gojekyll liquid tuesday; do		\
+		go get -u $(REPO)/$$f; done;		\
+	   go install $(REPO)/$@;			\
 	fi
 	cd $(LOCAL_BIN); ln -rsf $(HOME)/go/bin/$@ .
 
@@ -116,6 +100,5 @@ CHAIN = $(wildcard ../../MakeStuff/Makefile)
 include $(CHAIN)
 
 report-vars::
-	@echo OPT = $(OPT)
-	@echo INSTALL_TARGETS = $(INSTALL_TARGETS)
-	@echo CHAIN=$(CHAIN)
+	@echo " OPT="$(OPT)
+	@echo " CHAIN="$(CHAIN)
