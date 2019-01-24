@@ -69,9 +69,9 @@ export INSTALL_PKGS HAVE_X
 if [ -z "$REPOS" ]; then
     REPOS=https://github.com/ssavitzky
 fi
-# fetch the repositories we need.
+# fetch the repositories we need.  (Currently just Honu and MakeStuff)
 for r in Honu MakeStuff; do
-    if [ ! -d $$r ]; then git clone $REPOS/$r.git; fi
+    [ -d $$r ] || git clone $REPOS/$r.git
 done
 
 if $INSTALL_PKGS; then
