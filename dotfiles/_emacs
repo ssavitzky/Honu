@@ -432,7 +432,7 @@ If outside a list, start a paragraph."
   (interactive "*P")
   (letrec ((case-fold-search t)
 	   (in  "<li>\\|<dd>\\|<dt>\\|</ul>\\|</ol>\\|</menu>\\|</dir>\\|</dl>")
-	   (out "<ul>\\|<ol>\\|<menu>\\|<dir>\\|<dl>")
+	   (out "<ul[ >]\\|<ol[ >]\\|<menu[ >]\\|<dir[ >]\\|<dl[ >]")
 	   (s (concat in "\\|" out)))
     (if (save-excursion
           (and (re-search-forward s nil t) 
