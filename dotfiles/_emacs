@@ -198,6 +198,7 @@
 
 	 ("\\.js$" . rjsx-mode)		; javascript with jsx
 	 ("\\.md$" . markdown-mode)	; markdown (GitHub, etc.)
+	 ("\\.epub" . nov)		; nov.el ePub reader
 
 	 ("\\.m4$"  . indented-text-mode)
 	 ("\\.oc$"  . indented-text-mode)
