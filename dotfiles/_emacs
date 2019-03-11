@@ -851,7 +851,7 @@ Preformatted: yes
      "  " mode-line-modes mode-line-misc-info system-name mode-line-end-spaces)))
  '(package-selected-packages
    (quote
-    (rjsx-mode markdown-mode jekyll-modes web-mode elm-mode)))
+    (nov rjsx-mode markdown-mode jekyll-modes web-mode elm-mode)))
  '(scroll-bar-mode (quote right))
  '(select-enable-clipboard t)
  '(show-paren-mode t nil (paren))
