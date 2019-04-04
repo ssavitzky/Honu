@@ -834,7 +834,10 @@ Paragraphs are delimited only by empty lines."
  '(case-fold-search t)
  '(column-number-mode t)
  '(current-language-environment "ASCII")
- '(custom-enabled-themes (quote (wheatgrass)))
+ '(custom-enabled-themes (quote (nimbus)))
+ '(custom-safe-themes
+   (quote
+    ("477ee67197901195a60602c00001e58fbff93f588694333cdc494817d3fceb57" default)))
  '(delete-old-versions t)
  '(display-time-mode t)
  '(font-use-system-font t)
@@ -852,7 +855,7 @@ Preformatted: yes
      "  " mode-line-modes mode-line-misc-info system-name mode-line-end-spaces)))
  '(package-selected-packages
    (quote
-    (nov rjsx-mode markdown-mode jekyll-modes web-mode elm-mode)))
+    (nimbus-theme nov rjsx-mode markdown-mode jekyll-modes web-mode elm-mode)))
  '(scroll-bar-mode (quote right))
  '(select-enable-clipboard t)
  '(show-paren-mode t nil (paren))
