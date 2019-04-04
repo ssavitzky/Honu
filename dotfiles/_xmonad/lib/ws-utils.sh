@@ -46,6 +46,16 @@ key () {
     esac
 }
 
+# map workspace into desktop index
+desktop_index () {
+    case $1 in
+	(0) echo 9  ;;
+	(-) echo 10 ;;
+	(=) echo 11 ;;
+	(*) echo $(( $1 - 1 ));;
+    esac
+}
+
 # Extract the first number on a line.
 first_number () {
     sed -e 's/^[^0-9]*//' | sed -e 's/[^0-9].*//' 

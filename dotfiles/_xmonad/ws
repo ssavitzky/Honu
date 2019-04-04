@@ -55,7 +55,8 @@ if $KILL; then exit 0; fi
 WIDTH=$(grep firstTopBarWidth $XMLOCAL | first_number)
 fi
 # Switch to the indicated workspace; allow time to get there.
-xdotool key $MOD+`key $N`
+wmctrl -s $(desktop_index $N)
+#xdotool key $MOD+`key $N`
 
 if $LABEL; then
 sleep 1
