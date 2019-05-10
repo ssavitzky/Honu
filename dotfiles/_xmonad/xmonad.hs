@@ -136,6 +136,7 @@ myManageHooks = composeAll $
     , className =? "XSane"          --> doFloat
     , className =? "XCal"           --> doFloat
       -- ignore panels, bars, and the like even if they don't set the appropriate WM hint
+    ,     title =? "Desktop"        --> doIgnore
     , className =? "stalonetray"    --> doIgnore
     , className =? "panel"          --> doIgnore
     , className =? "lxpanel"        --> doIgnore
