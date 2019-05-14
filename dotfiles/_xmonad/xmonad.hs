@@ -139,6 +139,7 @@ myManageHooks = composeAll $
     ,     title =? "Desktop"        --> doIgnore
     , className =? "stalonetray"    --> doIgnore
     , className =? "panel"          --> doIgnore
+    ,     title =? "panel"          --> doIgnore
     , className =? "lxpanel"        --> doIgnore
     , className =? "dzen2"          --> doIgnore
     , className =? "xmobar"         --> doIgnore
