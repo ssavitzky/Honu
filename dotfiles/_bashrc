@@ -41,6 +41,7 @@ if [ "$PS1" ]; then
   if [[ $WS ]]; then
       # If we know what workspace this terminal is on, give it its own history file
       HISTFILE=$HOME/.bash_history_$WS
+      echo WS=$WS
   fi
 
   # At some point I will move the aliases and functions to .aliases,
