@@ -274,7 +274,7 @@
     ))
 
 (defvar gin-left-hang-indent-re
-  "\\s *\\([+o*?!@%#$:&\"([{]\\|[=-]+>*\\|([0-9.]+)\\|[0-9]+.\\)\\s +"
+  "\\s *\\([+o*?!@%#$:/&\"([{]\\|[=-]+>*\\|([0-9.]+)\\|[0-9]+.\\)\\s +"
   "*Regexp that defines a hanging indent of a paragraph.
 If it is seen by gin-guess-prefix, the next lines are indented with
 white space beyond the hanging indent.  Setting this variable makes
@@ -307,7 +307,7 @@ makes it buffer-local.")
   (gin-mode-on)
   (setq fill-column 78)
   (setq gin-left-hang-indent-re
-	"\\s *\\([-+o*?!@#$%&:~\"([{]\\|[=-]+>*\\|([0-9.]+)\\|[0-9]+.\\)\\s +")
+	"\\s *\\([-+o*?!@#$%/&:~\"([{]\\|[=-]+>*\\|([0-9.]+)\\|[0-9]+.\\)\\s +")
   ;(local-set-key "\C-Co" 'outline-mode) ; O = outline mode change
   ;(local-set-key "\C-Cp" 'picture-mode) ; P = picture mode change
   ;(local-set-key "\C-Cc" 'c-mode)       ; C = c mode change
