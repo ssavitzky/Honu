@@ -1,0 +1,25 @@
+#!/bin/bash
+# Show current CPU temperature.  May not work on anything but a thinkpad
+
+while true; do
+    LINE=$(sensors | grep crit | head -1)
+    TEMP=$(echo $LINE  | cut -f 2 -d+ | cut -f 1 -d \ )
+    ITEMP=$(echo $TEMP | cut -f 1 -d.)
+    CTEMP=$(echo $LINE | cut -f 3 -d+ | cut -f 1 -d. )
+    WTEMP=$((($CTEMP * 85) / 100))
+    if [ $ITEMP -ge $CTEMP ]; then
+	bg=red
+	fg=black
+    elif [ $ITEMP -ge $WTEMP ]; then
+	bg=yellow
+	fg=black
+    else
+	bg=
+	fg=
+    fi
+
+    # need to compute screen width probably
+    
+    echo "^bg($bg)" "^fg($fg)" $TEMP ' '
+    sleep 5;
+done | dzen2 -x 1250 -y 0 -ta r -tw 100 -h 24 -dock
