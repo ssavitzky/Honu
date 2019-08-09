@@ -1,12 +1,19 @@
 #!/bin/bash
 # Show current CPU temperature.  May not work on anything but a thinkpad
 
+# TODO:
+#  o disable right-click-to-exit
+#  * put raw sensor output in slave window
+#  o Adjust horizontal position -- get from screen if possible
+#  o rewrite using bash text processing instead of cut, etc.
+
 while true; do
-    LINE=$(sensors | grep crit | head -1)
-    TEMP=$(echo $LINE  | cut -f 2 -d+ | cut -f 1 -d \ )
-    ITEMP=$(echo $TEMP | cut -f 1 -d.)
-    CTEMP=$(echo $LINE | cut -f 3 -d+ | cut -f 1 -d. )
-    WTEMP=$((($CTEMP * 85) / 100))
+    SENSORS=$(sensors)		# save command output - we only want to do it once/loop
+    LINE=$(echo "$SENSORS" | grep crit | head -1)       #  this is the line we want
+    TEMP=$(echo $LINE  | cut -f 2 -d+ | cut -f 1 -d \ ) # temperature as a string
+    ITEMP=$(echo $TEMP | cut -f 1 -d.)                  # truncate temp to integer
+    CTEMP=$(echo $LINE | cut -f 3 -d+ | cut -f 1 -d. )  # extract critical temp.
+    WTEMP=$((($CTEMP * 85) / 100))		        # warn at 85% of critical
     if [ $ITEMP -ge $CTEMP ]; then
 	bg=red
 	fg=black
@@ -18,8 +25,8 @@ while true; do
 	fg=
     fi
 
-    # need to compute screen width probably
-    
-    echo "^bg($bg)" "^fg($fg)" $TEMP ' '
+    echo -e "^cs()\n" "^tw()" "^bg($bg)" "^fg($fg)" $TEMP ' '
+    echo "$SENSORS"
     sleep 5;
-done | dzen2 -x 1250 -y 0 -ta r -tw 100 -h 24 -dock
+    handlers="button3=exec:true;entertitle=uncollapse,unhide;button2=exit"
+done | dzen2 -x 1250 -y 0 -ta r -sa l -l 25 -tw 100 -h 24 -dock #-e "$handlers"
