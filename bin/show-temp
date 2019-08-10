@@ -15,7 +15,7 @@ handlers="button1=togglecollapse,unhide;button2=collapse"
 
 while true; do
     SENSORS=$(sensors)		# save command output - we only want to do it once/loop
-    LINE=$(echo "$SENSORS" | grep crit | head -1)       #  this is the line we want
+    LINE=$(<<<"$SENSORS"  grep crit | head -1)       #  this is the line we want
     t=${LINE#*+}; TEMP=${t%%\ *}   # extract temperature + units
     ITEMP=${TEMP%%.*}		   # truncate TEMP to an integer
     t=${LINE#*+*+}; CTEMP=${t%%.*} # extract and truncate critical temp.
