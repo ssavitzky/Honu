@@ -1,15 +1,6 @@
 #!/bin/bash
 # Show current CPU temperature.  May not work on anything but a thinkpad
 
-# TODO:
-#  * disable right-click-to-exit
-#  * put raw sensor output in slave window
-#  * rewrite using bash text processing instead of cut, etc.
-#    e.g. ${LINE#*+*+} == cut -f 3 d+; ${TEMP%%.*} == cut -f 1 -d.
-#  ~ Adjust horizontal position -- get from screen if possible
-#    -> actually where it is works with the second monitor, so maybe leave it or
-#       make it an option.
-
 # dzen2 options.  Some may eventually be adjustable
 #WIDTH=900
 TW=90
