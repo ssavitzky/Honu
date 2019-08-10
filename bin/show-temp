@@ -2,18 +2,33 @@
 # Show current CPU temperature.  May not work on anything but a thinkpad
 
 # TODO:
-#  o disable right-click-to-exit
+#  * disable right-click-to-exit
 #  * put raw sensor output in slave window
-#  o Adjust horizontal position -- get from screen if possible
-#  o rewrite using bash text processing instead of cut, etc.
+#  * rewrite using bash text processing instead of cut, etc.
+#    e.g. ${LINE#*+*+} == cut -f 3 d+; ${TEMP%%.*} == cut -f 1 -d.
+#  ~ Adjust horizontal position -- get from screen if possible
+#    -> actually where it is works with the second monitor, so maybe leave it or
+#       make it an option.
+
+# dzen2 options.  Some may eventually be adjustable
+#WIDTH=900
+TW=90
+XPOS=1250
+YPOS=0
+LINES=25
+
+# dzen2 event handlers
+handlers="button1=togglecollapse,unhide;button2=collapse"
+
+## main loop
 
 while true; do
     SENSORS=$(sensors)		# save command output - we only want to do it once/loop
     LINE=$(echo "$SENSORS" | grep crit | head -1)       #  this is the line we want
-    TEMP=$(echo $LINE  | cut -f 2 -d+ | cut -f 1 -d \ ) # temperature as a string
-    ITEMP=$(echo $TEMP | cut -f 1 -d.)                  # truncate temp to integer
-    CTEMP=$(echo $LINE | cut -f 3 -d+ | cut -f 1 -d. )  # extract critical temp.
-    WTEMP=$((($CTEMP * 85) / 100))		        # warn at 85% of critical
+    t=${LINE#*+}; TEMP=${t%%\ *}   # extract temperature + units
+    ITEMP=${TEMP%%.*}		   # truncate TEMP to an integer
+    t=${LINE#*+*+}; CTEMP=${t%%.*} # extract and truncate critical temp.
+    WTEMP=$((($CTEMP * 85) / 100)) # warn at 85% of critical
     if [ $ITEMP -ge $CTEMP ]; then
 	bg=red
 	fg=black
@@ -28,5 +43,4 @@ while true; do
     echo -e "^cs()\n" "^tw()" "^bg($bg)" "^fg($fg)" $TEMP ' '
     echo "$SENSORS"
     sleep 5;
-    handlers="button3=exec:true;entertitle=uncollapse,unhide;button2=exit"
-done | dzen2 -x 1250 -y 0 -ta r -sa l -l 25 -tw 100 -h 24 -dock #-e "$handlers"
+done | dzen2 -x $XPOS -y $YPOS -ta r -sa l -l $LINES -tw $TW -h 24 -dock -e "$handlers"
