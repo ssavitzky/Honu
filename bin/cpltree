@@ -10,4 +10,4 @@ if [ -z "$2" ]; then
     exit
 fi
 [! -e $2] || mkdir -p $2
-(cd $1; tar clf - .) | (cd $2; tar xvpBf -)
+(cd $1; tar --exclude=lost+found clf - .) | (cd $2; tar xvpBf -)
