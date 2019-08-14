@@ -3,19 +3,32 @@
 
 # dzen2 options.  Some may eventually be adjustable
 #WIDTH=900
-TW=90
+TW=80
 XPOS=1250
 YPOS=0
 LINES=25
+HEIGHT=24
 
+# try to get the width of the primary monitor
+if [ -x /usr/bin/xrandr ]; then
+    line=$(/usr/bin/xrandr | grep primary)
+    tail=${line%%x*}
+    screen_width=${tail##*\ }
+    XPOS=$(( $screen_width - $TW ))
+fi
+
+DZEN_PARAMS="-x $XPOS -y $YPOS -l $LINES -tw $TW -h $HEIGHT"
+DZEN_OPTS="-dock -ta r -sa l"
 # dzen2 event handlers
-handlers="button1=togglecollapse,unhide;button2=collapse"
+DZEN_EVENTS="-e button1=togglecollapse,unhide;button2=collapse"
 
 ## main loop
 
 while true; do
     SENSORS=$(sensors)		# save command output - we only want to do it once/loop
-    LINE=$(<<<"$SENSORS"  grep crit | head -1)       #  this is the line we want
+    # grab the first line that contains both a temperature and a critical temperature
+    # This probably won't always work, but it works on two of my thinkpads.
+    LINE=$(<<<"$SENSORS"  grep 'C  (crit' | head -1)
     t=${LINE#*+}; TEMP=${t%%\ *}   # extract temperature + units
     ITEMP=${TEMP%%.*}		   # truncate TEMP to an integer
     t=${LINE#*+*+}; CTEMP=${t%%.*} # extract and truncate critical temp.
@@ -27,11 +40,11 @@ while true; do
 	bg=yellow
 	fg=black
     else
-	bg=
+	bg=black
 	fg=
     fi
 
     echo -e "^cs()\n" "^tw()" "^bg($bg)" "^fg($fg)" $TEMP ' '
     echo "$SENSORS"
     sleep 5;
-done | dzen2 -x $XPOS -y $YPOS -ta r -sa l -l $LINES -tw $TW -h 24 -dock -e "$handlers"
+done | dzen2 $DZEN_OPTS $DZEN_PARAMS $DZEN_EVENTS
