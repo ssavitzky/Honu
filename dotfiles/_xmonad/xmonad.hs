@@ -148,9 +148,11 @@ myManageHooks = composeAll $
     , title =? "xmonad-ignore"	    --> doIgnore  -- eg xclock -name xmonad-ignore
     , title =? "xmonad-float"	    --> doFloat
     , title =? "scratchpad"	    --> doFloat
-    ] ++
-    -- shift anything with a title that contains "xmonad-ws=N" to workspace N
-    [fmap (("xmonad-ws="++(show n)) `isInfixOf`) title --> doShift (show n) | n <- [0..9]]
+    ]
+    -- shift anything with a title that contains "xmonad-ws=N" or startsWS=N to workspace N
+    ++ [fmap (("xmonad-ws="++(show n)) `isInfixOf`) title --> doShift (show n) | n <- [0..9]]
+    ++ [fmap (("WS="++(show n)) `isPrefixOf`) title --> doShift (show n) | n <- [0..9]]
+    ++ [fmap (("ws"++(show n)++"-") `isPrefixOf`) title --> doShift (show n) | n <- [0..9]]
     where
       upperRight = (withGaps (20,20,20,20) (fixed (1, 0)))
       lowerRight = (withGaps (20,20,20,20) (fixed (1, 1)))
