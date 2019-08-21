@@ -132,7 +132,7 @@ isRunning () {
 #   uxterm which is a wrapper for xterm with some arguments. 
 maybeTerm () {
     if ps x | grep -q "[ =]$1"; then :;
-    else $goodTerm ${termName}$1 & sleep 4;
+    else $haveXterm && $goodTerm ${termName}$1 & sleep 4;
     fi
 }
 
