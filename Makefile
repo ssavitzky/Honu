@@ -20,7 +20,7 @@ install::
 	for d in $(INSTALL_DIRS); do (cd $$d; $(MAKE) install) done
 
 install-pkgs::
-	cd setup; for f in *pkgs; do ./$$f; done
+	cd setup; make install-pkgs
 
 # Link Honu into home directory.
 $(HOME)/Honu:
