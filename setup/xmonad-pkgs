@@ -3,8 +3,8 @@
 
 sudo apt-get -y install xmonad trayer dzen2 suckless-tools     \
      xfce4-terminal xfce4-power-manager xdotool wmctrl         \
-     classicmenu-indicator ansiweather         		       \
-     x11-xserver-utils xterm gsimplecal fbpanel
+     classicmenu-indicator ansiweather lm-sensors	       \
+     x11-xserver-utils xterm gsimplecal fbpanel sysbench
 
 if grep -qs "trusty main" /etc/apt/sources.list; then
     echo "we appear to be on Ubuntu 14.04 -- skip xmobar"
