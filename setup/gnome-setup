@@ -40,7 +40,8 @@ S org.gnome.shell.overrides edge-tiling false
 if gsettings list-schemas | grep -q canonical; then
 
     ## fix the clock applet, which is badly broken in post-unity Ubuntu
+    #  Only show the time to save space, because the panel is vertical these days.
     S com.canonical.indicator.datetime time-format 'custom'
-    S com.canonical.indicator.datetime custom-time-format '%a %Y-%m-%d %H:%M'
+    S com.canonical.indicator.datetime custom-time-format '%H:%M'
 
 fi

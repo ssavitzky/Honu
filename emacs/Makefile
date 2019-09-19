@@ -9,7 +9,7 @@ GITDIRS :=
 
 ### Install target
 #
-install:: | ljupdate
+# install:: | ljupdate
 install:: | html-helper-mode
 install:: | $(HOME)/emacs
 
