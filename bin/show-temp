@@ -1,16 +1,26 @@
 #!/bin/bash
 # Show current CPU temperature.  May not work on anything but a thinkpad
 
+XMLOCAL=$HOME/.xmonad/lib/Local.hs
+
+# Extract the first number on a line.
+first_number () {
+    sed -e 's/^[^0-9]*//' | sed -e 's/[^0-9].*//' 
+}
+
 # dzen2 options.  Some may eventually be adjustable
 #WIDTH=900
 TW=80
-XPOS=1250
+XPOS=1000
 YPOS=0
 LINES=25
 HEIGHT=24
 
-# try to get the width of the primary monitor
-if [ -x /usr/bin/xrandr ]; then
+if [ -e $XMLOCAL ]; then
+    # Get the x position from the xmonad local parameters
+    XPOS=$(grep firstTopBarWidth $XMLOCAL | first_number)
+elif [ -x /usr/bin/xrandr ]; then
+    # try to get the width of the primary monitor
     line=$(/usr/bin/xrandr | grep primary)
     tail=${line%%x*}
     screen_width=${tail##*\ }
