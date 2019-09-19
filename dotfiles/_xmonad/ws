@@ -18,6 +18,7 @@ USAGE="$0 [-hdk] workspace [text...]
     -k: kill label
     -l: list workspaces
     -L: no label, just switch
+    -r: locate on the far right
     mod = $MOD
 "
 [ -z "$1" ] && (echo "$USAGE"; exit)
@@ -32,14 +33,19 @@ list () {
 KILL=false			# -k option: kill previous label and exit
 LABEL=true			# Are we going to show a label?
 STRFTIME=%H:%M 			# date-time format
-case $1 in
-    (-h) echo "$USAGE"; exit;;
-    (-D) STRFTIME=""; shift;;
-    (-d) STRFTIME="%a %F %H:%M"; shift;;
-    (-k) KILL=true; shift;;
-    (-l) list; exit;;
-    (-L) LABEL=false; shift;;
-esac
+POSITION=			# X position.  set to -0 for right-justified
+while [ ! -z "$1" ]; do 
+      case $1 in
+	  (-h) echo "$USAGE"; exit;;
+	  (-D) STRFTIME=""; shift;;
+	  (-d) STRFTIME="%a %F %H:%M"; shift;;
+	  (-k) KILL=true; shift;;
+	  (-l) list; exit;;
+	  (-L) LABEL=false; shift;;
+	  (-r) POSITION=-0; shift;;
+	  (*) break;;
+      esac
+done
 
 N=$1; shift
 if $LABEL; then
@@ -51,8 +57,8 @@ done
 
 if $KILL; then exit 0; fi
 
-# Get the x position from the xmonad local parameters:
-WIDTH=$(grep firstTopBarWidth $XMLOCAL | first_number)
+# Get the x position from the xmonad local parameters if not set already:
+[ ! -z $POSITION ] || POSITION=+$(grep firstTopBarWidth $XMLOCAL | first_number)
 fi
 # Switch to the indicated workspace; allow time to get there.
 wmctrl -s $(desktop_index $N)
@@ -61,6 +67,6 @@ wmctrl -s $(desktop_index $N)
 if $LABEL; then
 sleep 1
 # Run the label program (xclock)
-exec xclock -digital -geometry +$WIDTH+0 $COLORS -padding 0 \
+exec xclock -digital -geometry $POSITION+0 $COLORS -padding 0 \
             -strftime "WS=$N $STRFTIME $* " -name xmonad-ws=$N-label &
 fi
