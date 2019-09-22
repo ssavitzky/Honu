@@ -1,0 +1,29 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+our $pattern = shift;
+print "$pattern\n";
+
+our @files = (@ARGV);
+
+if (! $files[0]) {
+    @files = split /\n/, `ls */*.done to.do`;
+}
+
+while ($files[0]) {
+    my $file=shift @files;
+    open IN, $file;
+    my $date = "";
+    while (<IN>) {
+	my $line = $_;
+	if (/^(\d\d\d\d)/) {
+	    $date=$1;
+	}
+	if (/$pattern/) {
+	    print "$file: $date: $line";
+	}
+    }
+    close IN;
+}
