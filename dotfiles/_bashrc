@@ -92,7 +92,7 @@ if [ "$PS1" ]; then
   alias P=popd
   alias gf=grep-find
   alias gfs='grep-find -s'
-  alias gg='git grep'
+  alias gg='git grep -n'
   alias ll='ls -alF --color=auto'
   alias lr='ls -aRF --color=auto'
   alias l='ls -aCF --color=auto'
