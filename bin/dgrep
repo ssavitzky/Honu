@@ -16,13 +16,15 @@ while ($files[0]) {
     my $file=shift @files;
     open IN, $file;
     my $date = "";
+    my $lnum = 0;
     while (<IN>) {
 	my $line = $_;
+	$lnum++;
 	if (/^(\d\d\d\d)/) {
 	    $date=$1;
 	}
 	if (/$pattern/) {
-	    print "$file: $date: $line";
+	    print "$file:$lnum: $date: $line";
 	}
     }
     close IN;
