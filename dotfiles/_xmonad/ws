@@ -49,16 +49,16 @@ done
 
 N=$1; shift
 if $LABEL; then
-COLORS="$(colors $N)"
-# kill any pre-existing bar with the same color code.
-for pid in $(ps x | egrep -e "[x]clock.*$COLORS" | first_number); do
-    kill $pid;
-done
+   COLORS="$(colors $N)"
+   # kill any pre-existing bar with the same color code.
+   for pid in $(ps x | egrep -e "[x]clock.*$COLORS" | first_number); do
+       kill $pid;
+   done
 
-if $KILL; then exit 0; fi
+   if $KILL; then exit 0; fi
 
-# Get the x position from the xmonad local parameters if not set already:
-[ ! -z $POSITION ] || POSITION=+$(grep firstTopBarWidth $XMLOCAL | first_number)
+   # Get the x position from the xmonad local parameters if not set already:
+   [ ! -z $POSITION ] || POSITION=+$(grep firstTopBarWidth $XMLOCAL | first_number)
 fi
 # Switch to the indicated workspace; allow time to get there.
 wmctrl -s $(desktop_index $N)
