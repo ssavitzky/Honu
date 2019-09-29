@@ -24,7 +24,7 @@ sudo apt-get -y install \
      git git-doc git.el gitk git-extras curl make-doc wget rsync zile      \
      openssh-client openssh-server gdebi memtest86+ ntp lynx elinks        \
      emacs25-common-non-dfsg emacs-goodies-el units bash-doc ack           \
-     sysbench lm-sensors tidy pm-utils
+     sysbench lm-sensors tidy pm-utils whois
 
 
 
