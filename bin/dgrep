@@ -3,10 +3,22 @@
 use strict;
 use warnings;
 
-our $pattern = shift;
-print "$pattern\n";
+my $less = 0;
 
-our @files = (@ARGV);
+if (@ARGV == 0 || $ARGV[0] eq "-h" || $ARGV[0] eq "--help") {
+    print "usage: [options] pattern file...\n";
+    print "       -h    help\n";
+    print "       -l    prints as less -p DATE FILE LINE#: ... for paste\n";
+    print "             use e.g., dgrep -l PATTERN | cut -d ' ' -f1-4 | sh\n";
+    exit;
+} elsif ($ARGV[0] eq "-l" || $ARGV[0] eq "--less") {
+    $less = 1;
+    shift;
+}
+
+my $pattern = shift;
+
+my @files = (@ARGV);
 
 if (! $files[0]) {
     @files = split /\n/, `ls */*.done to.do`;
@@ -24,7 +36,11 @@ while ($files[0]) {
 	    $date=$1;
 	}
 	if (/$pattern/) {
-	    print "$file:$lnum: $date: $line";
+	    if ($less) {
+		print "less -p ^$date $file $lnum: $line";
+	    } else {
+		print "$file:$lnum: $date: $line";
+	    }
 	}
     }
     close IN;
