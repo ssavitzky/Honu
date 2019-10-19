@@ -168,6 +168,12 @@
     (setq search-slow-speed 19200 slow-term t)
   (setq slow-term nil) )
 
+;;; clean up remaining whitespace (typically indentation) after kill-line
+;;; from https://www.emacswiki.org/emacs/DeletingWhitespace
+(defadvice kill-line (after kill-line-cleanup-whitespace activate compile)
+      "cleanup whitespace on kill-line"
+      (if (not (bolp))
+	  (delete-region (point) (progn (skip-chars-forward " \t") (point)))))
 
 ;;; File extensions to ignore when completing filenames
 (setq completion-ignored-extensions
