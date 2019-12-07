@@ -20,8 +20,17 @@ my $pattern = shift;
 
 my @files = (@ARGV);
 
-if (! $files[0]) {
+if ($files[0]) {
+    # We got files on the command line -- use them
+} elsif (-f "to.do" && ! -l "to.do") {
+    # We're in a directory that contains a to.do file
     @files = split /\n/, `ls */*.done to.do`;
+} else {
+    # We're in the wrong directory, so look in the right one (...Dog)
+    my $path = (-d "~/Private/Journals/Dog")
+	? "~/Private/Journals/Dog"
+	: "~/vv/users/steve/Private/Journals/Dog";
+    @files = split /\n/, `ls $path/*/*.done $path/to.do`;
 }
 
 while ($files[0]) {
