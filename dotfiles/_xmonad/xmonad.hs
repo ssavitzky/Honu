@@ -87,6 +87,10 @@ main = do
     , ("M-<Right>",   nextWS )
     , ("M-S-<Left>",  shiftToPrev )
     , ("M-S-<Right>", shiftToNext )
+    , ("M-<Up>",      prevScreen ) -- Moving between screens
+    , ("M-<Down>",    nextScreen )
+    , ("M-S-<Up>",    shiftPrevScreen )
+    , ("M-S-<Down>",  shiftNextScreen )
     ]
 
 
