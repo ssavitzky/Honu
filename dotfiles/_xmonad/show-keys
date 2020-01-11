@@ -23,7 +23,7 @@ XCol=orange3
 startLine=2
 ( echo "   ^fg($titleCol) ----------- keys -----------^fg()";
   cat ~/.xmonad/Config.hs ~/.xmonad/xmonad.hs		\
-    | egrep 'xK_|eys' | tail -n +$startLine \
+    | egrep 'xK_|eys|M-' | tail -n +$startLine \
     | sed -e 's/\( *--\)\(.*eys*.*$\)/\1^fg('$commentCol')\2^fg()/' \
           -e 's/((\(.*xK_.*\)), *\(.*\))/^fg('$keyCol')\1^fg(), ^fg('$XCol')...^fg()/'
 
