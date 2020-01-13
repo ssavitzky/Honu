@@ -201,6 +201,8 @@ dzenCommandBase = unwords [ "dzen2 -dock -x '0' -y '0' -ta 'l' "
                                ++"   button1=exec:toggle\\ xcalc"
                                ++"\\;button2=exec:xdotool\\ key\\ super+shift+space"
                                ++"\\;button3=exec:xdotool\\ key\\ super+ctrl+c"
+			       ++"\\;button4=exec:xdotool\\ key\\ super+Left"
+			       ++"\\;button5=exec:xdotool\\ key\\ super+Right"
                   	  , "-fg", quote fgColor
 			  , "-bg", quote bgColor
 			  , "-fn", quote font
