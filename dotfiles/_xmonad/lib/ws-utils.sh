@@ -121,6 +121,16 @@ maybeRun () {
     if ps x | grep -q "[ ]$*" ; then :; else $* & sleep 2; fi
 }
 
+# run a command with a name that puts it on a given workspace (passed as $1)
+#    e.g. maybeRunOn 5 emacs ...
+#    This sleeps 0.5 seconds and could probably get away with less.
+#    
+maybeRunOn () {
+    local ws=$1
+    shift
+    if ps x | grep -q "[ ]$*" ; then :; else (exec -a "WS=$ws $1" $*) & sleep 0.5; fi
+}
+
 # see whether a command is running
 isRunning () {
     if ps x | grep -q "[ ]$*" ; then :; else false; fi
@@ -132,7 +142,7 @@ isRunning () {
 #   uxterm which is a wrapper for xterm with some arguments. 
 maybeTerm () {
     if ps x | grep -q "[ =]$1"; then :;
-    else $haveXterm && $goodTerm ${termName}$1 & sleep 4;
+    else $haveXterm && $goodTerm ${termName}$1 & sleep 0.5;
     fi
 }
 
