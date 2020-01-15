@@ -153,7 +153,7 @@ myManageHooks = composeAll $
     , title =? "xmonad-float"	    --> doFloat
     , title =? "scratchpad"	    --> doFloat
     ]
-    -- shift anything with a title that contains "xmonad-ws=N" or startsWS=N to workspace N
+    -- shift anything with a title containing "xmonad-ws=N" or starting WS=N to WS N
     ++ [fmap (("xmonad-ws="++(show n)) `isInfixOf`) title --> doShift (show n) | n <- [0..9]]
     ++ [fmap (("WS="++(show n)) `isPrefixOf`) title --> doShift (show n) | n <- [0..9]]
     ++ [fmap (("ws"++(show n)++"-") `isPrefixOf`) title --> doShift (show n) | n <- [0..9]]
