@@ -3,7 +3,7 @@
 PRINTER=lp
 VISUAL="emacs -nw"
 EDITOR="emacs -nw"
-BROWSER=firefox:iceweasel:chromium:google-chrome
+BROWSER=firefox:iceweasel:chromium-browser:google-chrome
 GEM_HOME=$HOME/.gems
 
 export VISUAL EDITOR BROWSER
