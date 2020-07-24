@@ -51,4 +51,6 @@ query_on_start
 #cont_failed_query
 
 # server to use -- freedb is mostly abandoned
-
+#  gnudb:  A new home for the freedb.org database to make sure it stays free.
+#  musicbrainz no longer supports the freedb protocol
+server:gnudb.gnudb.org
