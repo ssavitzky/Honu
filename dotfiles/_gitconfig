@@ -29,6 +29,7 @@
 	branch = auto
 [push]
 	default = matching
+	followTags = true
 
 [init]
 	# this template uses "main" instead of "master" as the name of git's default branch
