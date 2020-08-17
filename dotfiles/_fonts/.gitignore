@@ -1,1 +1,3 @@
+# ignore .uuid files in font directories:
+#  the names are random and not reproducible.
 .uuid
