@@ -146,6 +146,8 @@ myManageHooks = composeAll $
     ,     title =? "panel"          --> doIgnore
     , className =? "lxpanel"        --> doIgnore
     , className =? "dzen2"          --> doIgnore
+    , className =? "xfce4-panel"    --> doIgnore
+    ,     title =? "xfce4-panel"    --> doIgnore
     , className =? "xmobar"         --> doIgnore
     , className =? "xvnc"	    --> doIgnore
       -- set title for special handling.  This is the -name argument for xtoolkit apps

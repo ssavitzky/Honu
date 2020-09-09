@@ -40,17 +40,17 @@ $(HOME)/$(REL):
 ### SRCDIRS:  directories that need to have their contents symlinked
 #	(stripped of the leading =, so that they can be prefixed as needed)
 SRCDIRS := $(subst =,,$(wildcard =*))
-DOTDIRS := $(shell for f in $(SRCDIRS); do echo $$f| sed -e 's/=/./'; done)
-DSTDIRS := $(addprefix $(HOME)/, $(DOTDIRS))
 
-#	We start by copying each directory into $(ORIGINALS) if it isn't there already
+#	We start by moving the original (which might be either a directory or a
+#	link -- we don't care -- into $(ORIGINALS) if it isn't there already.
 #	We assume that there is only one level of subdirectories (e.g. =xmonad/lib)
 #	
 install::  | $(HOME)/$(REL) $(ORIGINALS)
-	for d in $(DOTDIRS); do							\
-	    if [ ! -d  $(ORIGINALS)/.$$d ]					\
-	       && [ -d $(DST)/.$$d ]; then 					\
-		cp -a $(DST)/.$$d $(ORIGINALS);					\
+	for d in $(SRCDIRS); do							\
+	    if [ ! -e  $(ORIGINALS)/.$$d ] && [ -e $(DST)/.$$d ]; then 		\
+		mv $(DST)/.$$d $(ORIGINALS);					\
+	    else								\
+		touch $(ORIGINALS)/.$$d;					\
 	    fi;									\
 	    mkdir -p $(DST)/.$$d; 						\
 	    (cd =$$d; for f in *; do						\
@@ -64,7 +64,7 @@ install::  | $(HOME)/$(REL) $(ORIGINALS)
 		    echo ../$(REL)/=$$d/$$f "->" $(DST)/.$$d;			\
 		    ln -sf ../$(REL)/=$$d/$$f $(DST)/.$$d;			\
 		fi								\
-	    done)								\
+	    done);								\
 	done
 
 # Remove broken symlinks in $(HOME)
