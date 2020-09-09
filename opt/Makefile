@@ -1,10 +1,10 @@
-### Makefile for opt
+### Makefile for Honu/opt
 #
 
 ### clearing GITDIRS keeps make push from trying to push stuff from github
 GITDIRS :=
 
-OPT := dzen eless charm ljupdate mustache-cli gojekyll liquid
+OPT := dzen eless charm ljupdate my-go mustache-cli gojekyll liquid my-ruby jekyll 
 HERE = ../../opt
 LOCAL_BIN 	 = ../local/bin
 LOCAL_EMACS 	 = ../local/emacs
@@ -64,6 +64,11 @@ ljupdate: | $(LOCAL_EMACS)
 	(cd ljupdate; yes | make fetch compile)
 	cd $(LOCAL_EMACS); ln -sf $(HERE)/ljupdate .
 
+### Programs that depend on Go:
+
+# my-go sets up the initial go environment:
+my-go:	
+
 # mustache-cli is a command-line mustache templating engine written in golang
 mustache-cli:	| $(LOCAL_BIN)
 	[ -d $@ ] || git clone git@github.com:quantumew/mustache-cli.git
@@ -92,6 +97,11 @@ gojekyll:	| $(LOCAL_BIN)
 	   go install $(REPO)/$@;			\
 	fi
 	cd $(LOCAL_BIN); ln -rsf $(HOME)/go/bin/$@ .
+
+### Programs that depend on Ruby
+
+# my-ruby sets up the Ruby development environment
+my-ruby:
 
 ### If we're using the MakeStuff package, chain in its Makefile
 #	See ../Makefile for more information.
