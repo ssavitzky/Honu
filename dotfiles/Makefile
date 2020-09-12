@@ -55,7 +55,8 @@ install::  | $(HOME)/$(REL) $(ORIGINALS)
 	    mkdir -p $(DST)/.$$d; 						\
 	    (cd =$$d; for f in *; do						\
 		if [ -d $$f ]; then 						\
-		    mkdir -p  $(DST)/$$f;					\
+		    if [ ! -d $(DST)/.$$d/$$f ]; then rm -f $(DST)/.$$d/$$f; fi;	\
+		    mkdir -p  $(DST)/.$$d/$$f;					\
 		    for g in $$f/*; do						\
 			echo ../../$(REL)/=$$d/$$g  "->" $(DST)/.$$d/$$f;	\
 			ln -sf ../../$(REL)/=$$d/$$g $(DST)/.$$d/$$f;		\
