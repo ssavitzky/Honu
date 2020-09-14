@@ -3,7 +3,9 @@
 
 # Define HAVE_X=true if you're installing from a terminal but want to
 # install the X apps anyway.
-#
+# The following should work in most cases:
+if which xclock || [ -e /usr/bin/X11 ]; then HAVE_X=true; fi
+
 [ -z $DISPLAY ] || HAVE_X=true
 [ -z $HAVE_X  ] && HAVE_X=false
 
