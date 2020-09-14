@@ -19,14 +19,14 @@ fi
 
 # All we really need for bootstrapping are git, make, and openssh-client.
 # This gets us the rest of the really basic stuff.  This mostly duplicates
-# the packages in bootstrap.sh, except that because this is a Makefile it's
-# safe to assume that make is installed.
+# the packages in bootstrap.sh, and includes make because we can't be sure
+# that it isn't being invoked directly.
 #
 sudo apt-get -y install \
      git git-doc git.el gitk git-extras curl make-doc wget rsync zile      \
      openssh-client openssh-server gdebi memtest86+ ntp lynx elinks        \
      emacs25-common-non-dfsg emacs-goodies-el units bash-doc ack           \
-     sysbench lm-sensors tidy pm-utils whois
+     sysbench lm-sensors tidy pm-utils whois make
 
 
 
