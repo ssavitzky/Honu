@@ -1,4 +1,6 @@
 #!/bin/sh
 # apt-get packages for gnome and friends on Debian or Ubuntu
 
-sudo apt-get -y install gnome-session-flashback gnome-power-manager 
+if which gnome-session; then
+    sudo apt-get -y install gnome-session-flashback gnome-power-manager 
+fi
