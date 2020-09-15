@@ -44,8 +44,9 @@ SRCDIRS := $(subst =,,$(wildcard =*))
 #	We start by moving the original (which might be either a directory or a
 #	link -- we don't care -- into $(ORIGINALS) if it isn't there already.
 #	We assume that there is only one level of subdirectories (e.g. =xmonad/lib)
-#	
-install::  | $(HOME)/$(REL) $(ORIGINALS)
+#
+install::  install_dirs
+install_dirs::  | $(HOME)/$(REL) $(ORIGINALS)
 	for d in $(SRCDIRS); do							\
 	    if [ ! -e  $(ORIGINALS)/.$$d ] && [ -e $(DST)/.$$d ]; then 		\
 		mv $(DST)/.$$d $(ORIGINALS);					\
@@ -68,6 +69,29 @@ install::  | $(HOME)/$(REL) $(ORIGINALS)
 	    done);								\
 	done
 
+# .gtkrc-2.0 gets modified by style themes; in Gnome3 it has an "include .gtkrc-2.0.mine"
+# in xfce it doesn't, but seems to incude .gtkrc-2.0.xfce (and nothing else).
+# That explains the weird things that happened after I did an install on Mint.
+# We can treat .gtkrc-2.0.mine as an ordinary dotfile, and append the include if it
+# isn't already there.  Allow for other instances of the same problem.
+#
+# It's easy to imagine cases where this won't work; deal with those as needed,
+# possibly by using sed to prepend the include statement.
+#
+INCLUDERS = $(patsubst _%.mine,.%,$(wildcard *.mine))
+install:: install_includes
+install_includes:: | $(HOME)/$(REL) $(ORIGINALS)
+	for f in $(INCLUDERS); do						\
+	    if [ ! -e  $(ORIGINALS)/.$$f ] && [ -e $(DST)/.$$f ]; then 		\
+		cp $(DST)/.$$f $(ORIGINALS);					\
+	    else								\
+		touch $(ORIGINALS)/.$$f;					\
+	    fi;		
+	    if grep -s .$$f.mine $(DST)/.$$f; then :;				\
+	    else echo include $(DST)/.$$f.mine >> $(DST)/.$$f;			\
+	    fi									\
+	done
+
 # Remove broken symlinks in $(HOME)
 cleanup::
 	@for f in $(HOME)/.*; do			\
@@ -86,4 +110,5 @@ report-vars::
 	@echo SRCFILES=$(SRCFILES)
 	@echo SRCDIRS=$(SRCDIRS)
 	@echo NONLINKS=$(NONLINKS)
+	@echo INCLUDERS=$(INCLUDERS)
 	@echo CHAIN=$(CHAIN)
