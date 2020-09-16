@@ -6,18 +6,19 @@ REL = Honu/$(notdir $(shell pwd))
 
 .PHONY: install report-vars
 
-
 ### Install
-#	It's an open question whether we want to bother making a link in $(HOME) at all,
-#	but it seems like a nice convenience, since most people expect to see a ~/bin.
+#	We used to make a symlink here from the user's home directory, if ~/bin
+#	didn't exist.  It makes more sense to make ~/bin the place where we put
+#	actual binaries, to keep them out of the Honu and Mathilda trees.
+
 install::
-	@if [ -e $(DST) ] && [ ! -L $(DST) ]; then			\
-		echo "~/bin exists: linking to local/honu_bin";		\
-		(cd ../local; ln -snf ../bin honu_bin)			\
-	else								\
-		echo "Symlinking $(REL) to ~/bin";			\
-		(cd $(HOME); ln -snf $(REL) .)				\
+	@if [ -L $(DST) ]; then			\
+		echo "~/bin is a symlink; replacing it with a real directory.";	\
+		rm $(DST);							\
 	fi
+	mkdir -p $(DST);
+
+#	We don't nee to make any links to this directory; just put it in $PATH
 
 ### If we're using the MakeStuff package, chain in its Makefile
 #	See ../Makefile for more information.
