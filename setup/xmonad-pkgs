@@ -1,7 +1,8 @@
 #!/bin/sh
 # apt-get packages for xmonad and friends on Debian or Ubuntu
 
-sudo apt-get -y install xmonad trayer dzen2 suckless-tools     \
+sudo apt-get -y install xmonad libghc-xmonad-dev trayer        \
+     dzen2 suckless-tools                                      \
      xfce4-terminal xfce4-power-manager xdotool wmctrl         \
      classicmenu-indicator ansiweather lm-sensors	       \
      x11-xserver-utils xterm gsimplecal fbpanel sysbench
