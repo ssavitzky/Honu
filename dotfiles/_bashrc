@@ -21,6 +21,7 @@ prependToPath () {
 
 appendToPath /opt/bin
 prependToPath $HOME/bin
+prependToPath $HOME/Honu/bin
 for d in `ls -d $HOME/Honu/local/{bin,[a-z]*_bin} 2>/dev/null`; do prependToPath $d; done
 for d in /opt/java/bin /usr/local/java/bin; do prependToPath $d; done
 
