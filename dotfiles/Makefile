@@ -86,7 +86,7 @@ install_includes:: | $(HOME)/$(REL) $(ORIGINALS)
 		cp $(DST)/.$$f $(ORIGINALS);					\
 	    else								\
 		touch $(ORIGINALS)/.$$f;					\
-	    fi;		
+	    fi;									\
 	    if grep -s .$$f.mine $(DST)/.$$f; then :;				\
 	    else echo include $(DST)/.$$f.mine >> $(DST)/.$$f;			\
 	    fi									\
