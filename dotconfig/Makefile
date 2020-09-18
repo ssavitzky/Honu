@@ -5,7 +5,7 @@ DST = $(HOME)/.config
 REL = ../Honu/dotconfig
 
 #  Note that we're ignoring editor backup and .sh files.
-CFGFILES = $(filter-out %.sh, $(wildcard [a-z]*[^~]))
+CFGFILES = $(filter-out %.sh Makefile, $(wildcard *[^~]))
 FILES = $(shell for f in $(CFGFILES); do [ -d $$f ] || echo $$f; done)
 DIRS  = $(shell for f in $(CFGFILES); do [ -d $$f ] && echo $$f; done)
 
