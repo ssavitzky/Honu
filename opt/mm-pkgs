@@ -8,6 +8,5 @@ sudo apt-get -y install audacity ams \
       sfftw-dev
 
 # CD and DVD ripping
-sudo apt-get -y install jack dvdrip-doc dvdrip xine-ui subtitleripper		\
-     abcde icedax id3 id3v2 eyed3 vorbisgain mkcue glyrc
+sudo apt-get -y install abcde icedax id3 id3v2 eyed3 vorbisgain mkcue glyrc
  
