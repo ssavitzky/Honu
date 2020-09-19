@@ -170,10 +170,10 @@ if [ ! -z $WANT_GOODTERM ]; then
   elif echo "$goodTerm" | grep -q xterm; then
       haveXterm=true
       termName='-name '
-  elif echo $goodTerm | grep -q gnome-terminal; then
+  elif echo $goodTerm | grep -q gnome-terminal || echo $goodTerm | grep -q mate-terminal; then
       termName='--name='
-      if echo "$goodterm" | grep -q disable; then :;
-      else goodTerm="/usr/bin/gnome-terminal --disable-factory"; fi
+      if echo "$goodTerm" | grep -q disable; then :;
+      else goodTerm="$goodTerm --disable-factory"; fi
       haveXterm=true
   fi
 fi  # WANT_GOODTERM
