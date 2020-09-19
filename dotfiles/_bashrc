@@ -32,9 +32,10 @@ if [ "$PS1" ]; then
 
   PS1='(\h $USER\W \!) '
 
+  [[ -z $WS ]] || ws="WS=$WS "
   case "$TERM" in
       xterm*)
-	  PS1='\[\033]1;\h:\u\]\[\033]2;$USER@\h \w\](\h \W \!) ';;
+	  PS1='\[\033]1;\h:\u\]\[\033]2;$ws\w $USER@\h\](\h \W \!) ';;
   esac
   
   export ignoreeof=0
