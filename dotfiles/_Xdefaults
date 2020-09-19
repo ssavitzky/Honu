@@ -46,7 +46,7 @@ XTerm*scrollBar:		true
 XTerm*scrollInput:		false
 XTerm*scrollKey:		true
 XTerm*BorderWidth:		3
-XTerm*font:				-adobe-courier-medium-r-normal--16-*-*-*-m-*-*-1
+!XTerm*font:				-bitstream-courier-medium-r-normal--16-*-*-*-m-*-*-1
 XTerm*VT100.Translations:	#override\
 	<KeyPress> KP_Add:	  set-vt-font(d)set-scrollbar(on)\n\
 	<KeyPress> KP_Separator:  set-vt-font(d)set-scrollbar(on)\n\
@@ -97,14 +97,14 @@ NXTterm*VT100.background:	white
 
 xterm-r*VT100.geometry:		80x24-0-20
 xterm-s*VT100.geometry:		80x12-0-395
-xterm-s*VT100.font: -adobe-courier-medium-r-normal--10-100-75-75-m-60-iso8859-1
+!xterm-s*VT100.font: -bitstream-courier-medium-r-normal--10-100-75-75-m-60-iso8859-1
 
 ! used in conjunction with less for displaying command output (e.g. xwininfo)
 sh*VT100.geometry:		80x24+0+200
-sh*VT100.font: -adobe-courier-medium-r-normal--10-100-75-75-m-60-iso8859-1
+!sh*VT100.font: -bitstream-courier-medium-r-normal--10-100-75-75-m-60-iso8859-1
 
 console*VT100.geometry: 	80x4-50+0
-console*VT100.font: -adobe-courier-medium-r-normal--10-100-75-75-m-60-iso8859-1
+!console*VT100.font: -bitstream-courier-medium-r-normal--10-100-75-75-m-60-iso8859-1
 
 nethack*font:			10x20
 nethack*VT100.Translations:	#override\
@@ -127,8 +127,8 @@ nethack*VT100.Translations:	#override\
 
 ! Environments that don't use xrdb or don't have a RESOURCE_MANAGER property
 ! on the root window (e.g Widoze X servers) will pick up these resources.
-XTerm*font:	-adobe-courier-medium-r-normal--*-120-*-*-m-*-*-1
-NXTerm*font:	-adobe-courier-medium-r-normal--*-120-*-*-m-*-*-1
+!XTerm*font:	-bitstream-courier-medium-r-normal--*-120-*-*-m-*-*-1
+!NXTerm*font:	-bitstream-courier-medium-r-normal--*-120-*-*-m-*-*-1
 xterm*VT100.geometry:		80x24+0-0
 console*VT100.geometry: 	80x4-55+0
 console*font:			fixed
@@ -143,7 +143,7 @@ Emacs.BorderWidth:		3
 Emacs.InternalBorder:		2
 Emacs.Cursor:			xterm
 
-!Emacs.Font:	-adobe-courier-medium-r-normal--*-160-*-*-m-*-*-1
+!Emacs.Font:	-bitstream-courier-medium-r-normal--*-160-*-*-m-*-*-1
 !Emacs*background:			black
 !Emacs*Background:			black
 !Emacs*foreground:			white
@@ -152,7 +152,7 @@ Emacs.Cursor:			xterm
 ! We suppress the toolbar in .emacs, but doing it here keeps emacs from resizing,
 ! which it does because it shows the toolbar on startup and then deletes it
 ! when the option is set.
-Emacs*font:	-adobe-courier-medium-r-normal--*-120-*-*-m-*-*-1
+!Emacs*font:	-bitstream-courier-medium-r-normal--*-120-*-*-m-*-*-1
 Emacs.geometry:			80x35+0+52
 Emacs*toolBar:			0
 
