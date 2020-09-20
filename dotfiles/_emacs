@@ -843,7 +843,7 @@ Paragraphs are delimited only by empty lines."
  '(custom-enabled-themes (quote (wheatgrass)))
  '(custom-safe-themes
    (quote
-    ("462d6915a7eac1c6f00d5acd8b08ae379e12db2341e7d3eac44ff7f984a5e579" "477ee67197901195a60602c00001e58fbff93f588694333cdc494817d3fceb57" default)))
+    ("786a64696e16b750861cd99b02f7bc69e26ed46d85671135b50bc6ab3e1b7d7c" "462d6915a7eac1c6f00d5acd8b08ae379e12db2341e7d3eac44ff7f984a5e579" "477ee67197901195a60602c00001e58fbff93f588694333cdc494817d3fceb57" default)))
  '(delete-old-versions t)
  '(display-time-mode t)
  '(font-use-system-font t)
@@ -861,7 +861,7 @@ Preformatted: yes
      "  " mode-line-modes mode-line-misc-info system-name mode-line-end-spaces)))
  '(package-selected-packages
    (quote
-    (dark-mint-theme nimbus-theme nov rjsx-mode markdown-mode jekyll-modes web-mode elm-mode)))
+    (modus-vivendi-theme dark-mint-theme nimbus-theme nov rjsx-mode markdown-mode jekyll-modes web-mode elm-mode)))
  '(scroll-bar-mode (quote right))
  '(select-enable-clipboard t)
  '(show-paren-mode t nil (paren))
