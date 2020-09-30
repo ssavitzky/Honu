@@ -1,0 +1,95 @@
+#!/bin/bash
+#  Start a terminal on a workspace.
+#  Search for the "best" terminal; we no longer need to rely on Local.hs
+#  to specify it for us.
+
+# Identify a "good" terminal emulator:
+
+
+USAGE="Usage: $0 [-hknv] [-t terminal] workspace? [-- terminal...]
+    -h 	  	 - print help text
+    -k		 - kill running terminak
+    -n		 - no-op
+    -t terminal	 - specify terminal program (default $goodTerm)
+    -v 		 - verbose
+    The workspace can be passed either on the command line
+    or in the WS environment variable (=$WS).  If it workspace isn't
+    specified, the terminal is created on the current workspace,
+    but does not have a workspace ID embedded in its name.
+"
+
+KILL=false			# -k option: kill previous terminal and exit
+NO_OP=false
+VERBOSE=false
+
+while [ ! -z $1 ]; do
+    case $1 in
+	-h) echo "$USAGE"
+	    exit
+	    ;;
+	-k) KILL=true
+	    shift
+	    ;;
+	-n) NO_OP=true
+	    shift
+	    ;;
+	-t) shift
+	    goodTerm="$1"
+	    shift
+	    ;;
+	-v) shift
+	    VERBOSE=true
+	    ;;
+	[-=0-9]) WS="$1"
+		 break
+		 ;;
+	--) shift
+	    TERMINALS="$*"
+	    break
+	    ;;
+	-?) echo "$USAGE"
+	    exit
+	    ;;
+	*) NAME="$1"
+	   shift
+	   ;;
+    esac
+done
+
+[[ ! -z $NAME ]] || NAME="ws$WS-terminal"
+
+if $KILL; then killall $NAME; exit; fi
+
+# search for a suitable terminal
+
+TERMINALS="$TERMINALS mate-terminal gnome-terminal roxterm xterm"}
+
+for f in "$goodTerm" $TERMINALS; do
+    if  goodTerm=`which $f`; then break; fi
+done
+
+
+# unfortunately there's no simple way of associating a workspace name
+#   with a terminal.  -name ws2-terminal works for xterm, but
+#   roxterm wants --separate --name=ws2-terminal, and 
+#   gnome-terminal wants --disable-factory --name=...
+
+if echo $goodTerm | grep -q roxterm; then
+    termName='--name='
+    if echo "$goodterm" | grep -q separate; then : else goodTerm="roxterm --separate"; fi
+    haveXterm=true
+elif echo "$goodTerm" | grep -q xterm; then
+    echo $goodTerm | grep -q [-]fn || goodTerm="$goodTerm -fn 9x15"
+    termName='-name '
+elif echo $goodTerm | grep -q gnome-terminal \
+	|| echo $goodTerm | grep -q mate-terminal; then
+    termName='--name='
+    if echo "$goodTerm" | grep -q disable; then :;
+    else goodTerm="$goodTerm --disable-factory"; fi
+    haveXterm=true
+fi
+
+COMMAND="$goodTerm $termName$NAME"
+
+$VERBOSE && echo $COMMAND
+$NO_OP || exec $COMMAND
