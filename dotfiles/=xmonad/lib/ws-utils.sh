@@ -142,38 +142,6 @@ isRunning () {
 #   uxterm which is a wrapper for xterm with some arguments. 
 maybeTerm () {
     if ps x | grep -q "[ =]$1"; then :;
-    else $haveXterm && $goodTerm ${termName}$1 & sleep 0.5;
+    else $HOME/.xmonad/ws-terminal ${termName}$1 & sleep 0.5;
     fi
 }
-
-# Find a good terminal program to use.  Used in wssetup
-#   To enable this, set WANT_GOODTERM=true
-#
-if [ ! -z $WANT_GOODTERM ]; then
-  # Get preferred terminal from local_xmonad.hs
-  XMLOCAL=$HOME/.xmonad/lib/Local.hs
-  if [ -z "$goodTerm" ]; then
-      goodTerm=$(grep goodTerminal $XMLOCAL | sed -e s/^.*=// | sed -e 's/"//g')
-  fi
-
-  # unfortunately there's no simple way of associating a workspace name
-  #   with a terminal.  -name ws2-terminal works for xterm, but
-  #   roxterm wants --separate --name=ws2-terminal, and 
-  #   gnome-terminal wants --disable-factory --name=...
-
-  haveXterm=false
-
-  if echo $goodTerm | grep -q roxterm; then
-      termName='--name='
-      if echo "$goodterm" | grep -q separate; then : else goodTerm="roxterm --separate"; fi
-      haveXterm=true
-  elif echo "$goodTerm" | grep -q xterm; then
-      haveXterm=true
-      termName='-name '
-  elif echo $goodTerm | grep -q gnome-terminal || echo $goodTerm | grep -q mate-terminal; then
-      termName='--name='
-      if echo "$goodTerm" | grep -q disable; then :;
-      else goodTerm="$goodTerm --disable-factory"; fi
-      haveXterm=true
-  fi
-fi  # WANT_GOODTERM

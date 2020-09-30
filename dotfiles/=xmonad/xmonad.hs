@@ -54,7 +54,6 @@ import Local			   -- local configuration options
 --   here.  
 main = do
   -- see whether we have some of the programs we might be using
-  haveGoodTerminal <- doesFileExist goodTerminal -- detect terminal emulator
   haveXmobar <- doesFileExist "/usr/bin/xmobar"  -- detect status bar program
 
   -- Spawn the status bar for the first screen.  Might be xmobar, but probably not.
@@ -68,7 +67,7 @@ main = do
  
   xmonad $ ewmh $ desktopConfig -- defaultConfig
     { modMask = myModMask
-    , terminal =  if haveGoodTerminal then goodTerminal else "xterm"
+    , terminal =  "ws-terminal"
     , layoutHook = myLayoutHook
     , manageHook = manageHook desktopConfig
                    <+> myManageHooks

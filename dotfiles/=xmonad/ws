@@ -3,14 +3,6 @@
 
 XMLOCAL=$HOME/.xmonad/lib/Local.hs
 
-# FIXME: this is very fragile
-if grep -q '= mod5Mask' $XMLOCAL; then
-    MOD=ISO_Level3_Shift
-else
-    # if we start using other keys for mod we'll have to add cases
-    MOD=super
-fi
-
 USAGE="$0 [-hdk] workspace [text...]
     -h: print help text
     -D: no default date/time
@@ -19,7 +11,6 @@ USAGE="$0 [-hdk] workspace [text...]
     -l: list workspaces
     -L: no label, just switch
     -r: locate on the far right
-    mod = $MOD
 "
 [ -z "$1" ] && (echo "$USAGE"; exit)
 
@@ -61,8 +52,8 @@ if $LABEL; then
    [ ! -z $POSITION ] || POSITION=+$(grep firstTopBarWidth $XMLOCAL | first_number)
 fi
 # Switch to the indicated workspace; allow time to get there.
+#    we use wmctrl so that we don't have to fake a command with MOD+WS
 wmctrl -s $(desktop_index $N)
-#xdotool key $MOD+`key $N`
 
 if $LABEL; then
 sleep 1
