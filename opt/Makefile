@@ -4,7 +4,7 @@
 ### clearing GITDIRS keeps make push from trying to push stuff from github
 GITDIRS :=
 
-OPT := dzen eless charm ljupdate my-go mustache-cli gojekyll liquid my-ruby jekyll 
+OPT := dzen eless charm ljupdate my-go mustache gojekyll liquid my-ruby jekyll 
 HERE = ../../opt
 LOCAL_BIN 	 = ../local/bin
 LOCAL_EMACS 	 = ../local/emacs
@@ -70,10 +70,22 @@ ljupdate: | $(LOCAL_EMACS)
 my-go:	
 
 # mustache-cli is a command-line mustache templating engine written in golang
-mustache-cli:	| $(LOCAL_BIN)
-	[ -d $@ ] || git clone git@github.com:quantumew/mustache-cli.git
-	cd $@; $(MAKE)
-	cd $(LOCAL_BIN); ln -s $(HERE)/$@/mustache .
+#	The executable is called mustache, and lives in $(LOCAL_BIN)
+#	It's really not clear whether to rewrite this using `go get` etc,
+#	or to rewrite liquid and gojekyll to look more like mustache.
+#	This set of recipes for mustache has the advantage of putting
+#	the executable under Honu/opt/
+.PHONY: mustache
+mustache: $(LOCAL_BIN)/mustache
+
+$(LOCAL_BIN)/mustache:  mustache-cli/mustache | $(LOCAL_BIN)
+	cd $(LOCAL_BIN); ln -s $(HERE)/$< .
+
+mustache-cli/mustache:	 mustache-cli
+	cd $<; $(MAKE)
+
+mustache-cli:
+	git clone git@github.com:quantumew/mustache-cli.git
 
 # liquid is a templating engine for liquid templates, written in golang
 liquid: REPO = github.com/osteele
