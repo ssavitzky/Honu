@@ -11,9 +11,9 @@ LOCAL_EMACS 	 = ../local/emacs
 
 .PHONY: install fetch 
 
-all::
-	echo make one or more of the following:
-	echo $(OPT)
+help::
+	@echo Honu/opt: make one or more of the following:
+	@echo $(OPT)
 
 ### Fetch code from github
 fetch:: | $(OPT)
