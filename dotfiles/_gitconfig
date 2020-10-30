@@ -30,6 +30,10 @@
 [push]
 	default = matching
 
+[init]
+	# this template uses "main" instead of "master" as the name of git's default branch
+	templateDir = ~/.config/git/init_template
+
 [include]
 	path = ~/Honu/local/local_gitconfig
 
