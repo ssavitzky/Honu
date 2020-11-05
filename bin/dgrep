@@ -35,6 +35,8 @@ if ($files[0]) {
     my $path = (-d "~/Private/Journals/Dog")
 	? "~/Private/Journals/Dog"
 	: "~/vv/users/steve/Private/Journals/Dog";
+    $path = `realpath --relative-to . $path`;
+    $path =~ s/\n//;
     @files = split /\n/, `ls $path/*/*.done $path/to.do`;
 }
 
