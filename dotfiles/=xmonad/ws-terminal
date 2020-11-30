@@ -81,9 +81,10 @@ if echo $goodTerm | grep -q roxterm; then
 elif echo "$goodTerm" | grep -q xterm; then
     echo $goodTerm | grep -q [-]fn || goodTerm="$goodTerm -fn 9x15"
     termName='-name '
-elif echo $goodTerm | grep -q gnome-terminal \
-	|| echo $goodTerm | grep -q mate-terminal; then
+elif echo $goodTerm | grep -q gnome-terminal; then
     termName='--name='
+elif echo $goodTerm | grep -q mate-terminal ; then
+    termName='--title='
     if echo "$goodTerm" | grep -q disable; then :;
     else goodTerm="$goodTerm --disable-factory"; fi
     haveXterm=true
