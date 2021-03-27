@@ -122,12 +122,14 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# if we have go installed in our home directory instead of in /usr/bin or /usr/local,
+# if we have go installed in /usr/local or our home directory instead of in /usr/bin,
 # set GOHOME and prepend its bin directory to PATH (prepend because we may want to
-# overrie the installed version)
+# override the installed version)
 if [ -d $HOME/golang/go ]; then
     export GOHOME=$HOME/golang/go
     prependToPath $GOHOME/bin
+elif [ -d /usr/local/go ]; then
+    prependToPath /usr/local/go/bin
 fi
 
 # we don't have to specify GOPATH, because ~/go is the default, but we

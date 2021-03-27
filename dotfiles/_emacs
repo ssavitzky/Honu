@@ -83,7 +83,7 @@
 (defun shrug ()
   "insert shrug emoticon at point"
   (interactive nil)
-  (insert  "¯\_(ツ)_/¯"))
+  (insert  "¯\\_(ツ)_/¯"))
   
 ;;;
 ;;; Key Bindings
