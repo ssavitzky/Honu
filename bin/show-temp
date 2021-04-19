@@ -16,6 +16,9 @@ YPOS=0
 LINES=25
 HEIGHT=24
 
+fgCol=green
+bgCol=gray25
+
 if [ -e $XMLOCAL ]; then
     # Get the x position from the xmonad local parameters
     XPOS=$(grep firstTopBarWidth $XMLOCAL | first_number)
@@ -27,7 +30,7 @@ elif [ -x /usr/bin/xrandr ]; then
     XPOS=$(( $screen_width - $TW ))
 fi
 
-DZEN_PARAMS="-x $XPOS -y $YPOS -l $LINES -tw $TW -h $HEIGHT"
+DZEN_PARAMS=" -fg $fgCol -bg $bgCol -x $XPOS -y $YPOS -l $LINES -tw $TW -h $HEIGHT"
 DZEN_OPTS="-dock -ta r -sa l"
 # dzen2 event handlers
 DZEN_EVENTS="-e button1=togglecollapse,unhide;button2=collapse"
