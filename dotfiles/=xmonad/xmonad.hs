@@ -259,13 +259,16 @@ wsKeyName::String -> String
 wsKeyName ws = case head ws of { '=' -> "equal"; '-' -> "minus"; x -> [x]; }
 
 -- key bindings to start programs.  Note that the lock binding is the traditional Ctl-Alt-l.
+--     putting a single space before the comment looks sloppy here, but better in mod-/
 myAdditionalKeys wsNames =
   [ ((mod1Mask  .|. controlMask, xK_l     ), spawn "gnome-screensaver-command --lock" ) -- lock screen
-  , ((myModMask .|. controlMask, xK_c     ), spawn "gsimplecal" )                       -- calendar
-  , ((myModMask,                 xK_c     ), spawn "toggle xcalc" )                     -- calculator
-  , ((myModMask,                 xK_slash ), spawn "show-keys" )                        -- show bindings
-  , ((myModMask .|. controlMask, xK_e     ), spawn "emacs" )                            -- editor
-  , ((myModMask .|. controlMask, xK_t     ), spawn "scratchpad" )                       -- scratchpad
+  , ((myModMask .|. controlMask, xK_c     ), spawn "gsimplecal" ) -- calendar
+  , ((myModMask,                 xK_c     ), spawn "toggle xcalc" ) -- calculator
+  , ((myModMask,                 xK_slash ), spawn "show-keys" ) -- show bindings
+  , ((myModMask .|. controlMask, xK_d     ), spawn "discord" ) -- discord
+  , ((myModMask .|. controlMask, xK_e     ), spawn "emacs" ) -- editor
+  , ((myModMask .|. controlMask, xK_s     ), spawn "signal-desktop" ) -- signal
+  , ((myModMask .|. controlMask, xK_t     ), spawn "scratchpad" ) -- scratchpad
   ] ++ [ -- regular and shifted bindings for myExtraWorkspaces
     ((myModMask, key), (windows $ W.greedyView ws))
     | (key, ws) <- wsKeys wsNames
