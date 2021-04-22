@@ -1,0 +1,49 @@
+#!/bin/bash
+# copy important files between firefox profiles; see:
+# https://support.mozilla.org/en-US/kb/recovering-important-data-from-an-old-profile
+
+
+[ -z $1 ] || {
+    echo Usage: $0 SRC_PROFILE DST_PROFILE
+    echo '   copy important files from SRC_PROFILE to DST_PROFILE'
+    exit 1
+} 
+
+prof1=$1
+prof2=$2
+
+cd $prof1
+
+fffiles=`grep '^ ` <<EOF
+
+Bookmarks, Downloads and Browsing History
+    places.sqlite
+    favicons.sqlite
+
+Passwords
+    key4.db 
+    logins.json 
+
+Site-specific preferences
+    permissions.sqlite 
+
+Search engines
+    search.json.mozlz4 
+
+Personal dictionary
+    persdict.dat 
+
+Autocomplete history
+    formhistory.sqlite 
+
+Cookies
+    cookies.sqlite 
+
+Security certificate settings
+    cert9.db 
+
+File types and download actions
+    handlers.json 
+EOF
+
+for f in $fffiles; do [ ! -e $f ] || cp $f $prof2; done
