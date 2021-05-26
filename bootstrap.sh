@@ -50,7 +50,7 @@ if $INSTALL_PKGS; then		### Install packages.
     # Required packages: if we don't get these, all is lost.
     sudo apt-get -y install git curl wget make openssh-client
 
-elif for f in git curl wget make ssh;  do which $f > /dev/null; done; then
+elif for f in git wget make ssh;  do which $f > /dev/null; done; then
     # ok, we have all the required packages without having to install them.
     # It's still possible that things won't work, but at least we can run
     # the makefiles.
