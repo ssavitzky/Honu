@@ -128,7 +128,9 @@ maybeRun () {
 maybeRunOn () {
     local ws=$1
     shift
-    if ps x | grep -q "[ ]$*" ; then :; else (exec -a "WS=$ws $1" $*) & sleep 0.5; fi
+    if ps x | grep -q "[ ]$*" ; then :;
+    else (exec -a "WS=$ws $1" $* &>/dev/null) & sleep 0.5;
+    fi
 }
 
 # see whether a command is running
