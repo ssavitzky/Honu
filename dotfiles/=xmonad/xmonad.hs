@@ -267,6 +267,7 @@ myAdditionalKeys wsNames =
   , ((myModMask,                 xK_slash ), spawn "show-keys" ) -- show bindings
   , ((myModMask .|. controlMask, xK_d     ), spawn "discord" ) -- discord
   , ((myModMask .|. controlMask, xK_e     ), spawn "emacs" ) -- editor
+  , ((myModMask .|. controlMask, xK_f     ), spawn "firefox" ) -- firefox
   , ((myModMask .|. controlMask, xK_s     ), spawn "signal-desktop" ) -- signal
   , ((myModMask .|. controlMask, xK_t     ), spawn "scratchpad" ) -- scratchpad
   ] ++ [ -- regular and shifted bindings for myExtraWorkspaces
