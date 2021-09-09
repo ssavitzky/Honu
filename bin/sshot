@@ -1,0 +1,8 @@
+#!/bin/bash
+# take a screenshot.  output is png.  If no output file is specified
+# on the command line, uses yyyy-mm-ddThh-mm-ss.png
+
+outfile=$(date +%FT%H:%M:%S.png)
+if [ ! -z $1 ]; then outfile=$1; fi
+
+xwd | xwdtopnm | pnmtopng > $outfile
