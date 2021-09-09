@@ -34,6 +34,12 @@
 	# this template uses "main" instead of "master" as the name of git's default branch
 	templateDir = ~/.config/git/init_template
 
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+
 [include]
 	path = ~/Honu/local/local_gitconfig
 
