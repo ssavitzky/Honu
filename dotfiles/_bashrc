@@ -35,7 +35,10 @@ if [ "$PS1" ]; then
   [[ -z $WS ]] || ws="WS=$WS "
   case "$TERM" in
       xterm*)
-	  PS1='\[\033]1;\h:\u\]\[\033]2;$ws\w $USER@\h\](\h \W \!) ';;
+	  PS1='\[\033]1;\h:\u\]\[\033]2;$ws\w $USER@\h\](\h \W \!) '
+	  # the following shows the currently-running command in the xterm title bar:
+	  trap 'echo -ne "\033]2;$ws$(history 1 | sed "s/^[ ]*[0-9]*[ ]*//g")\007"' DEBUG
+	  ;;
   esac
   
   export ignoreeof=0
