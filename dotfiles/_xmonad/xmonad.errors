@@ -1,0 +1,12 @@
+
+xmonad.hs:57:37: error:
+    Variable not in scope: goodTerminal :: FilePath
+   |
+57 |   haveGoodTerminal <- doesFileExist goodTerminal -- detect terminal emulator
+   |                                     ^^^^^^^^^^^^
+
+xmonad.hs:71:44: error:
+    Variable not in scope: goodTerminal :: String
+   |
+71 |     , terminal =  if haveGoodTerminal then goodTerminal else "xterm"
+   |                                            ^^^^^^^^^^^^
