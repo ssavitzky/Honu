@@ -6,7 +6,7 @@
 [advice]
 	pushNonFastForward = false
 
-# some aliases from http://durdn.com/blog/2012/11/22/must-have-git-aliases-advanced-examples/
+# some aliases mostly from http://durdn.com/blog/2012/11/22/must-have-git-aliases-advanced-examples/
 [alias]
 	amend	= commit -a --amend
 	br	= branch
@@ -21,6 +21,7 @@
 	lt 	= describe --tags --abbrev=0
 	ss	= status -s
 	st	= status
+	top	= !pwd
 
 [color]
 	ui = auto
