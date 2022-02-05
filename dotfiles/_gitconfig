@@ -21,7 +21,8 @@
 	lt 	= describe --tags --abbrev=0
 	ss	= status -s
 	st	= status
-	top	= !pwd
+	sw	= switch
+	top	= "!pwd;"	# print top-level directory of worktree; run command there
 
 [color]
 	ui = auto
