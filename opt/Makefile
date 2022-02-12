@@ -53,6 +53,10 @@ eless:	| $(LOCAL_BIN)
 
 # charm is a command-line/terminal LJ client.
 charm:	| $(LOCAL_BIN)
+	@if [ ! -x /usr/bin/python2 ]; then				\
+	    echo === WARNING === You need to apt install python2;	\
+	    exit -1;							\
+	fi
 	[ -d $@ ] || git clone git@github.com:ssavitzky/charm.git
 	cd $(LOCAL_BIN); ln -s $(HERE)/$@/$@ .
 
