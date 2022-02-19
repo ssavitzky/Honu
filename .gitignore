@@ -1,1 +1,57 @@
-dotfiles/_gitignore_global
+# Top-level .gitignore file
+
+# Ignore .draft, and .post which are used by MakeStuff's blogging plugin
+# to point to an entry under construction.
+
+.draft
+.post
+
+# Ignore large files.  If you need to version-control them, try git-annex.
+# If you just want to deploy them, use rsync.
+
+*.iso
+*.tar
+*.tgz
+*.wav
+
+# Ignore editor temporary files and version files, intermediate files, build
+# products, RCS and SCCS history files, etc.
+
+*~
+\#*
+.#*
+,*
+
+*.[ao]
+*.aux
+*.bak
+*.BAK
+*.dvi
+*.elc
+*.exe
+*.log
+*.obj
+*.old
+*.orig
+*.rej
+*.so
+*.Z
+
+.make.state
+.svn
+
+core
+CVS
+cvslog.*
+RCS
+RCSLOG
+SCCS
+tags 
+TAGS 
+
+#For reference, here's the list for rsync --cvs-exclude:
+# RCS  SCCS  CVS  CVS.adm   RCSLOG   cvslog.*   tags   TAGS
+# .make.state  .nse_depinfo *~ #* .#* ,* _$* *$ *.old *.bak
+# *.BAK *.orig *.rej .del-* *.a *.olb *.o *.obj *.so  *.exe
+$ *.Z *.elc *.ln core .svn/
+
